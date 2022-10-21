@@ -1,0 +1,7 @@
+import { <%= classify(name) %>Validator } from './<%= dasherize(name) %>.validator';
+
+describe('<%= classify(name) %>Validator', () => {
+  it('should be created', () => {
+    expect(<%= classify(name) %>Validator).toBeTruthy();
+  });
+});

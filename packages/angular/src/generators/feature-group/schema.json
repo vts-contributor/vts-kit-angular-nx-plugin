@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularFeatureGroup",
+  "title": "Angular Feature Group Schema",
+  "cli": "nx",
+  "type": "object",
+  "description": "Creates a new feature group in the given or default app project.",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the feature group.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the feature group?",
+      "pattern": "^[a-zA-Z].*$"
+    },
+    "appRoutingProject": {
+      "type": "string",
+      "description": "The name of the app where the new feature group will be imported for routing. Only projects of application are valid",
+      "x-dropdown": "projects"
+    }
+  },
+  "required": ["name"]
+}

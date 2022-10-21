@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularValidator",
+  "title": "Angular Validator Schema",
+  "cli": "nx",
+  "type": "object",
+  "description": "Creates a new, generic Angular validator definition in the given or default project.",
+  "additionalProperties": false,
+  "properties": {
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path at which to create the validator file, relative to the selected project (/src/(lib|app)/<relative_path>) or relative to workspace (<root_workspace>/<relative_path>).",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "x-dropdown": "projects"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the validator.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the validator?"
+    },
+    "skipTests": {
+      "type": "boolean",
+      "description": "Do not create \"spec.ts\" test files for the new class.",
+      "default": false,
+      "x-user-analytics": 12
+    },
+    "type": {
+      "description": "Specifies type of validator (sync / async).",
+      "type": "string",
+      "enum": ["sync", "async"],
+      "x-prompt": {
+        "message": "What type of validator to be created? (--type)",
+        "type": "list",
+        "items": [
+          {
+            "value": "sync",
+            "label": "Sync Validator [ https://angular.io/guide/form-validation#defining-custom-validators ]"
+          },
+          {
+            "value": "async",
+            "label": "Async Validator [ https://angular.io/guide/form-validation#creating-asynchronous-validators ]"
+          }
+        ]
+      },
+      "default": "sync"
+    },
+    "form": {
+      "description": "Specifies type of Angular form in which validator be used (Reactive form / Template-driven form).",
+      "type": "string",
+      "enum": ["template", "reactive"],
+      "x-prompt": {
+        "message": "What type of Angular form in which validator be used? (--form)",
+        "type": "list",
+        "items": [
+          {
+            "value": "reactive",
+            "label": "Reactive form (Create validation function)"
+          },
+          {
+            "value": "template",
+            "label": "Template-driven form (Create directive validator)"
+          }
+        ]
+      },
+      "default": "template"
+    }
+  },
+  "required": ["name", "type", "form"]
+}

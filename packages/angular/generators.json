@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "angular",
+  "version": "0.0.1",
+  "schematics": {
+    "library": {
+      "factory": "./src/generators/library/library.compat",
+      "schema": "./src/generators/library/schema.json",
+      "aliases": ["lib"],
+      "description": "Creates an Angular library."
+    },
+    "directive": {
+      "factory": "./src/generators/directive/directive.compat",
+      "schema": "./src/generators/directive/schema.json",
+      "aliases": ["d"],
+      "description": "Generate an Angular Directive."
+    },
+    "pipe": {
+      "factory": "./src/generators/pipe/pipe.compat",
+      "schema": "./src/generators/pipe/schema.json",
+      "aliases": ["p"],
+      "description": "Generate an Angular Pipe."
+    },
+    "service": {
+      "factory": "./src/generators/service/service.compat",
+      "schema": "./src/generators/service/schema.json",
+      "aliases": ["s"],
+      "description": "Generate an Angular Service."
+    },
+    "class": {
+      "factory": "./src/generators/class/class.compat",
+      "schema": "./src/generators/class/schema.json",
+      "description": "Generate an Angular Class."
+    },
+    "interface": {
+      "factory": "./src/generators/interface/interface.compat",
+      "schema": "./src/generators/interface/schema.json",
+      "aliases": ["i"],
+      "description": "Generate an Angular Interface."
+    },
+    "enum": {
+      "factory": "./src/generators/enum/enum.compat",
+      "schema": "./src/generators/enum/schema.json",
+      "aliases": ["e"],
+      "description": "Generate an Angular Enum."
+    },
+    "guard": {
+      "factory": "./src/generators/guard/guard.compat",
+      "schema": "./src/generators/guard/schema.json",
+      "aliases": ["g"],
+      "description": "Generate an Angular Guard."
+    },
+    "interceptor": {
+      "factory": "./src/generators/interceptor/interceptor.compat",
+      "schema": "./src/generators/interceptor/schema.json",
+      "description": "Generate an Angular Interceptor."
+    },
+    "resolver": {
+      "factory": "./src/generators/resolver/resolver.compat",
+      "schema": "./src/generators/resolver/schema.json",
+      "aliases": ["r"],
+      "description": "Generate an Angular Resolver."
+    },
+    "validator": {
+      "factory": "./src/generators/validator/validator.compat",
+      "schema": "./src/generators/validator/schema.json",
+      "aliases": ["v"],
+      "description": "Generate an Angular Validator."
+    },
+    "feature-group": {
+      "factory": "./src/generators/feature-group/feature-group.compat",
+      "schema": "./src/generators/feature-group/schema.json",
+      "aliases": ["fg"],
+      "description": "Generate an Angular Feature group."
+    },
+    "enhance": {
+      "factory": "./src/generators/enhance/enhance.compat",
+      "schema": "./src/generators/enhance/schema.json",
+      "description": "Enhance Nx workspace",
+      "hidden": true
+    }
+  },
+  "generators": {
+    "library": {
+      "factory": "./src/generators/library/library",
+      "schema": "./src/generators/library/schema.json",
+      "aliases": ["lib"],
+      "x-type": "library",
+      "description": "Creates an Angular library."
+    },
+    "component": {
+      "factory": "./src/generators/component/component",
+      "schema": "./src/generators/component/schema.json",
+      "aliases": ["c"],
+      "x-type": "component",
+      "description": "Creates an Angular component."
+    },
+    "directive": {
+      "factory": "./src/generators/directive/directive",
+      "schema": "./src/generators/directive/schema.json",
+      "aliases": ["d"],
+      "description": "Generate an Angular Directive."
+    },
+    "pipe": {
+      "factory": "./src/generators/pipe/pipe",
+      "schema": "./src/generators/pipe/schema.json",
+      "aliases": ["p"],
+      "description": "Generate an Angular Pipe."
+    },
+    "service": {
+      "factory": "./src/generators/service/service",
+      "schema": "./src/generators/service/schema.json",
+      "aliases": ["s"],
+      "description": "Generate an Angular Service."
+    },
+    "class": {
+      "factory": "./src/generators/class/class",
+      "schema": "./src/generators/class/schema.json",
+      "description": "Generate an Angular Class."
+    },
+    "interface": {
+      "factory": "./src/generators/interface/interface",
+      "schema": "./src/generators/interface/schema.json",
+      "aliases": ["i"],
+      "description": "Generate an Angular Interface."
+    },
+    "enum": {
+      "factory": "./src/generators/enum/enum",
+      "schema": "./src/generators/enum/schema.json",
+      "aliases": ["i"],
+      "description": "Generate an Angular Enum."
+    },
+    "guard": {
+      "factory": "./src/generators/guard/guard",
+      "schema": "./src/generators/guard/schema.json",
+      "aliases": ["g"],
+      "description": "Generate an Angular Guard."
+    },
+    "interceptor": {
+      "factory": "./src/generators/interceptor/interceptor",
+      "schema": "./src/generators/interceptor/schema.json",
+      "description": "Generate an Angular Interceptor."
+    },
+    "resolver": {
+      "factory": "./src/generators/resolver/resolver",
+      "schema": "./src/generators/resolver/schema.json",
+      "aliases": ["r"],
+      "description": "Generate an Angular Resolver."
+    },
+    "validator": {
+      "factory": "./src/generators/validator/validator",
+      "schema": "./src/generators/validator/schema.json",
+      "aliases": ["v"],
+      "description": "Generate an Angular Validator."
+    },
+    "feature-group": {
+      "factory": "./src/generators/feature-group/feature-group",
+      "schema": "./src/generators/feature-group/schema.json",
+      "aliases": ["v"],
+      "description": "Generate an Angular Feature Group."
+    },
+    "enhance": {
+      "factory": "./src/generators/enhance/enhance",
+      "schema": "./src/generators/enhance/schema.json",
+      "description": "Enhance Nx workspace",
+      "hidden": true
+    }
+  }
+}

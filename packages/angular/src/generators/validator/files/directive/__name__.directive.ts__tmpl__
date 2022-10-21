@@ -1,0 +1,20 @@
+import { Directive, Input } from '@angular/core';
+import { AbstractControl, ValidationErrors, <% if (type === 'sync') { %>Validator, NG_VALIDATORS<% } else { %>AsyncValidator, NG_ASYNC_VALIDATORS<% } %> } from '@angular/forms';
+import { <%= classify(name) %>Validator } from './<%=name%>.validator'
+<% if (type === 'async') { %>import { Observable } from 'rxjs';<% } %>
+
+@Directive({
+  selector: '[<%= camelize(name) %>][ngModel]',
+  providers: [{provide: <% if (type === 'sync') { %>NG_VALIDATORS<% } else { %>NG_ASYNC_VALIDATORS<% } %> , useExisting: <%= classify(name) %>ValidatorDirective, multi: true}]
+})
+export class <%= classify(name) %>ValidatorDirective implements <% if (type === 'sync') { %>Validator<% } else { %>AsyncValidator<% } %> {
+  @Input() <%= camelize(name) %> = '';
+
+  validate(control: AbstractControl): <% if (type === 'sync') { 
+    %>ValidationErrors | null<% 
+  } else { 
+    %>Observable<ValidationErrors | null> | Promise<ValidationErrors | null><% 
+  } %> {
+    return <%= classify(name) %>Validator(this.<%= camelize(name) %>)(control);
+  }
+}

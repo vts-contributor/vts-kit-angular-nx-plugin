@@ -1,0 +1,17 @@
+import { AbstractControl, ValidationErrors, <% if (type === 'sync') { %>ValidatorFn<% } else { %>AsyncValidatorFn<% } %> } from '@angular/forms';
+<% if(type === 'async') { 
+    %>import { Observable } from 'rxjs';<% 
+} %>
+
+export const <%= classify(name) %>Validator: (options: any) => <% if (type === 'sync') { %>ValidatorFn<% } else { %>AsyncValidatorFn<% } %> 
+  = (options) => {
+    return (control: AbstractControl): <% if(type === 'sync') { 
+        %>ValidationErrors | null<% 
+      } else { 
+          %>Observable<ValidationErrors | null> | Promise<ValidationErrors | null><% 
+      } %> => {
+      <% if (type === 'sync') { %>return null;<% } else { %>return Promise.resolve(null);<% } %>
+  };
+}
+
+export default <%= classify(name) %>Validator;

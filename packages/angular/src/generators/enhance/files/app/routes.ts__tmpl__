@@ -1,0 +1,11 @@
+import { Route } from '@angular/router';
+
+const ROUTES: Route[] = [
+  {
+    path: 'welcome',
+    loadChildren: () => import('@<%= npmScope %>/welcome/feature').then((m) => m.WelcomeFeatureModule),
+  },
+  { path: '**', redirectTo: '/welcome' }
+];
+
+export default ROUTES;

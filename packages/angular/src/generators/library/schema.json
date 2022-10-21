@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "GeneratorAngularLibrary",
+  "title": "Create a library",
+  "description": "Creates an Angular library.",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the library.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the library?",
+      "pattern": "^[a-zA-Z].*$"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the library is placed."
+    },
+    "publishable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate a publishable library. Must specify importPath for other projects be able to import it"
+    },
+    "buildable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate a buildable library."
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add dependencies to `package.json`."
+    },
+    "skipPostInstall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add or append `ngcc` to the `postinstall` script in `package.json`."
+    },
+    "skipTsConfig": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not update `tsconfig.json` for development experience."
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the library (used for linting)."
+    },
+    "unitTestRunner": {
+      "type": "string",
+      "enum": ["karma", "jest", "none"],
+      "description": "Test runner to use for unit tests.",
+      "default": "jest"
+    },
+    "importPath": {
+      "type": "string",
+      "description": "The library name used to import it, like `@organize/lib-name`. Must be a valid npm name."
+    },
+    "strict": {
+      "type": "boolean",
+      "description": "Create a library with stricter type checking and build optimization options.",
+      "default": true
+    },
+    "linter": {
+      "description": "The tool to use for running lint checks.",
+      "type": "string",
+      "enum": ["eslint", "none"],
+      "default": "eslint"
+    },
+    "compilationMode": {
+      "description": "Specifies the compilation mode to use. If not specified, it will default to `partial` for publishable libraries and to `full` for buildable libraries. The `full` value can not be used for publishable libraries.",
+      "type": "string",
+      "enum": ["full", "partial"]
+    },
+    "feature": {
+      "description": "Generate additional NgModule and Routing config with library. Every component generated inside feature library will automatically create a route to it.",
+      "type": "boolean",
+      "default": false
+    },
+    "appRoutingProject": {
+      "type": "string",
+      "description": "ONLY WORK WITH FEATURE LIBRARY. The name of the app where feature will be imported for routing. Only projects of application are valid",
+      "x-dropdown": "projects"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["name"]
+}

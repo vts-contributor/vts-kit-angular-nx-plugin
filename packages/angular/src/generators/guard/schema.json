@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularGuard",
+  "title": "Angular Guard Schema",
+  "cli": "nx",
+  "type": "object",
+  "description": "Creates a new, generic Angular guard definition in the given or default project.",
+  "additionalProperties": false,
+  "properties": {
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path at which to create the guard file, relative to the selected project (/src/(lib|app)/<relative_path>) or relative to workspace (<root_workspace>/<relative_path>).",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "x-dropdown": "projects"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the guard.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the guard?"
+    },
+    "skipTests": {
+      "type": "boolean",
+      "description": "Do not create \"spec.ts\" test files for the new guard.",
+      "default": false,
+      "x-user-analytics": 12
+    },
+    "implements": {
+      "type": "array",
+      "description": "Specifies which route guards to implement (hold Ctrl to multiselect).",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": ["CanActivate", "CanActivateChild", "CanDeactivate", "CanLoad"],
+        "type": "string"
+      },
+      "default": ["CanActivate"]
+    }
+  },
+  "required": ["name"]
+}

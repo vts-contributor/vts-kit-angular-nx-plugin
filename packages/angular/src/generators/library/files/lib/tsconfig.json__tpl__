@@ -1,0 +1,14 @@
+{
+  "extends": "<%= rootTsConfigPath %>",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }<% if (publishable) { %>,
+    {
+      "path": "./tsconfig.lib.prod.json"
+    }
+    <% } %>
+  ]
+}

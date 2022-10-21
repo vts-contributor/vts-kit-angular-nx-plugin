@@ -1,0 +1,8 @@
+import { <%= classify(name) %>ValidatorDirective } from './<%= dasherize(name) %>.directive';
+
+describe('<%= classify(name) %>ValidatorDirective', () => {
+  it('should create an instance', () => {
+    const directive = new <%= classify(name) %>ValidatorDirective();
+    expect(directive).toBeTruthy();
+  });
+});
