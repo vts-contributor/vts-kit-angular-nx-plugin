@@ -163,7 +163,7 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 - Install Nx Console in VSCode
 
 <p align="center">
-    <img src="/blob/doc/doc/images/install-nx-console.png" />
+    <img src="/doc/images/install-nx-console.png" />
 </p>
 
 - Select Nx generate in context menu or Nx Console Tab
