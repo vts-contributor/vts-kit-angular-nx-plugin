@@ -340,9 +340,10 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 
 ## References
 
+- [Nx Introduction](https://nx.dev/getting-started/intro)
 - [App and lib](https://nx.dev/more-concepts/applications-and-libraries)
 - [Monorepo](https://nx.dev/more-concepts/why-monorepos)
-- [Nx Introduction](https://nx.dev/getting-started/intro)
+- [Buildable and Publishable](https://nx.dev/more-concepts/buildable-and-publishable-libraries)
 
 ## Contribute Guidelines
 
