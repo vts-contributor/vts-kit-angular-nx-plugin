@@ -166,11 +166,36 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
     <img src="/doc/images/install-nx-console.png" />
 </p>
 
-- Select Nx generate in context menu or Nx Console Tab
+- Using generator:
+    - Option 1: Select `generate` Nx Console Tab and select a generator
+    
+    <p align="center">
+        <img src="/doc/images/generate-in-nx-tab.png" />
+    </p>
+    
+    - Option 2: Right click on a library and select `nx generate` in context menu
+    
+    <p align="center">
+        <img src="/doc/images/generate-in-nx-context-menu.png" />
+    </p>
 
-- Fill in options and preview changes
+- Fill in options
+
+<p align="center">
+    <img src="/doc/images/fill-option.png" />
+</p>
+
+- Preview changes
+
+<p align="center">
+    <img src="/doc/images/preview-change.png" />
+</p>
 
 - Press Run to make changes
+
+<p align="center">
+    <img src="/doc/images/apply-change.png" />
+</p>
 
 ### Generator: Library
 
