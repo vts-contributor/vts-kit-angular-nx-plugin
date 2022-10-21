@@ -9,6 +9,12 @@
       "aliases": ["lib"],
       "description": "Creates an Angular library."
     },
+    "component": {
+      "factory": "./src/generators/component/component.compat",
+      "schema": "./src/generators/component/schema.json",
+      "aliases": ["c"],
+      "description": "Generate an Angular Component."
+    },
     "directive": {
       "factory": "./src/generators/directive/directive.compat",
       "schema": "./src/generators/directive/schema.json",

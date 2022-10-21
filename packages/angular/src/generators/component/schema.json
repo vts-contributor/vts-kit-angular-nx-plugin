@@ -10,7 +10,7 @@
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path at which to create the directive file, relative to the selected project (/src/(lib|app)/<relative_path>) or relative to workspace (<root_workspace>/<relative_path>).",
+      "description": "The path at which to create the component file, relative to the selected project (/src/(lib|app)/<relative_path>) or relative to workspace (<root_workspace>/<relative_path>).",
       "visible": false
     },
     "project": {
