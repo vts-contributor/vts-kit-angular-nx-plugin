@@ -1,0 +1,11 @@
+<vts-content>
+  <br />
+  <vts-breadcrumb *ngIf="routeData$ | async as routeData" [vtsSeparator]="'>'">
+    <span>Route Data Breadcrumb: &nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <vts-breadcrumb-item *ngFor="let item of routeData['breadcrumb']">{{
+      item
+    }}</vts-breadcrumb-item>
+  </vts-breadcrumb>
+  <br />
+  <router-outlet></router-outlet>
+</vts-content>

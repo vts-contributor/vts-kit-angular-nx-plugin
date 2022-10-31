@@ -1,0 +1,34 @@
+{
+  "name": "share-services",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/share/services/src",
+  "prefix": "lib",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/share/services"],
+      "options": {
+        "project": "libs/share/services/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/share/services/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/share/services/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/share/services/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

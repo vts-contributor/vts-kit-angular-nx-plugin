@@ -1,0 +1,14 @@
+.vts-layout-header {
+  background: white;
+}
+
+:host > vts-layout {
+  min-height: 100vh;
+}
+
+.vts-layout-sider {
+  background: white;
+  padding-top: var(--content-padding);
+  box-shadow: 1px 4px 4px rgb(0 0 0 / 20%);
+  z-index: 1000;
+}

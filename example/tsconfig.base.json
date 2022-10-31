@@ -1,0 +1,62 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@vts-kit-ng-nx-demo/layout/data-access": [
+        "libs/layout/data-access/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/layout/feature": [
+        "libs/layout/feature/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/layout/ui": ["libs/layout/ui/src/index.ts"],
+      "@vts-kit-ng-nx-demo/product/data-access": [
+        "libs/product/data-access/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/product/feature": [
+        "libs/product/feature/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/product/ui": ["libs/product/ui/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/animation": [
+        "libs/share/animation/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/share/data-access": [
+        "libs/share/data-access/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/share/guards": ["libs/share/guards/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/interceptors": [
+        "libs/share/interceptors/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/share/mixins": ["libs/share/mixins/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/pipes": ["libs/share/pipes/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/services": [
+        "libs/share/services/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/share/ui": ["libs/share/ui/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/utils": ["libs/share/utils/src/index.ts"],
+      "@vts-kit-ng-nx-demo/share/validators": [
+        "libs/share/validators/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/welcome/data-access": [
+        "libs/welcome/data-access/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/welcome/feature": [
+        "libs/welcome/feature/src/index.ts"
+      ],
+      "@vts-kit-ng-nx-demo/welcome/ui": ["libs/welcome/ui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

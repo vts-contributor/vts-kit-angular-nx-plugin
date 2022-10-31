@@ -1,0 +1,29 @@
+<vts-table
+  #productTable
+  *ngIf="products$ | async as data"
+  [vtsData]="data"
+  [vtsPageSize]="10"
+  [vtsPageIndex]="1"
+  vtsShowPagination
+  vtsShowSizeChanger
+  [vtsLoading]="loading$ | async"
+>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Create By</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of productTable.data; index as i">
+      <td>{{ data.name }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.createdBy }}</td>
+      <td>
+        <a>Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</vts-table>

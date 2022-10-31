@@ -1,0 +1,39 @@
+<ng-container *ngIf="loading$ | async; else table"> Loading... </ng-container>
+
+<ng-template #table>
+  <vts-descriptions *ngIf="detail$ | async as product" vtsBordered>
+    <vts-descriptions-item vtsTitle="Product">{{
+      product.name
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Billing Mode">{{
+      product.billing
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Automatic Renewal">{{
+      product.renewal ? 'True' : 'False'
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Order Time">{{
+      product.orderTime
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Usage Time" [vtsSpan]="2">{{
+      product.usageTime
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Status" [vtsSpan]="3">{{
+      product.status
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Negotiated Amount">{{
+      product.negotiatedAmount
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Discount">{{
+      product.discount
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Official Receipts">{{
+      product.officialReceipts
+    }}</vts-descriptions-item>
+    <vts-descriptions-item vtsTitle="Config Info">
+      <ng-container *ngFor="let item of product.configInfo">
+        {{ item }}
+        <br />
+      </ng-container>
+    </vts-descriptions-item>
+  </vts-descriptions>
+</ng-template>

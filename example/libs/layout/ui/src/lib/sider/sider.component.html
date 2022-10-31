@@ -1,0 +1,24 @@
+<ng-container>
+  <ul vts-menu vtsMode="inline">
+    <li
+      *ngFor="let route of routes"
+      vts-submenu
+      vtsOpen
+      [vtsIcon]="route.icon"
+      [vtsTitle]="route.title"
+    >
+      <ul>
+        <ng-container *ngFor="let child of route.children">
+          <li
+            vts-menu-item
+            *ngIf="routeData$ | async as routeData"
+            [vtsSelected]="routeData['title'] == child.title"
+            [routerLink]="child.route"
+          >
+            {{ child.title }}
+          </li>
+        </ng-container>
+      </ul>
+    </li>
+  </ul>
+</ng-container>

@@ -1,0 +1,18 @@
+<ng-container *ngIf="loading$ | async; else chart"> Loading... </ng-container>
+
+<ng-template #chart>
+  <ng-container *ngIf="statistic$ | async as data">
+    <div vts-row vtsAlign="middle">
+      <div vts-col [vtsSpan]="18">
+        <vts-line-chart [vtsOptions]="data.line.chartOptions"> </vts-line-chart>
+      </div>
+      <div vts-col [vtsSpan]="6">
+        <vts-donut-chart
+          style="margin: auto"
+          [vtsOptions]="data.donut.chartOptions"
+          [donutChartOptions]="data.donut.donutChartOptions"
+        ></vts-donut-chart>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
