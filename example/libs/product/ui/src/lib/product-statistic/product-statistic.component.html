@@ -3,10 +3,10 @@
 <ng-template #chart>
   <ng-container *ngIf="statistic$ | async as data">
     <div vts-row vtsAlign="middle">
-      <div vts-col [vtsSpan]="18">
+      <div vts-col [vtsSpan]="14">
         <vts-line-chart [vtsOptions]="data.line.chartOptions"> </vts-line-chart>
       </div>
-      <div vts-col [vtsSpan]="6">
+      <div vts-col [vtsSpan]="8">
         <vts-donut-chart
           style="margin: auto"
           [vtsOptions]="data.donut.chartOptions"
