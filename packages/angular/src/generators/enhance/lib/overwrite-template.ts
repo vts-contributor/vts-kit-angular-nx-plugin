@@ -1,19 +1,23 @@
 import { strings } from '@angular-devkit/core';
 import {
   generateFiles,
+  ProjectConfiguration,
   readProjectConfiguration,
   readWorkspaceConfiguration,
+  updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { Tree } from 'nx/src/generators/tree';
 import { join } from 'path';
 import { NormalizedSchema } from '../schema';
 import featureGroupGenerator from '../../feature-group/feature-group';
-import { readdirSync, readFileSync } from 'fs';
+import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
 
-export async function overwriteWelcome(tree: Tree, options: NormalizedSchema) {
+export async function overwriteTemplate(tree: Tree, options: NormalizedSchema) {
   await generateWelcome(tree, options);
   await overwriteApp(tree, options);
-  await overwriteFavicon(tree, options);
+  await overwriteAppRoot(tree, options);
+  await overwriteWorkspaceRoot(tree, options);
+  await updateAppProjectConfig(tree, options);
 }
 
 async function overwriteApp(tree: Tree, options: NormalizedSchema) {
@@ -69,21 +73,61 @@ async function generateWelcome(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-async function overwriteFavicon(tree: Tree, options: NormalizedSchema) {
+async function overwriteAppRoot(tree: Tree, options: NormalizedSchema) {
   const { defaultProject: project } = readWorkspaceConfiguration(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
+  tree.delete(`${sourceRoot}/styles/global.scss`)
 
-  const appRootFolder = join(__dirname, '../files/app-root');
-  const appRootFiles = readdirSync(appRootFolder);
-  appRootFiles.forEach((name) => {
-    const replaceName = name.replace('__tmpl__', '');
-    const replacePath = join(sourceRoot, replaceName);
-    const sourcePath = join(appRootFolder, name);
-    tree.write(replacePath, readFileSync(sourcePath));
-  });
-  // tree.write()
-  // generateFiles(tree, join(__dirname, '../files/app-root'), sourceRoot, {
-  //   tmpl: ''
-  // })
+  const templateRootFolder = join(__dirname, '../files/app-root');
+  generateFiles(
+    tree,
+    templateRootFolder,
+    sourceRoot,
+    {
+      tmpl: '',
+      ...strings,
+      ...options,
+    }
+  );
+}
+
+async function overwriteWorkspaceRoot(tree: Tree, options: NormalizedSchema) {
+  generateFiles(
+    tree,
+    join(__dirname, '../files/workspace-root'),
+    '/',
+    {
+      tmpl: '',
+      ...strings,
+      ...options,
+    }
+  );
+}
+
+async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
+  const projectConfig = readDefaultProjectConfigurationFromTree(tree);
+  const { name } = projectConfig;
+
+  const update: ProjectConfiguration = {
+    ...projectConfig,
+    targets: {
+      ...projectConfig.targets,
+      build: {
+        ...projectConfig.targets['build'],
+        configurations: {
+          ...projectConfig.targets['build'].configurations,
+          production: {
+            ...projectConfig.targets['build'].configurations.production,
+            budgets: []
+          },
+        },
+        options: {
+          ...projectConfig.targets['build'].options,
+          baseHref: "/"
+        }
+      }
+    },
+  };
+  updateProjectConfiguration(tree, name, update);
 }

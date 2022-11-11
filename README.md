@@ -11,12 +11,6 @@ This library aims to provide a quick way to start a new Angular Project and main
 
 ## Quickstart
 
-- Update npm registry:
-
-```
-npm config set registry http://10.254.144.164:8081/repository/npm-all/
-```
-
 - Create a new workspace using VTS Kit Angular NX Plugin:
 
 ```
@@ -163,38 +157,38 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 - Install Nx Console in VSCode
 
 <p align="center">
-    <img src="/doc/images/install-nx-console.png" />
+    <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/install-nx-console.png" />
 </p>
 
 - Using generator:
     - Option 1: Select `generate` Nx Console Tab and select a generator
     
     <p align="center">
-        <img src="/doc/images/generate-in-nx-tab.png" />
+        <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/generate-in-nx-tab.png" />
     </p>
     
     - Option 2: Right click on a library and select `nx generate` in context menu
     
     <p align="center">
-        <img src="/doc/images/generate-in-nx-context-menu.png" />
+        <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/generate-in-nx-context-menu.png" />
     </p>
 
 - Fill in options
 
 <p align="center">
-    <img src="/doc/images/fill-option.png" />
+    <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/fill-option.png" />
 </p>
 
 - Preview changes
 
 <p align="center">
-    <img src="/doc/images/preview-change.png" />
+    <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/preview-change.png" />
 </p>
 
 - Press Run to make changes
 
 <p align="center">
-    <img src="/doc/images/apply-change.png" />
+    <img src="https://github.com/vts-contributor/vts-kit-angular-nx-plugin/raw/master/doc/images/apply-change.png" />
 </p>
 
 ### Generator: Library

@@ -1,16 +1,13 @@
 import {
   ProjectConfiguration,
-  readProjectConfiguration,
-  readWorkspaceConfiguration,
   updateProjectConfiguration,
-  updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { Tree } from 'nx/src/generators/tree';
+import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
 import { NormalizedSchema } from '../schema';
 
 export async function updateWebpack(tree: Tree, options: NormalizedSchema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
-  const projectConfig = readProjectConfiguration(tree, project);
+  const projectConfig = readDefaultProjectConfigurationFromTree(tree);
   const { name } = projectConfig;
 
   const webpackPath = `apps/${name}/webpack`;
@@ -73,5 +70,5 @@ export async function updateWebpack(tree: Tree, options: NormalizedSchema) {
       },
     },
   };
-  updateProjectConfiguration(tree, project, update);
+  updateProjectConfiguration(tree, name, update);
 }

@@ -69,6 +69,13 @@ async function getConfiguration(
   argv: yargs.Arguments<Arguments>
 ): Promise<void> {
   try {
+    output.log({
+      title: `Version ${version}`,
+      bodyLines: [
+        `Collecting configuration...`,
+      ],
+    });
+
     let workspaceName, appName, style;
     workspaceName = await determineWorkspaceName(argv);
     appName = await determineAppName(argv);

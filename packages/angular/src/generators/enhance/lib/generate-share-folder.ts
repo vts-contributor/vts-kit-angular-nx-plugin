@@ -28,7 +28,7 @@ export async function generateShareFolder(
   await generateLib(tree, 'pipes');
   await generateLib(tree, 'guards');
   await generateLib(tree, 'interceptors');
-  await generateLib(tree, 'mixins');
+  // await generateLib(tree, 'mixins');
   await generateLib(tree, 'services');
   await generateLib(tree, 'ui');
   await generateLib(tree, 'utils');

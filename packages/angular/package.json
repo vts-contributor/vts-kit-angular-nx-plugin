@@ -1,9 +1,11 @@
 {
   "name": "@vts-kit/nx-angular",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "main": "src/index.js",
   "generators": "./generators.json",
   "bin": "./bin/index.js",
+  "author": "Viettel Solutions",
+  "license": "Viettel Solutions",
   "dependencies": {
     "@nrwl/devkit": "^15.0.0",
     "chalk": "^4.1.0",

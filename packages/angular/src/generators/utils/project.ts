@@ -1,12 +1,13 @@
 import {
   joinPathFragments,
   normalizePath,
+  ProjectConfiguration,
   readProjectConfiguration,
   readWorkspaceConfiguration,
   Tree,
 } from '@nrwl/devkit';
 import { getProjectNameFromDirPath } from 'nx/src/utils/project-graph-utils';
-import { relative } from 'path';
+import { join, relative } from 'path';
 import { checkPathUnderFolder } from './path';
 
 export function getProjectFromPath(path: string) {
@@ -60,4 +61,24 @@ export function normalizeProjectAndPath(
 
   const isDefault = relative(path, defaultPath) === '';
   return { project, projectSourceRoot, path, isDefault };
+}
+
+export function readProjectConfigurationFromTree(
+  tree: Tree,
+  projectConfig: ProjectConfiguration
+) {
+  const { sourceRoot } = projectConfig
+  const config = JSON.parse(tree.read(join(sourceRoot, '..', 'project.json'), 'utf-8')) as ProjectConfiguration
+  return {
+    ...projectConfig,
+    ...config
+  }
+}
+
+export function readDefaultProjectConfigurationFromTree(
+  tree: Tree,
+) {
+  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const projectConfig = readProjectConfiguration(tree, project);
+  return readProjectConfigurationFromTree(tree, projectConfig)
 }
