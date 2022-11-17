@@ -329,8 +329,11 @@ async function installVtsPlugin(projectPath: string) {
 
   try {
     const { install } = getPackageManagerCommand();
-    const command = `--save-dev ${packageName}@${version}`;
+    let command = `--save-dev ${packageName}@${version}`;
+    if (version.endsWith('local'))
+      command = `--save-dev ${join(__dirname, '..', '..')}`
     const fullCommand = `${install} ${command}`;
+    console.log(fullCommand)
     await execAndWait(fullCommand, projectPath);
 
     installSetupSpinner.succeed(`Installed ${packageName}`);

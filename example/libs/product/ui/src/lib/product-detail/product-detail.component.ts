@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtsDescriptionsModule } from 'ng-vts/descriptions';
+import { VtsDescriptionsModule } from '@ui-vts/ng-vts/descriptions';
 import { Observable } from 'rxjs';
 import { ProductDetail } from '@vts-kit-ng-nx-demo/share/data-access';
 

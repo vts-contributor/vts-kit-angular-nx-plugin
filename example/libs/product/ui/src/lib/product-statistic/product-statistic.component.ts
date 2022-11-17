@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtsChartModule } from 'ng-vts/chart';
-import { VtsGridModule } from 'ng-vts/grid';
+import { VtsChartModule } from '@ui-vts/ng-vts/chart';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
 import { Observable } from 'rxjs';
 import { ProductStatistic } from '@vts-kit-ng-nx-demo/share/data-access';
 

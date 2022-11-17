@@ -6,7 +6,7 @@ import { join } from 'path';
 import { createSourceFile, ScriptTarget } from 'typescript';
 import { addImportToModule } from '../../utils/nx-devkit/ast-utils';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
-import { ngxTranslateVersion } from '../../utils/versions';
+import { ngxTranslateVersion, webpackAnalyzerVersion } from '../../utils/versions';
 import { Schema } from '../schema';
 
 export function installKits(tree: Tree, options: Schema) {
@@ -23,9 +23,13 @@ function installTask(tree: Tree, options: Schema) {
     {
       '@ui-vts/ng-vts': 'latest',
       '@vts-kit/angular-network': 'latest',
+      '@vts-kit/angular-validator': 'latest',
       '@ngx-translate/core': ngxTranslateVersion
     },
-    {}
+    {
+      'cross-env': 'latest',
+      'webpack-bundle-analyzer': webpackAnalyzerVersion
+    }
   )
 }
 
@@ -63,8 +67,8 @@ async function addKitConfig(tree: Tree, options: Schema) {
   const { sourceRoot } = projectConfig
   tree.write(join(sourceRoot, 'app', 'configs.ts'), `
     import { TranslateLoader, TranslateModuleConfig } from "@ngx-translate/core"
-    import { RestClient, RestClientOptions, VtsRestModuleConfig } from "@vts-kit/angular-network"
-    import { Observable } from "rxjs"
+    import { RestClientOptions, VtsRestModuleConfig } from "@vts-kit/angular-network"
+    import { from, Observable } from "rxjs"
     
     /**
      * Network Module Config
@@ -80,12 +84,8 @@ async function addKitConfig(tree: Tree, options: Schema) {
      * Translate Module Config
      */
     class TranslateHttpLoader extends TranslateLoader {
-      constructor(private client: RestClient) {
-        super()
-      }
-    
       getTranslation(lang: string): Observable<any> {
-        return this.client.obserseBody().get(\`./assets/locale/\${lang}.json\`)
+        return from(fetch(\`./assets/locale/\${lang}.json\`).then(d => d.json()))
       }
     }
     
@@ -93,7 +93,6 @@ async function addKitConfig(tree: Tree, options: Schema) {
       defaultLanguage: 'vi',
       loader: {
         provide: TranslateLoader,
-        deps: [RestClient],
         useClass: TranslateHttpLoader
       }
     })`

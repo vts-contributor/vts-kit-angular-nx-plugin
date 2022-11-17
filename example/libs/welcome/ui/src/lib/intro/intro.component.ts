@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtsButtonModule } from 'ng-vts/button';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { RouterModule } from '@angular/router';
 
 @Component({

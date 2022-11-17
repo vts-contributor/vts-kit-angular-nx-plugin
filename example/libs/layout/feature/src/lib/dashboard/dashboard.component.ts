@@ -5,7 +5,7 @@ import {
   SiderComponent,
   TopbarComponent,
 } from '@vts-kit-ng-nx-demo/layout/ui';
-import { VtsLayoutModule } from 'ng-vts/layout';
+import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
 
 @Component({
   selector: 'layout-feature-dashboard',

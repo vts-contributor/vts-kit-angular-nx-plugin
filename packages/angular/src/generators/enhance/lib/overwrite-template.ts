@@ -77,7 +77,7 @@ async function overwriteAppRoot(tree: Tree, options: NormalizedSchema) {
   const { defaultProject: project } = readWorkspaceConfiguration(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
-  tree.delete(`${sourceRoot}/styles/global.scss`)
+  tree.delete(`${sourceRoot}/styles.scss`)
 
   const templateRootFolder = join(__dirname, '../files/app-root');
   generateFiles(

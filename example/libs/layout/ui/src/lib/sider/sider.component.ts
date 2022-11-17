@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtsMenuModule } from 'ng-vts/menu';
+import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 import { ROUTES as productRoutes } from '@vts-kit-ng-nx-demo/product/feature';
 import { flatMap } from 'lodash-es';
 import { Route, RouterModule } from '@angular/router';

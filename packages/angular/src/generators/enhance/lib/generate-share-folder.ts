@@ -33,4 +33,5 @@ export async function generateShareFolder(
   await generateLib(tree, 'ui');
   await generateLib(tree, 'utils');
   await generateLib(tree, 'validators');
+  await generateLib(tree, 'data-access');
 }

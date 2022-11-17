@@ -1,0 +1,5 @@
+{
+  "hello": {
+    "world": "Xin chào {{name}}"
+  }
+}

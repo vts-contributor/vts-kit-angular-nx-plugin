@@ -1,9 +1,10 @@
 import { Route } from '@angular/router';
+import { DashboardComponent } from '@vts-kit-ng-nx-demo/layout/feature';
 
 export const ROUTES: Route[] = [
   {
     path: '',
-    // component: LayoutComponent,
+    component: DashboardComponent,
     children: [
       {
         path: 'list',

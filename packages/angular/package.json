@@ -1,11 +1,16 @@
 {
   "name": "@vts-kit/nx-angular",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "src/index.js",
   "generators": "./generators.json",
   "bin": "./bin/index.js",
   "author": "Viettel Solutions",
   "license": "Viettel Solutions",
+  "description": "VTS Kit Angular NX Plugin is a collection of generators to be integrated with Nx Workspace. This library aims to provide a quick way to start a new Angular Project and maintain code structure with least effort.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vts-contributor/vts-kit-angular-nx-plugin"
+  },
   "dependencies": {
     "@nrwl/devkit": "^15.0.0",
     "chalk": "^4.1.0",

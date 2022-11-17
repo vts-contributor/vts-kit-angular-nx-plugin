@@ -32,3 +32,4 @@ export const typesJasminewd2Version = '~2.0.3';
 export const typesNodeVersion = '16.11.7';
 
 export const ngxTranslateVersion = '^14.0.0'
+export const webpackAnalyzerVersion = '^4.7.0'

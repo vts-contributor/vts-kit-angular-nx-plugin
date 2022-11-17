@@ -1,4 +1,4 @@
-import { VtsChartOptions, VtsDonutOptions } from 'ng-vts/chart';
+import { VtsChartOptions, VtsDonutOptions } from '@ui-vts/ng-vts/chart';
 
 export interface Product {
   id: string;

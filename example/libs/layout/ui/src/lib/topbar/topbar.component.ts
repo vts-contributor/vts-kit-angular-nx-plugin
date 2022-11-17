@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VtsMenuModule } from 'ng-vts/menu';
+import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 import { RouterModule } from '@angular/router';
 
 @Component({

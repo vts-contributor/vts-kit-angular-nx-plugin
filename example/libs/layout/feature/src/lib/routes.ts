@@ -3,7 +3,6 @@ import { Route } from '@angular/router';
 const ROUTES: Route[] = [
   {
     path: '',
-    // component: LayoutComponent,
     children: [
       {
         path: 'dashboard',
