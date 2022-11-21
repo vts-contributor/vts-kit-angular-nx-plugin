@@ -637,7 +637,7 @@ Either use VTS Kit script inside `package.json` or custom your own.
 Using `start:analyzer` to start analyzing on Development Environment or `build:analyzer` to analyze on Production Environment
 
 <p align="center">
-    <img src="/doc/images/webpack-bundle-analyzer.png" />
+    <img src="/doc/images/webpack-bundle-analyze.png" />
 </p>
 
 ## References
