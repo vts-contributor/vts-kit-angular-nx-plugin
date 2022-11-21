@@ -1,10 +1,4 @@
-import {
-  joinPathFragments,
-  ProjectConfiguration,
-  readJsonFile,
-  updateProjectConfiguration,
-  workspaceRoot,
-} from '@nrwl/devkit';
+import { ProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
 import { existsSync } from 'fs';
 import { Tree } from 'nx/src/generators/tree';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
@@ -14,11 +8,14 @@ import { NormalizedSchema } from '../schema';
  * Create webpack and add bundle analyze
  */
 export async function updateWebpack(tree: Tree, options: NormalizedSchema) {
-  await createWebpackAndProjectConfig(tree, options)
-  await addScript(tree, options)
+  await createWebpackAndProjectConfig(tree, options);
+  await addScript(tree, options);
 }
 
-export async function createWebpackAndProjectConfig(tree: Tree, options: NormalizedSchema) {
+export async function createWebpackAndProjectConfig(
+  tree: Tree,
+  options: NormalizedSchema
+) {
   const projectConfig = readDefaultProjectConfigurationFromTree(tree);
   const { name } = projectConfig;
 
@@ -95,17 +92,17 @@ export async function createWebpackAndProjectConfig(tree: Tree, options: Normali
 
 export async function addScript(tree: Tree, options: NormalizedSchema) {
   try {
-    const pkgJsonContent = JSON.parse(tree.read('package.json', 'utf-8'))
+    const pkgJsonContent = JSON.parse(tree.read('package.json', 'utf-8'));
     const update = {
       ...pkgJsonContent,
       scripts: {
         ...pkgJsonContent.scripts,
         'start:analyze': 'cross-env ANALYZE=1 npm run start',
-        'build:analyze': 'cross-env ANALYZE=1 npm run build'
-      }
-    }
-    tree.write('package.json', JSON.stringify(update))
+        'build:analyze': 'cross-env ANALYZE=1 npm run build',
+      },
+    };
+    tree.write('package.json', JSON.stringify(update));
   } catch {
-    throw new Error("Failed to update script in package.json")
+    throw new Error('Failed to update script in package.json');
   }
 }

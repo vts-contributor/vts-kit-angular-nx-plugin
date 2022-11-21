@@ -167,8 +167,9 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 </p>
 
 - Using generator:
-    - Option 1: Select `generate` Nx Console Tab and select a generator
-    
+
+  - Option 1: Select `generate` Nx Console Tab and select a generator
+
     <p align="center">
         <img src="/doc/images/generate-in-nx-tab.png" />
     </p>
@@ -343,7 +344,7 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 - UI Component: [VTS UI Kit](https://design.atviettelsolutions.com/uikit/)
 - Localization: [@ngx-translate/core](https://github.com/ngx-translate/core)
 - Network Utilities: [VTS Kit Angular Utilities](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/network)
-  
+
 ## References
 
 - [Nx Introduction](https://nx.dev/getting-started/intro)

@@ -1,6 +1,7 @@
 export interface Schema {
   appRoutingProject?: string;
   name?: string;
+  skipRoute?: boolean;
 }
 
 export interface NormalizedSchema extends Schema {
@@ -8,4 +9,5 @@ export interface NormalizedSchema extends Schema {
   uiName: string;
   featureName: string;
   dataAccessName: string;
+  skipRoute?: boolean;
 }

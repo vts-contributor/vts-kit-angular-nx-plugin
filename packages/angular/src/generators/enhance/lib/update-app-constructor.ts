@@ -1,14 +1,17 @@
 import { Tree } from 'nx/src/generators/tree';
 import { Schema } from '../schema';
 import { tsquery } from '@phenomnomnominal/tsquery';
-import { readProjectConfiguration, readWorkspaceConfiguration } from '@nrwl/devkit';
+import {
+  readProjectConfiguration,
+  readWorkspaceConfiguration,
+} from '@nrwl/devkit';
 import { join } from 'path';
 
 export async function updateAppConstructor(tree: Tree, options: Schema) {
   const project = readWorkspaceConfiguration(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
-  const { sourceRoot } = projectConfig
-  const modulePath = join(sourceRoot, 'app', 'app.module.ts')
+  const { sourceRoot } = projectConfig;
+  const modulePath = join(sourceRoot, 'app', 'app.module.ts');
   const content = tree.read(modulePath, 'utf-8');
   const ast = tsquery.ast(content);
   const APP_MODULE_CONSTRUCTOR =

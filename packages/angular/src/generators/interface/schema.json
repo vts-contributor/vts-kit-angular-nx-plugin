@@ -36,5 +36,5 @@
       "description": "Prefix to be added before interface name"
     }
   },
-  "required": ["name"]
+  "required": ["name", "project"]
 }

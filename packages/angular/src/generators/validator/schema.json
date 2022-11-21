@@ -74,5 +74,5 @@
       "default": "template"
     }
   },
-  "required": ["name", "type", "form"]
+  "required": ["name", "type", "form", "project"]
 }

@@ -23,8 +23,7 @@ export async function enhanceGenerator(tree: Tree, rawOptions: Schema) {
     await generateLayout(tree, options);
     await generateShareFolder(tree, options);
     await formatFiles(tree);
-    return installTask
-
+    return installTask;
   } catch (e) {
     console.error(e);
     throw e;

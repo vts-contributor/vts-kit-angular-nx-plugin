@@ -174,8 +174,9 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 </p>
 
 - Using generator:
-    - Option 1: Select `generate` Nx Console Tab and select a generator
-    
+
+  - Option 1: Select `generate` Nx Console Tab and select a generator
+
     <p align="center">
         <img src="/doc/images/generate-in-nx-tab.png" />
     </p>
@@ -346,28 +347,28 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 | 6   | form      | Specifies type of Angular form in which validator be used (Reactive form / Template-driven form).                                                                                         | ["reactive", "template"] | ✔       |                  |
 
 ## Feature Guideline
-  
+
 ### Feature: Custom webpack
- 
+
 Custom webpack unlock the ability to enhance web builder process.  
 VTS Kit Angular provides 2 profile of webpack on generating project. You find these files under `app/<app_name>/webpack.config.<profile>.js`.  
 You can also add another profile, but take note to register profile in `app/<app_name>/project.json`
 
 ### Feature: UI Component
-  
+
 Please see full guideline in [https://design.atviettelsolutions.com/uikit/](https://design.atviettelsolutions.com/uikit/)
 
 ### Feature: Localization
-  
+
 Translation dictionary can be found under `app/<app_name>/src/assets/locale/`. By default, VTS Kit generate 2 translation files which are Vietnamese and English. If you want to add new language, just create new JSON file under this folder and use `TranslateService` to use new language.
-  
+
 **Config** (Already declared on generating, maybe be overwritten)
 
 Translation config is localed in `app/<app_name>/src/app/configs.ts`.
-  
+
 ```
 // configs.ts
-  
+
 import { TranslateLoader, TranslateModuleConfig } from '@ngx-translate/core';
 
 class TranslateHttpLoader extends TranslateLoader {
@@ -384,9 +385,9 @@ export const TRANSLATE_MODULE_CONFIG: TranslateModuleConfig = {
   },
 };
 ```
-  
+
 By default, translation module is configured to use HTTP loader to load translation file from `assets` and use `vi` language.
-  
+
 **Import** (Already imported on generating)
 
 ```
@@ -397,27 +398,27 @@ By default, translation module is configured to use HTTP loader to load translat
   ]
 })
 ```
-  
+
 **Usage**
 
 - Switch language
-  
+
 ```
 constructor(private translateService: TranslateService) {
   this.translateService.use('en')
 }
 ```
-  
+
 - Get current language:
-  
+
 ```
 this.translateService.currentLang
 ```
 
 - Get translate:
-  
+
 Example dictionary
-  
+
 ```
 {
   "hello": {
@@ -427,35 +428,35 @@ Example dictionary
 ```
 
 Get translation using service
-  
+
 ```
 // Return value of string => Xin chào A
 // Note: instant() require the TranslateModule has been loaded, if you're unsure about this, use get() or pipe
 this.translateService.instant('hello.world', {name: 'A'})
-  
+
 // Return Observable of value of string
 this.translateService.get('hello.world', {name: 'A'}).subscribe((d) => console.log(d)) // d = 'Xin chào A'
 ```
-  
+
 Get translation using pipe
-  
+
 ```
 // Will render paragraph of "Xin chào A"
 <p>{{ 'hello.world' | translate:{name: 'A'} }}
 ```
-  
+
 ### Feature: Network
-  
+
 VTS KIT provides easy-to-config RestClient to interactive with RESTful API and some other network utilities.
 
 **Config** (Already declared on generating, maybe be overwritten)
 
 Network config is localed in `app/<app_name>/src/app/configs.ts`.
-  
+
 ```
 // configs.ts
 import { RestClientOptions, VtsRestModuleConfig } from '@vts-kit/angular-network';
-  
+
 const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
   defaultConfig: new RestClientOptions()
     .setBaseUrl('https://<base_api_url>')
@@ -464,7 +465,7 @@ const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
     .setRetry(3),
 };
 ```
-  
+
 **Import** (Already imported on generating)
 
 ```
@@ -475,10 +476,11 @@ const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
   ]
 })
 ```
-  
+
 **Usage**
 
 Pattern
+
 ```
 client
   .setHeader("key", "value")
@@ -488,9 +490,9 @@ client
   .get("<path or url>") // or post, patch, put, options, delete
   .subscribe(...)
 ```
-  
+
 Example
-  
+
 ```
 // name.any.ts
 import { RestClient } from '@vts-kit/angular-network';
@@ -514,7 +516,7 @@ export class Service {
 ```
 
 ### Feature: Validation
-  
+
 VTS KIT provides common validation function to be used combine with [Angular Validator](https://angular.io/api/forms/Validators) to make form validation easier.
 
 **List of validator**
@@ -541,7 +543,7 @@ VTS KIT provides common validation function to be used combine with [Angular Val
 | 18  | \[number\]\[smallerOrEqual\] | `VTS Kit Validators` | Whether input number is less than or equal to provided number           |
 
 **Usage**
-  
+
 For template-driven form:
 
 ```
@@ -551,7 +553,7 @@ import { VtsValidatorModule } from '@vts-kit/angular-validator';
 @(NgModule | Component | ...)({
     imports: [VtsValidatorModule]
 })
-  
+
 // *.html
 <input ngModel url  />
 <input number [larger]="5" [smallerOrEqual]="10" #control="ngModel">
@@ -559,7 +561,7 @@ import { VtsValidatorModule } from '@vts-kit/angular-validator';
 // You can see raise errors here
 {{ control.errors | json }}
 ```
-  
+
 For reactive form:
 
 ```
@@ -571,7 +573,7 @@ export class Component ... {
   control1 = new FormBuilder().control('', {
       validators: [VTSValidators.url]
   })
-  
+
   control2 = new FormBuilder().control('', {
     validators: [
         VTSValidators.number({
@@ -592,13 +594,13 @@ export class Component ... {
 ```
 
 ### Feature: Bundle Analyzer
-  
+
 VTS KIT integrated bundle analyzer to help auditing overall bundle size.
 
 **Config** (Already declared on generating, maybe be overwritten)
 
 Webpack bundle analyzer config is localed in `app/<app_name>/webpack/webpack.configs(.prod).ts`.
-  
+
 ```
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 

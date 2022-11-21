@@ -52,5 +52,5 @@
       "description": "The HTML selector to use for this directive."
     }
   },
-  "required": ["name"]
+  "required": ["name", "project"]
 }

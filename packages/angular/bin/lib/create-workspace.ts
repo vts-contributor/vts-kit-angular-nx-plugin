@@ -71,9 +71,7 @@ async function getConfiguration(
   try {
     output.log({
       title: `Version ${version}`,
-      bodyLines: [
-        `Collecting configuration...`,
-      ],
+      bodyLines: [`Collecting configuration...`],
     });
 
     let workspaceName, appName, style;
@@ -331,9 +329,8 @@ async function installVtsPlugin(projectPath: string) {
     const { install } = getPackageManagerCommand();
     let command = `--save-dev ${packageName}@${version}`;
     if (version.endsWith('local'))
-      command = `--save-dev ${join(__dirname, '..', '..')}`
+      command = `--save-dev ${join(__dirname, '..', '..')}`;
     const fullCommand = `${install} ${command}`;
-    console.log(fullCommand)
     await execAndWait(fullCommand, projectPath);
 
     installSetupSpinner.succeed(`Installed ${packageName}`);

@@ -67,18 +67,18 @@ export function readProjectConfigurationFromTree(
   tree: Tree,
   projectConfig: ProjectConfiguration
 ) {
-  const { sourceRoot } = projectConfig
-  const config = JSON.parse(tree.read(join(sourceRoot, '..', 'project.json'), 'utf-8')) as ProjectConfiguration
+  const { sourceRoot } = projectConfig;
+  const config = JSON.parse(
+    tree.read(join(sourceRoot, '..', 'project.json'), 'utf-8')
+  ) as ProjectConfiguration;
   return {
     ...projectConfig,
-    ...config
-  }
+    ...config,
+  };
 }
 
-export function readDefaultProjectConfigurationFromTree(
-  tree: Tree,
-) {
+export function readDefaultProjectConfigurationFromTree(tree: Tree) {
   const project = readWorkspaceConfiguration(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
-  return readProjectConfigurationFromTree(tree, projectConfig)
+  return readProjectConfigurationFromTree(tree, projectConfig);
 }

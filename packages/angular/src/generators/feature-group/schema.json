@@ -21,6 +21,12 @@
       "type": "string",
       "description": "The name of the app where the new feature group will be imported for routing. Only projects of application are valid",
       "x-dropdown": "projects"
+    },
+    "skipRoute": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not generate routes and lazy load.",
+      "hidden": true
     }
   },
   "required": ["name"]

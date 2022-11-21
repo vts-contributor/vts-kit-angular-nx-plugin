@@ -1,20 +1,30 @@
 import { strings } from '@angular-devkit/core';
-import { addDependenciesToPackageJson, generateFiles, ProjectConfiguration, readProjectConfiguration, readWorkspaceConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
+import {
+  addDependenciesToPackageJson,
+  generateFiles,
+  ProjectConfiguration,
+  readProjectConfiguration,
+  readWorkspaceConfiguration,
+  updateProjectConfiguration,
+} from '@nrwl/devkit';
 import { insertImport } from '@nrwl/workspace/src/utilities/ast-utils';
 import { Tree } from 'nx/src/generators/tree';
 import { join } from 'path';
 import { createSourceFile, ScriptTarget } from 'typescript';
 import { addImportToModule } from '../../utils/nx-devkit/ast-utils';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
-import { ngxTranslateVersion, webpackAnalyzerVersion } from '../../utils/versions';
+import {
+  ngxTranslateVersion,
+  webpackAnalyzerVersion,
+} from '../../utils/versions';
 import { Schema } from '../schema';
 
 export function installKits(tree: Tree, options: Schema) {
-  const task = installTask(tree, options)
-  updateAngularJson(tree, options)
-  addKitConfig(tree, options)
-  updateAppModule(tree, options)
-  return task
+  const task = installTask(tree, options);
+  updateAngularJson(tree, options);
+  addKitConfig(tree, options);
+  updateAppModule(tree, options);
+  return task;
 }
 
 function installTask(tree: Tree, options: Schema) {
@@ -24,13 +34,13 @@ function installTask(tree: Tree, options: Schema) {
       '@ui-vts/ng-vts': 'latest',
       '@vts-kit/angular-network': 'latest',
       '@vts-kit/angular-validator': 'latest',
-      '@ngx-translate/core': ngxTranslateVersion
+      '@ngx-translate/core': ngxTranslateVersion,
     },
     {
       'cross-env': 'latest',
-      'webpack-bundle-analyzer': webpackAnalyzerVersion
+      'webpack-bundle-analyzer': webpackAnalyzerVersion,
     }
-  )
+  );
 }
 
 async function updateAngularJson(tree: Tree, options: Schema) {
@@ -48,24 +58,26 @@ async function updateAngularJson(tree: Tree, options: Schema) {
           assets: [
             ...projectConfig.targets['build'].options.assets,
             {
-              glob: "**/*",
-              input: "./node_modules/@ui-vts/icons-angular/icons/svg/",
-              output: "/assets/"
-            }
+              glob: '**/*',
+              input: './node_modules/@ui-vts/icons-angular/icons/svg/',
+              output: '/assets/',
+            },
           ],
-          styles: [`${sourceRoot}/styles/global.scss`]
+          styles: [`${sourceRoot}/styles/global.${options.style}`],
         },
-      }
+      },
     },
   };
   updateProjectConfiguration(tree, name, update);
 }
 
-async function addKitConfig(tree: Tree, options: Schema) { 
+async function addKitConfig(tree: Tree, options: Schema) {
   const project = readWorkspaceConfiguration(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
-  const { sourceRoot } = projectConfig
-  tree.write(join(sourceRoot, 'app', 'configs.ts'), `
+  const { sourceRoot } = projectConfig;
+  tree.write(
+    join(sourceRoot, 'app', 'configs.ts'),
+    `
     import { TranslateLoader, TranslateModuleConfig } from "@ngx-translate/core"
     import { RestClientOptions, VtsRestModuleConfig } from "@vts-kit/angular-network"
     import { from, Observable } from "rxjs"
@@ -96,14 +108,14 @@ async function addKitConfig(tree: Tree, options: Schema) {
         useClass: TranslateHttpLoader
       }
     })`
-  )
+  );
 }
 
 async function updateAppModule(tree: Tree, options: Schema) {
   const project = readWorkspaceConfiguration(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
-  const { sourceRoot } = projectConfig
-  const modulePath = join(sourceRoot, 'app', 'app.module.ts')
+  const { sourceRoot } = projectConfig;
+  const modulePath = join(sourceRoot, 'app', 'app.module.ts');
   const sourceText = tree.read(modulePath, 'utf-8');
 
   let sourceFile = createSourceFile(
@@ -132,9 +144,12 @@ async function updateAppModule(tree: Tree, options: Schema) {
     './configs'
   );
 
-  sourceFile = addImportToModule(tree, sourceFile, modulePath, 
+  sourceFile = addImportToModule(
+    tree,
+    sourceFile,
+    modulePath,
     `VtsRestModule.forRoot(NETWORK_MODULE_CONFIG)`
-  )
+  );
 
   /**
    * Translate
@@ -154,7 +169,7 @@ async function updateAppModule(tree: Tree, options: Schema) {
     tree,
     sourceFile,
     modulePath,
-    `TranslateModule, TranslateService`,
+    `TranslateModule`,
     '@ngx-translate/core'
   );
 
@@ -166,7 +181,10 @@ async function updateAppModule(tree: Tree, options: Schema) {
     './configs'
   );
 
-  sourceFile = addImportToModule(tree, sourceFile, modulePath, 
+  sourceFile = addImportToModule(
+    tree,
+    sourceFile,
+    modulePath,
     `TranslateModule.forRoot(TRANSLATE_MODULE_CONFIG)`
-  )
+  );
 }

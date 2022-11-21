@@ -45,5 +45,5 @@
       "default": ["CanActivate"]
     }
   },
-  "required": ["name"]
+  "required": ["name", "project"]
 }

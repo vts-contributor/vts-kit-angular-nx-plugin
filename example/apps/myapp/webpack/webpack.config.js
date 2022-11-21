@@ -16,18 +16,5 @@ module.exports = (config, context) => {
           ]
         : []),
     ],
-    module: {
-      rules: [
-        {
-          test: /\.less$/,
-          loader: 'less-loader',
-          options: {
-            lessOptions: {
-              javascriptEnabled: true,
-            },
-          },
-        },
-      ],
-    },
   });
 };

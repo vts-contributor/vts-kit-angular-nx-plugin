@@ -85,5 +85,5 @@
       "description": "Specifies if the component should have a selector or not."
     }
   },
-  "required": ["name"]
+  "required": ["name", "project"]
 }

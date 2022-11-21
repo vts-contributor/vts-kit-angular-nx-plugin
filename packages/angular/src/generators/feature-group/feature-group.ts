@@ -12,7 +12,7 @@ export async function featureGroupGenerator(tree: Tree, rawOptions: Schema) {
   await libraryGenerator(tree, {
     name: featureName,
     directory: groupPath,
-    feature: true,
+    feature: !options.skipRoute,
     appRoutingProject,
   });
   await formatFiles(tree);

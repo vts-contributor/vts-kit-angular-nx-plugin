@@ -77,32 +77,22 @@ async function overwriteAppRoot(tree: Tree, options: NormalizedSchema) {
   const { defaultProject: project } = readWorkspaceConfiguration(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
-  tree.delete(`${sourceRoot}/styles.scss`)
+  tree.delete(`${sourceRoot}/styles.${options.style}`);
 
   const templateRootFolder = join(__dirname, '../files/app-root');
-  generateFiles(
-    tree,
-    templateRootFolder,
-    sourceRoot,
-    {
-      tmpl: '',
-      ...strings,
-      ...options,
-    }
-  );
+  generateFiles(tree, templateRootFolder, sourceRoot, {
+    tmpl: '',
+    ...strings,
+    ...options,
+  });
 }
 
 async function overwriteWorkspaceRoot(tree: Tree, options: NormalizedSchema) {
-  generateFiles(
-    tree,
-    join(__dirname, '../files/workspace-root'),
-    '/',
-    {
-      tmpl: '',
-      ...strings,
-      ...options,
-    }
-  );
+  generateFiles(tree, join(__dirname, '../files/workspace-root'), '/', {
+    tmpl: '',
+    ...strings,
+    ...options,
+  });
 }
 
 async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
@@ -119,14 +109,14 @@ async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
           ...projectConfig.targets['build'].configurations,
           production: {
             ...projectConfig.targets['build'].configurations.production,
-            budgets: []
+            budgets: [],
           },
         },
         options: {
           ...projectConfig.targets['build'].options,
-          baseHref: "/"
-        }
-      }
+          baseHref: '/',
+        },
+      },
     },
   };
   updateProjectConfiguration(tree, name, update);
