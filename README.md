@@ -16,6 +16,7 @@ This library aims to provide a quick way to start a new Angular Project and main
 - Localization: @ngx-translate/core ([Guideline](#feature-localization) + [Git](https://github.com/ngx-translate/core))
 - Network Utilities: VTS Kit Angular Utilities ([Guideline](#feature-network) + [Git](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/network))
 - Validator Utilities: VTS Kit Angular Utilities ([Guideline](#feature-validation) + [Git](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/validator))
+- Bundle Analyze: webpack-bundle-analyzer ([Guideline](#feature-bundle-analyzer) + [Git](https://github.com/webpack-contrib/webpack-bundle-analyzer) + [NPM](https://www.npmjs.com/package/webpack-bundle-analyzer))
 
 ## Quickstart
 
@@ -115,7 +116,7 @@ npx @vts-kit/nx-angular@latest
     │   └── share/
     │       └── guards/                         // Library, publishable (generatable)
     │       ├── interceptors/                   // Library, publishable (generatable)
-    │       ├── mixins/                         // Library, publishable (generatable)
+    │       ├── data-access/                         // Library, publishable (generatable)
     │       ├── pipes/                          // Library, publishable (generatable)
     │       ├── services/                       // Library, publishable (generatable)
     │       ├── ui/                             // Library, publishable (generatable)
@@ -589,6 +590,55 @@ export class Component ... {
 {{ control1.errors | json }}
 {{ control2.errors | json }}
 ```
+
+### Feature: Bundle Analyzer
+  
+VTS KIT integrated bundle analyzer to help auditing overall bundle size.
+
+**Config** (Already declared on generating, maybe be overwritten)
+
+Webpack bundle analyzer config is localed in `app/<app_name>/webpack/webpack.configs(.prod).ts`.
+  
+```
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+module.exports = (config, context) => {
+  return merge(config, {
+    plugins: [
+      // Other plugins
+      ...(process.env.ANALYZE
+        ? [
+            new BundleAnalyzerPlugin({
+              analyzerMode: 'server',
+              analyzerHost: '127.0.0.1',
+              analyzerPort: 8001,
+            }),
+          ]
+        : []),
+    ]
+  })
+```
+
+By default, webpack bundle analyzer will serve a web report at http://127.0.0.1:8001. You can check out more options for webpack bundle analyzer [here](https://www.npmjs.com/package/webpack-bundle-analyzer)
+
+**Usage**
+
+Either use VTS Kit script inside `package.json` or custom your own.
+
+```
+// package.json
+  ...
+  scripts: {
+    "start:analyze": "cross-env ANALYZE=1 npm run start",
+    "build:analyze": "cross-env ANALYZE=1 npm run build"
+  }
+```
+
+Using `start:analyzer` to start analyzing on Development Environment or `build:analyzer` to analyze on Production Environment
+
+<p align="center">
+    <img src="/doc/images/webpack-bundle-analyzer.png" />
+</p>
 
 ## References
 
