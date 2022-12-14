@@ -6,3 +6,6 @@
 example/dist
 example/.angular
 tmp
+
+*.yaml
+*.groovy

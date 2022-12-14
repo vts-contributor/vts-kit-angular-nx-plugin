@@ -82,8 +82,13 @@
     "enhance": {
       "factory": "./src/generators/enhance/enhance.compat",
       "schema": "./src/generators/enhance/schema.json",
-      "description": "Enhance Nx workspace",
+      "description": "Enhance Nx workspace.",
       "hidden": true
+    },
+    "template": {
+      "factory": "./src/generators/template/template.compat",
+      "schema": "./src/generators/template/schema.json",
+      "description": "Generate a new feature-group template."
     }
   },
   "generators": {
@@ -170,6 +175,11 @@
       "schema": "./src/generators/enhance/schema.json",
       "description": "Enhance Nx workspace",
       "hidden": true
+    },
+    "template": {
+      "factory": "./src/generators/template/template",
+      "schema": "./src/generators/template/schema.json",
+      "description": "Generate a new feature-group template."
     }
   }
 }

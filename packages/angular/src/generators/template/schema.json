@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularTemplate",
+  "title": "Angular Template Schema",
+  "cli": "nx",
+  "type": "object",
+  "description": "Generate a new feature-group template.",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["error"],
+      "description": "Type of template which will be created.",
+      "x-prompt": {
+        "message": "What type of template to be created? (--type)",
+        "type": "list",
+        "items": [
+          {
+            "value": "error",
+            "label": "Error Template"
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of feature group.",
+      "x-prompt": "What name would you like to use for new feature group?"
+    }
+  },
+  "required": ["type", "name"]
+}

@@ -1,0 +1,6 @@
+<div>
+    <vts-result vtsTemplate="404" [vtsOkText]="okText" [vtsCancelText]="cancelText">
+      <div vts-result-title>{{ title }}</div>
+      <div *ngIf="!!subtitle" vts-result-subtitle>{{ subtitle }}</div>
+    </vts-result>
+</div>

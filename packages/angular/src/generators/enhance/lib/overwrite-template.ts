@@ -113,8 +113,8 @@ async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
           },
         },
         options: {
-          ...projectConfig.targets['build'].options,
           baseHref: '/',
+          ...projectConfig.targets['build'].options,
         },
       },
     },

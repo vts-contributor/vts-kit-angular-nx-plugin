@@ -173,9 +173,9 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
     <p align="center">
         <img src="/doc/images/generate-in-nx-tab.png" />
     </p>
-    
+
     - Option 2: Right click on a library and select `nx generate` in context menu
-    
+
     <p align="center">
         <img src="/doc/images/generate-in-nx-context-menu.png" />
     </p>

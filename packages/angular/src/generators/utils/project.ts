@@ -82,3 +82,14 @@ export function readDefaultProjectConfigurationFromTree(tree: Tree) {
   const projectConfig = readProjectConfiguration(tree, project);
   return readProjectConfigurationFromTree(tree, projectConfig);
 }
+
+export function getStyleType(tree: Tree) {
+  const { generators } = readWorkspaceConfiguration(tree);
+  const packageName = require('../../../package.json').name;
+  const generateName = `${packageName}:component`;
+  if (generators[generateName] != null) {
+    const { style } = generators[generateName];
+    return style;
+  }
+  return 'scss';
+}

@@ -4,3 +4,7 @@
 /coverage
 
 .angular
+**/*.sh
+**/*.config
+**/*.yaml
+**/*.groovy

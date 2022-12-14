@@ -46,6 +46,10 @@ export const commandsObject: yargs.Argv<Arguments> = yargs
         .option('style', {
           describe: chalk.dim`Stylesheet format`,
           type: 'string',
+        })
+        .option('templates', {
+          describe: chalk.dim`Initial Templates`,
+          type: 'array',
         }),
     async (argv: yargs.ArgumentsCamelCase<Arguments>) => {
       await main(argv).catch((error) => {
@@ -74,14 +78,16 @@ async function getConfiguration(
       bodyLines: [`Collecting configuration...`],
     });
 
-    let workspaceName, appName, style;
+    let workspaceName, appName, style, templates;
     workspaceName = await determineWorkspaceName(argv);
     appName = await determineAppName(argv);
     style = await determineStyle(argv);
+    templates = await determineTemplate(argv);
     Object.assign(argv, {
       workspaceName,
       appName,
       style,
+      templates,
     });
   } catch (e) {
     console.error(e);
@@ -155,10 +161,6 @@ async function determineStyle(
       name: 'less',
       message: 'LESS              [ http://lesscss.org     ]',
     },
-    {
-      name: 'css',
-      message: 'CSS',
-    },
   ];
 
   if (!parsedArgs.style) {
@@ -191,6 +193,42 @@ async function determineStyle(
   }
 
   return Promise.resolve(parsedArgs.style);
+}
+
+async function determineTemplate(
+  parsedArgs: yargs.Arguments<Arguments>
+): Promise<string[]> {
+  const templateChoices = [
+    {
+      name: 'error',
+      message: 'Error Template',
+    },
+  ];
+
+  if (!parsedArgs.templates) {
+    return enquirer
+      .prompt([
+        {
+          name: 'useTemplate',
+          message: `Do you want to generate inital templates?`,
+          type: 'confirm',
+        },
+      ])
+      .then((a: { useTemplate: boolean }) => {
+        if (!!a.useTemplate) {
+          return enquirer
+            .prompt([
+              {
+                name: 'templates',
+                message: `Select inital templates: (Use <space> to toggle select)`,
+                type: 'multiselect',
+                choices: templateChoices,
+              },
+            ])
+            .then((a: { templates: string[] }) => a.templates);
+        } else return [];
+      });
+  }
 }
 
 async function main(parsedArgs: yargs.Arguments<Arguments>) {
@@ -264,7 +302,6 @@ async function createApp(
   tmpDir: string
 ) {
   const { workspaceName, appName, style } = parsedArgs;
-
   const args = unparse({
     appName,
     style,
@@ -320,6 +357,7 @@ async function applyVtsChange(
 ) {
   await installVtsPlugin(projectPath);
   await runEnhancement(parsedArgs, projectPath);
+  await generateTemplate(parsedArgs, projectPath);
 }
 
 async function installVtsPlugin(projectPath: string) {
@@ -372,5 +410,40 @@ async function runEnhancement(
     process.exit(1);
   } finally {
     workspaceUpdateSpinner.stop();
+  }
+}
+
+async function generateTemplate(
+  parsedArgs: yargs.Arguments<Arguments>,
+  projectPath: string
+) {
+  const { templates } = parsedArgs;
+  if (templates == null || templates.length == 0) return;
+
+  let templateGenerateSpinner = ora(`Generating template`).start();
+
+  try {
+    const { exec } = getPackageManagerCommand();
+
+    templates.forEach(async (type) => {
+      const args = unparse({
+        type,
+        name: type,
+      }).join(' ');
+      const command = `g ${packageName}:template`;
+      const fullCommand = `${exec} nx ${command} ${args}`;
+      await execAndWait(fullCommand, projectPath);
+    });
+
+    templateGenerateSpinner.succeed(`Generated.`);
+  } catch (e) {
+    templateGenerateSpinner.fail();
+    output.error({
+      title: `Failed to generate template.`,
+      bodyLines: mapErrorToBodyLines(e),
+    });
+    process.exit(1);
+  } finally {
+    templateGenerateSpinner.stop();
   }
 }
