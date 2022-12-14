@@ -22,7 +22,7 @@ This library aims to provide a quick way to start a new Angular Project and main
 
 - Create a new workspace using VTS Kit Angular NX Plugin:
 
-```
+```ts
 npx @vts-kit/nx-angular@latest
 ```
 
@@ -116,7 +116,7 @@ npx @vts-kit/nx-angular@latest
     │   └── share/
     │       └── guards/                         // Library, publishable (generatable)
     │       ├── interceptors/                   // Library, publishable (generatable)
-    │       ├── data-access/                         // Library, publishable (generatable)
+    │       ├── data-access/                    // Library, publishable (generatable)
     │       ├── pipes/                          // Library, publishable (generatable)
     │       ├── services/                       // Library, publishable (generatable)
     │       ├── ui/                             // Library, publishable (generatable)
@@ -366,7 +366,7 @@ Translation dictionary can be found under `app/<app_name>/src/assets/locale/`. B
 
 Translation config is localed in `app/<app_name>/src/app/configs.ts`.
 
-```
+```ts
 // configs.ts
 
 import { TranslateLoader, TranslateModuleConfig } from '@ngx-translate/core';
@@ -390,7 +390,7 @@ By default, translation module is configured to use HTTP loader to load translat
 
 **Import** (Already imported on generating)
 
-```
+```ts
 // app.module.ts
 @NgModule({
   imports: [
@@ -403,7 +403,7 @@ By default, translation module is configured to use HTTP loader to load translat
 
 - Switch language
 
-```
+```ts
 constructor(private translateService: TranslateService) {
   this.translateService.use('en')
 }
@@ -411,7 +411,7 @@ constructor(private translateService: TranslateService) {
 
 - Get current language:
 
-```
+```ts
 this.translateService.currentLang
 ```
 
@@ -419,7 +419,7 @@ this.translateService.currentLang
 
 Example dictionary
 
-```
+```json
 {
   "hello": {
     "world": "Xin chào {{name}}"
@@ -429,7 +429,7 @@ Example dictionary
 
 Get translation using service
 
-```
+```ts
 // Return value of string => Xin chào A
 // Note: instant() require the TranslateModule has been loaded, if you're unsure about this, use get() or pipe
 this.translateService.instant('hello.world', {name: 'A'})
@@ -440,7 +440,7 @@ this.translateService.get('hello.world', {name: 'A'}).subscribe((d) => console.l
 
 Get translation using pipe
 
-```
+```ts
 // Will render paragraph of "Xin chào A"
 <p>{{ 'hello.world' | translate:{name: 'A'} }}
 ```
@@ -453,7 +453,7 @@ VTS KIT provides easy-to-config RestClient to interactive with RESTful API and s
 
 Network config is localed in `app/<app_name>/src/app/configs.ts`.
 
-```
+```ts
 // configs.ts
 import { RestClientOptions, VtsRestModuleConfig } from '@vts-kit/angular-network';
 
@@ -468,7 +468,7 @@ const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
 
 **Import** (Already imported on generating)
 
-```
+```ts
 // app.module.ts
 @NgModule({
   imports: [
@@ -481,7 +481,7 @@ const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
 
 Pattern
 
-```
+```ts
 client
   .setHeader("key", "value")
   .setTimeout(60000)
@@ -493,7 +493,7 @@ client
 
 Example
 
-```
+```ts
 // name.any.ts
 import { RestClient } from '@vts-kit/angular-network';
 
@@ -546,7 +546,7 @@ VTS KIT provides common validation function to be used combine with [Angular Val
 
 For template-driven form:
 
-```
+```ts
 // *.ts
 import { VtsValidatorModule } from '@vts-kit/angular-validator';
 
@@ -564,7 +564,7 @@ import { VtsValidatorModule } from '@vts-kit/angular-validator';
 
 For reactive form:
 
-```
+```ts
 // *.ts
 import { VTSValidators } from '@vts-kit/angular-validator';
 
@@ -601,7 +601,7 @@ VTS KIT integrated bundle analyzer to help auditing overall bundle size.
 
 Webpack bundle analyzer config is localed in `app/<app_name>/webpack/webpack.configs(.prod).ts`.
 
-```
+```ts
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (config, context) => {
@@ -627,7 +627,7 @@ By default, webpack bundle analyzer will serve a web report at http://127.0.0.1:
 
 Either use VTS Kit script inside `package.json` or custom your own.
 
-```
+```ts
 // package.json
   ...
   scripts: {
