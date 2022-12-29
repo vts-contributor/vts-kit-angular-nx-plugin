@@ -1,4 +1,4 @@
-FROM 10.60.156.72/vbs/node:16-nginx-alpine3.16
+FROM 16-nginx-alpine3.16
 COPY cicd/configs/nginx.conf /etc/nginx/nginx.conf
 COPY dist/apps/<%= name %> /usr/share/nginx/html/
 
