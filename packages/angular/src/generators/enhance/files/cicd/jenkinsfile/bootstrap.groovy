@@ -83,7 +83,7 @@ def bootstrapPushCommitBuild() {
                         "<br/>${buildResultContent}",
                         mimeType: 'text/html',
                         cc: "${env.mailCC}",
-                        from: 'vtsjenkinsadmin@viettel.com.vn',
+                        from: 'jenkins_mail',
                         replyTo: '',
                         subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
                         to: "${env.mailTo}"
@@ -209,7 +209,7 @@ def bootstrapMergeRequestBuild() {
             body: "${mergeRequestBuildStr}",
             mimeType: 'text/html',
             cc: "${env.mailCC}",
-            from: 'vtsjenkinsadmin@viettel.com.vn',
+            from: 'jenkins_mail',
             replyTo: '',
             subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
             to: "${env.mailTo}"
