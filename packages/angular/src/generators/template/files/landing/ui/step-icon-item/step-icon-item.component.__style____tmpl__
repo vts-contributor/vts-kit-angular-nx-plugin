@@ -1,0 +1,11 @@
+.step-icon-item {
+  width: 100%;
+
+  &-icon {
+    font-size: 80px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 28px rgba(0, 0, 0, 0.08);
+    padding: 8px;
+  }
+}

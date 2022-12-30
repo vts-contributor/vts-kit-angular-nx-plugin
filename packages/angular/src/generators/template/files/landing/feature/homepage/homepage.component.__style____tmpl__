@@ -1,0 +1,280 @@
+.home {
+  &-banner {
+    position: relative;
+
+    &-image {
+      background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.118182) 0%,
+          rgba(0, 0, 0, 0) 32.6%,
+          rgba(0, 0, 0, 0.96) 76.46%
+        ),
+        url('/assets/template/landing/banner.png') 40%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: calc(100vh - 2 * var(--layout-top-h));
+    }
+
+    &-floating {
+      position: absolute;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      padding: 0 32px;
+      color: var(--white-0);
+      text-align: center;
+
+      .heading {
+        font-size: 3.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      &-image {
+        height: 60vh;
+      }
+
+      &-floating {
+        .heading {
+          font-size: 2.5rem;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  &-benefit {
+    padding: 50px var(--pd-h) 200px var(--pd-h);
+    background: url('/assets/template/landing/benefit-bg.png');
+    background-repeat: no-repeat;
+    background-position: 50% 70%;
+
+    &-prepend {
+      width: 100%;
+      margin-bottom: 200px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      padding: 50px var(--pd-h) 100px var(--pd-h);
+      background-position: 50% 40%;
+
+      &-prepend {
+        margin-bottom: 100px;
+      }
+    }
+  }
+
+  &-feature {
+    padding: 50px var(--pd-h) 100px var(--pd-h);
+    background-color: #f9f9f9;
+
+    &-prepend {
+      width: 100%;
+      margin-bottom: 100px;
+    }
+
+    &-grid {
+      &-illustration {
+        text-align: right;
+      }
+    }
+  }
+
+  &-step {
+    padding: 100px var(--pd-h) 200px var(--pd-h);
+    background: url('/assets/template/landing/step-bg.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 55%;
+
+    &-prepend {
+      width: 100%;
+      margin-bottom: 100px;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding: 50px var(--pd-h) 100px var(--pd-h);
+      background: unset;
+
+      &-prepend {
+        margin-bottom: 100px;
+      }
+    }
+  }
+
+  &-comment {
+    padding: 0 var(--pd-h);
+    background: linear-gradient(
+        0deg,
+        rgba(247, 247, 247, 0.9),
+        rgba(247, 247, 247, 0.9)
+      ),
+      url('/assets/template/landing/comment-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &-grid {
+      height: unset;
+      padding-bottom: 50px;
+
+      &.lg {
+        height: 480px;
+      }
+
+      &-desc {
+        margin-top: 50px;
+        align-items: center;
+
+        span.vts-typo {
+          text-align: center;
+        }
+      }
+
+      &.lg &-desc {
+        align-items: flex-start;
+
+        span.vts-typo {
+          text-align: left;
+        }
+      }
+
+      &-card {
+        position: relative;
+        height: 100%;
+
+        &.floating {
+          > <%= name %>-ui-comment-card:nth-child(1) {
+            position: absolute;
+            top: 16px;
+            right: 70%;
+            width: 260px;
+          }
+
+          > <%= name %>-ui-comment-card:nth-child(2) {
+            position: absolute;
+            top: 16px;
+            right: 70%;
+            width: 360px;
+            transform: translateY(calc(100% + 40px));
+          }
+
+          > <%= name %>-ui-comment-card:nth-child(3) {
+            position: absolute;
+            top: 16px;
+            right: 0;
+            width: 360px;
+            transform: translate(0, -90px);
+
+            @media screen and (min-width: 2200px) {
+              top: 16px;
+              right: 70%;
+              width: 360px;
+              transform: translate(calc(360px + 90px), -90px);
+            }
+          }
+
+          > <%= name %>-ui-comment-card:nth-child(4) {
+            position: absolute;
+            top: 16px;
+            right: 0;
+            width: 260px;
+            transform: translate(-100px, 100%);
+
+            @media screen and (min-width: 2200px) {
+              top: 16px;
+              right: 70%;
+              width: 260px;
+              transform: translate(calc(260px + 90px), calc(100%));
+            }
+          }
+        }
+
+        &.static {
+          > <%= name %>-ui-comment-card {
+            width: 360px;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-package {
+    padding: 230px var(--pd-h) 200px var(--pd-h);
+
+    @media screen and (max-width: 768px) {
+      padding: 50px var(--pd-h) 200px var(--pd-h);
+    }
+
+    &-prepend {
+      width: 100%;
+      padding: 0 20vw;
+      margin-bottom: 100px;
+
+      @media screen and (max-width: 768px) {
+        padding: 0;
+      }
+    }
+
+    &-grid {
+      width: 100%;
+
+      &-row {
+        > <%= name %>-ui-price-card:nth-child(1) {
+          order: 1;
+        }
+
+        > <%= name %>-ui-price-card:nth-child(3) {
+          order: 3;
+        }
+
+        > <%= name %>-ui-price-card:nth-child(2) {
+          margin-top: unset;
+          order: 4;
+        }
+
+        &.lg > <%= name %>-ui-price-card:nth-child(2) {
+          transform: translateY(-50px);
+          order: 2;
+        }
+      }
+    }
+  }
+
+  &-partner {
+    padding: 0 var(--pd-h) 150px var(--pd-h);
+
+    &-grid {
+      img {
+        object-fit: contain;
+
+        @media screen and (max-width: 600px) {
+          max-width: 150px;
+        }
+      }
+    }
+  }
+
+  &-support {
+    padding: 80px var(--pd-h);
+    background: #f9f9f9;
+
+    &-grid {
+      &-illustration {
+        img {
+          max-width: 100%;
+        }
+      }
+
+      &-form-content {
+        width: 100%;
+      }
+    }
+  }
+}

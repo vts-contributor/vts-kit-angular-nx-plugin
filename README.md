@@ -412,7 +412,7 @@ constructor(private translateService: TranslateService) {
 - Get current language:
 
 ```ts
-this.translateService.currentLang
+this.translateService.currentLang;
 ```
 
 - Get translate:
@@ -432,10 +432,12 @@ Get translation using service
 ```ts
 // Return value of string => Xin chào A
 // Note: instant() require the TranslateModule has been loaded, if you're unsure about this, use get() or pipe
-this.translateService.instant('hello.world', {name: 'A'})
+this.translateService.instant('hello.world', { name: 'A' });
 
 // Return Observable of value of string
-this.translateService.get('hello.world', {name: 'A'}).subscribe((d) => console.log(d)) // d = 'Xin chào A'
+this.translateService
+  .get('hello.world', { name: 'A' })
+  .subscribe((d) => console.log(d)); // d = 'Xin chào A'
 ```
 
 Get translation using pipe
@@ -455,7 +457,10 @@ Network config is localed in `app/<app_name>/src/app/configs.ts`.
 
 ```ts
 // configs.ts
-import { RestClientOptions, VtsRestModuleConfig } from '@vts-kit/angular-network';
+import {
+  RestClientOptions,
+  VtsRestModuleConfig,
+} from '@vts-kit/angular-network';
 
 const NETWORK_MODULE_CONFIG: VtsRestModuleConfig = {
   defaultConfig: new RestClientOptions()

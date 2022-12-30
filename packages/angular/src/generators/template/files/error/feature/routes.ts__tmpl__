@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-const ROUTES: Route[] = [
+export const ROUTES: Route[] = [
   {
     path: '',
     children: [

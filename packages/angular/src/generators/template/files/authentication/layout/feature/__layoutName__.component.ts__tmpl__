@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
+
+@Component({
+  selector: 'layout-feature-<%= layoutName %>',
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule, VtsTypographyModule],
+  templateUrl: './<%= layoutName %>.component.html',
+  styleUrls: ['./<%= layoutName %>.component.<%= style %>'],
+})
+export class <%= classify(layoutName) %>Component implements OnInit {
+  constructor() {}
+
+  ngOnInit(): void {}
+}

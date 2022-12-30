@@ -1,0 +1,325 @@
+<div class="landing-layout">
+  <ng-container *ngIf="breakpoint$ | async as bp">
+    <div
+      *ngIf="bp.lg"
+      class="landing-layout-prepend"
+      vts-space
+      vtsPreset="4"
+      vtsWrap
+    >
+      <div *vtsSpaceItem class="learn-more">
+        <a
+          vts-space
+          vtsPreset="1"
+          vtsAlign="center"
+          vts-typography
+          vtsColor="secondary"
+        >
+          <i *vtsSpaceItem vts-icon vtsType="InfoOutline"></i>
+          <span *vtsSpaceItem>{{
+            'landing.layout.learnMore' | translate
+          }}</span>
+        </a>
+      </div>
+      <div *vtsSpaceItem class="contact">
+        <a
+          vts-space
+          vtsPreset="1"
+          vtsAlign="center"
+          vts-typography
+          vtsColor="secondary"
+        >
+          <i *vtsSpaceItem vts-icon vtsType="PhoneOutline:import"></i>
+          <span *vtsSpaceItem>18008098/198</span>
+        </a>
+      </div>
+      <div *vtsSpaceItem class="order">
+        <a
+          vts-space
+          vtsPreset="1"
+          vtsAlign="center"
+          vts-typography
+          vtsColor="secondary"
+        >
+          <i *vtsSpaceItem vts-icon vtsType="OrderOutline:import"></i>
+          <span *vtsSpaceItem>{{
+            'landing.layout.checkOrder' | translate
+          }}</span>
+        </a>
+      </div>
+      <div *vtsSpaceItem vts-space vtsPreset="2" class="locale">
+        <a
+          *vtsSpaceItem
+          class="vi"
+          [class.active]="currentLang == 'vi'"
+          (click)="setTranslate('vi')"
+        >
+          <img
+            width="36px"
+            height="24px"
+            src="assets/template/landing/vi.png"
+          />
+        </a>
+        <a
+          *vtsSpaceItem
+          class="en"
+          [class.active]="currentLang == 'en'"
+          (click)="setTranslate('en')"
+        >
+          <img
+            width="36px"
+            height="24px"
+            src="assets/template/landing/en.png"
+          />
+        </a>
+      </div>
+    </div>
+  </ng-container>
+  <div class="landing-layout-top">
+    <div class="landing-layout-top-logo">
+      <layout-ui-logo [size]="150" color="var(--white-0)"></layout-ui-logo>
+    </div>
+    <ng-container *ngIf="breakpoint$ | async as bp">
+      <ng-container *ngIf="bp.lg">
+        <div
+          *ngIf="navActions$ | async as actions"
+          vts-space
+          vtsPreset="2"
+          class="landing-layout-top-anchor"
+        >
+          <ng-container *ngFor="let item of actions; trackBy: trackByFn">
+            <a
+              *vtsSpaceItem
+              class="action"
+              [class.primary]="item.primary"
+              [class.secondary]="!item.primary"
+              >{{ item.name }}</a
+            >
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!bp.lg">
+        <div
+          class="landing-layout-top-mini-toggle"
+          (click)="drawerVisible = true"
+        >
+          <i vts-icon vtsType="ReorderOutline"></i>
+        </div>
+        <vts-drawer
+          vtsWidth="300px"
+          vtsWrapClassName="landing-layout-drawer"
+          [vtsClosable]="false"
+          [vtsVisible]="drawerVisible"
+          (vtsOnClose)="drawerVisible = false"
+        >
+          <ng-container *vtsDrawerContent>
+            <div class="logo">
+              <layout-ui-logo
+                [size]="140"
+                color="var(--white-0)"
+              ></layout-ui-logo>
+            </div>
+
+            <div vts-space vtsPreset="2" class="drawer-action">
+              <a
+                *vtsSpaceItem
+                class="vi"
+                [class.active]="currentLang == 'vi'"
+                (click)="setTranslate('vi')"
+              >
+                <img
+                  width="36px"
+                  height="24px"
+                  src="assets/template/landing/vi.png"
+                />
+              </a>
+              <a
+                *vtsSpaceItem
+                class="en"
+                [class.active]="currentLang == 'en'"
+                (click)="setTranslate('en')"
+              >
+                <img
+                  width="36px"
+                  height="24px"
+                  src="assets/template/landing/en.png"
+                />
+              </a>
+            </div>
+            <a class="drawer-action" vts-space vtsPreset="1">
+              <i *vtsSpaceItem vts-icon vtsType="InfoOutline"></i>
+              <span *vtsSpaceItem>{{
+                'landing.layout.learnMore' | translate
+              }}</span>
+            </a>
+            <a class="drawer-action" vts-space vtsPreset="1">
+              <i *vtsSpaceItem vts-icon vtsType="PhoneOutline:import"></i>
+              <span *vtsSpaceItem>18008098/198</span>
+            </a>
+            <a class="drawer-action" vts-space vtsPreset="1">
+              <i *vtsSpaceItem vts-icon vtsType="OrderOutline:import"></i>
+              <span *vtsSpaceItem>{{
+                'landing.layout.checkOrder' | translate
+              }}</span>
+            </a>
+            <ng-container *ngIf="navActions$ | async as actions">
+              <ng-container *ngFor="let item of actions; trackBy: trackByFn">
+                <a
+                  class="drawer-action"
+                  [class.primary]="item.primary"
+                  [class.secondary]="!item.primary"
+                  >{{ item.name }}</a
+                >
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </vts-drawer>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="landing-layout-content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="landing-layout-footer">
+    <div class="landing-layout-footer-grid" vts-row [vtsGutter]="[32, 32]">
+      <div
+        vts-col
+        vtsMd="10"
+        vts-space
+        vtsDirection="vertical"
+        vtsPreset="4"
+        class="landing-layout-footer-info"
+      >
+        <div *vtsSpaceItem class="logo">
+          <layout-ui-logo
+            [size]="160"
+            color="var(--primary-color-1)"
+          ></layout-ui-logo>
+        </div>
+        <div *vtsSpaceItem class="company-name">
+          <span vts-typography vtsColor="secondary"
+            ><b>{{ 'landing.layout.companyName' | translate }}</b></span
+          >
+          <br />
+          <span vts-typography vtsColor="secondary"
+            ><b>{{ 'landing.layout.companyBranch' | translate }}</b></span
+          >
+        </div>
+        <div
+          *vtsSpaceItem
+          vts-row
+          [vtsGutter]="[0, 24]"
+          class="company-contact"
+        >
+          <span
+            vts-col
+            vtsSpan="24"
+            *ngFor="let item of companyContact$ | async; trackBy: trackByFn"
+            vts-space
+            vtsPreset="2"
+            vts-typography
+            vtsColor="secondary"
+          >
+            <i *vtsSpaceItem vts-icon [vtsType]="item.icon"></i>
+            <div *vtsSpaceItem>
+              <b>{{ item.name }}</b>
+              &nbsp;
+              <span>{{ item.value }}</span>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div vts-col vtsMd="14" class="landing-layout-footer-navigation">
+        <div
+          class="landing-layout-footer-navigation-grid"
+          vts-row
+          [vtsGutter]="[120, 32]"
+        >
+          <ng-container *ngIf="footNavigation$ | async as footNav">
+            <div
+              vts-col
+              vtsSpan="auto"
+              *ngFor="let item of footNav; trackBy: trackByFn"
+              vts-space
+              vtsDirection="vertical"
+              vtsPreset="4"
+            >
+              <span
+                *vtsSpaceItem
+                class="title"
+                vts-typography
+                vtsColor="secondary"
+                vtsTransform="uppercase"
+                ><b>{{ item.title }}</b></span
+              >
+              <div
+                *vtsSpaceItem
+                class="items"
+                vts-space
+                vtsDirection="vertical"
+                vtsPreset="3"
+              >
+                <ng-container
+                  *ngFor="let child of item.children; trackBy: trackByFn"
+                >
+                  <a
+                    *vtsSpaceItem
+                    class="item"
+                    vts-typography
+                    vtsColor="secondary"
+                  >
+                    {{ child }}
+                  </a>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <div vts-col vtsSpan="auto">
+            <img
+              src="assets/template/landing/commerce-logo.png"
+              width="180px"
+              height="auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="landing-layout-append" vts-row [vtsGutter]="16">
+    <div
+      vts-col
+      vts-space
+      vtsPreset="3"
+      vtsAlign="center"
+      class="landing-layout-append-copyright"
+    >
+      <span *vtsSpaceItem vts-typography vtsColor="secondary"
+        >© Viettel Telecom 2019. All rights reserved</span
+      >
+      <div *vtsSpaceItem class="logo">
+        <img
+          src="/assets/template/landing/copyright-logo.png"
+          width="118px"
+          height="auto"
+        />
+      </div>
+    </div>
+    <div
+      vts-col
+      vts-space
+      vtsPreset="3"
+      vtsAlign="center"
+      class="landing-layout-append-policy"
+    >
+      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+        'landing.layout.termOfUse' | translate
+      }}</a>
+      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+        'landing.layout.securityPolicy' | translate
+      }}</a>
+      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+        'landing.layout.siteMap' | translate
+      }}</a>
+    </div>
+  </div>
+</div>

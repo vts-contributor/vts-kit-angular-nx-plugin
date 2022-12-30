@@ -1,0 +1,75 @@
+<form
+  [vtsLayout]="'vertical'"
+  vts-form
+  vtsSize="lg"
+  [formGroup]="supportForm"
+  (ngSubmit)="submitForm()"
+>
+  <div vts-row vtsGutter="12">
+    <div vts-col vtsSpan="12">
+      <vts-form-item vts-col>
+        <vts-form-label vtsRequired>{{
+          'common.form.fullName' | translate
+        }}</vts-form-label>
+        <vts-form-control [vtsErrorTip]="fullNameErrorTpl">
+          <<%= name %>-ui-app-input
+            formControlName="fullName"
+            [placeholder]="'common.form.fullName' | translate"
+          >
+          </<%= name %>-ui-app-input>
+          <ng-template #fullNameErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">{{
+              'common.validation.required'
+                | translate : { name: 'common.form.fullName' | translate }
+            }}</ng-container>
+          </ng-template>
+        </vts-form-control>
+      </vts-form-item>
+    </div>
+    <div vts-col vtsSpan="12">
+      <vts-form-item vts-col>
+        <vts-form-label vtsRequired>{{
+          'common.form.phoneNumber' | translate
+        }}</vts-form-label>
+        <vts-form-control [vtsErrorTip]="phoneNumberErrorTpl">
+          <<%= name %>-ui-app-input
+            formControlName="phoneNumber"
+            [placeholder]="'common.form.phoneNumber' | translate"
+          >
+          </<%= name %>-ui-app-input>
+          <ng-template #phoneNumberErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">{{
+              'common.validation.required'
+                | translate : { name: 'common.form.phoneNumber' | translate }
+            }}</ng-container>
+          </ng-template>
+        </vts-form-control>
+      </vts-form-item>
+    </div>
+  </div>
+  <vts-form-item>
+    <vts-form-label vtsRequired>{{
+      'common.form.email' | translate
+    }}</vts-form-label>
+    <vts-form-control [vtsErrorTip]="emailErrorTpl">
+      <<%= name %>-ui-app-input
+        formControlName="email"
+        [placeholder]="'common.form.email' | translate"
+      >
+      </<%= name %>-ui-app-input>
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">{{
+          'common.validation.required'
+            | translate : { name: 'common.form.email' | translate }
+        }}</ng-container>
+      </ng-template>
+    </vts-form-control>
+  </vts-form-item>
+  <vts-form-item>
+    <vts-form-control>
+      <button vtsType="primary" vtsBlock vts-button>
+        {{ 'landing.homepage.supportSubmitText' | translate }}
+      </button>
+    </vts-form-control>
+  </vts-form-item>
+</form>

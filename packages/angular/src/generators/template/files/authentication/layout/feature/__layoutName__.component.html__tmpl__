@@ -1,0 +1,19 @@
+<div class="authentication-layout">
+  <div class="authentication-layout-panel">
+    <div class="authentication-layout-panel-introduction">
+      <span class="welcome">{{
+        'authentication.layout.welcome' | translate
+      }}</span>
+      <h2 vts-typo vtsType="h2" class="site-name">
+        {{ 'authentication.layout.site' | translate }}
+      </h2>
+      <div class="illustration"></div>
+      <span vts-typo vtsColor="secondary" class="copyright">{{
+        'authentication.layout.copyright' | translate
+      }}</span>
+    </div>
+    <div class="authentication-layout-panel-outlet">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+import { Route } from '@angular/router';
+import { <%= classify(layoutName) %>Component } from '@<%= npmScope %>/layout/feature';
+
+export const ROUTES: Route[] = [
+  {
+    path: '',
+    component: <%= classify(layoutName) %>Component,
+    children: [
+      {
+        path: 'notification',
+        loadComponent: () =>
+          import('./notification/notification.component').then(
+            (c) => c.NotificationComponent
+          ),
+      },
+      {
+        path: 'forgot-password',
+        loadComponent: () =>
+          import('./forgot-password/forgot-password.component').then(
+            (c) => c.ForgotPasswordComponent
+          ),
+      },
+      {
+        path: 'signup',
+        loadComponent: () =>
+          import('./signup/signup.component').then((c) => c.SignupComponent),
+      },
+      {
+        path: 'signin',
+        loadComponent: () =>
+          import('./signin/signin.component').then((c) => c.SigninComponent),
+      },
+      // Wildcard Route
+      // { path: '**', redirectTo: '/' }
+    ],
+  },
+];
+
+export default ROUTES;

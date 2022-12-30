@@ -1,0 +1,27 @@
+<div class="step-item" [class.primary]="primary" vts-space vtsPreset="4">
+  <div *vtsSpaceItem class="step-item-number">
+    <span vts-typography vtsType="h2" vtsColor="secondary">{{
+      number | number : '2.0-0'
+    }}</span>
+  </div>
+  <div *vtsSpaceItem class="step-item-text" vts-space vtsDirection="vertical">
+    <span
+      class="heading"
+      *vtsSpaceItem
+      vts-typography
+      vtsType="h4"
+      vtsWeight="semi-bold"
+      vtsColor="secondary"
+      >{{ title }}</span
+    >
+    <ng-container *ngIf="description">
+      <span
+        class="description"
+        *vtsSpaceItem
+        vts-typography
+        vtsColor="secondary"
+        >{{ description }}</span
+      >
+    </ng-container>
+  </div>
+</div>

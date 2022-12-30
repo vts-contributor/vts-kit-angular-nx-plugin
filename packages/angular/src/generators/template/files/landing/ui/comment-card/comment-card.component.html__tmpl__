@@ -1,0 +1,28 @@
+<div class="comment-card" vts-space vtsDirection="vertical" vtsPreset="2">
+  <div
+    *vtsSpaceItem
+    class="comment-card-header"
+    vts-space
+    vtsPreset="2"
+    vtsAlign="center"
+  >
+    <div *vtsSpaceItem class="comment-card-header-image">
+      <img [src]="avatar" alt="avatar" height="56px" width="56px" />
+    </div>
+    <div
+      *vtsSpaceItem
+      class="comment-card-header-text"
+      vts-space
+      vtsDirection="vertical"
+    >
+      <span vts-typography vtsType="sub2">{{ title }}</span>
+      <span vts-typography vtsColor="primary">{{ subtitle }}</span>
+    </div>
+  </div>
+  <div *vtsSpaceItem class="comment-card-body">
+    <span vts-typography>{{ description }}</span>
+  </div>
+  <div *ngIf="icon" class="comment-card-icon">
+    <i vts-icon [vtsType]="icon"></i>
+  </div>
+</div>

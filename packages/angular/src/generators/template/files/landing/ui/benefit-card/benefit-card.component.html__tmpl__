@@ -1,0 +1,31 @@
+<div class="benefit-card" vts-space vtsPreset="3">
+  <ng-container *vtsSpaceItem>
+    <div *ngIf="icon" class="benefit-card-icon">
+      <i vts-icon [vtsType]="icon"></i>
+    </div>
+  </ng-container>
+  <div
+    *vtsSpaceItem
+    class="benefit-card-text"
+    vts-space
+    vtsDirection="vertical"
+    vtsPreset="3"
+  >
+    <span
+      *vtsSpaceItem
+      class="benefit-card-text-title"
+      vts-typography
+      vtsType="h4"
+    >
+      {{ title }}
+    </span>
+    <span
+      *vtsSpaceItem
+      class="benefit-card-text-description"
+      vts-typography
+      vtsColor="secondary"
+    >
+      {{ description }}
+    </span>
+  </div>
+</div>

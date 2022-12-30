@@ -1,0 +1,203 @@
+::ng-deep {
+  :root {
+    --pd-h: 240px;
+    --layout-prepend-h: 48px;
+    --layout-top-h: 72px;
+
+    // If using less pre-processor, consider using variable from @ui-vts/theme
+    // @import '@ui-vts/theme/style/themes/default.less';
+    --white-0: #fff;
+    --primary-color-0: #cb002b;
+    --primary-color-1: #ee0033;
+    --primary-color-2: #f8455b;
+    --grey-4: #d1d1d1;
+    --grey-5: #e9e9e9;
+
+    // Responsive
+    @media screen and (max-width: 1600px) {
+      --pd-h: 160px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      --pd-h: 120px;
+    }
+
+    @media screen and (max-width: 1024px) {
+      --pd-h: 80px;
+    }
+
+    @media screen and (max-width: 600px) {
+      --pd-h: 30px;
+    }
+  }
+}
+
+.landing-layout {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: 100%;
+
+  * {
+    transition: all 0.3s ease-out;
+  }
+
+  &-prepend {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 4px var(--pd-h);
+    background-color: var(--grey-5);
+    height: var(--layout-prepend-h);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    .vi,
+    .en {
+      img {
+        height: 100%;
+      }
+
+      &:hover,
+      &.active {
+        box-shadow: 0 0 1px 2px var(--primary-color-0);
+      }
+    }
+  }
+
+  &-top {
+    min-height: var(--layout-top-h);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--pd-h);
+    background-color: var(--primary-color-0);
+    position: fixed;
+    top: var(--layout-prepend-h);
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    @media screen and (max-width: 1200px) {
+      top: 0;
+    }
+
+    &-anchor {
+      margin-left: auto;
+
+      .action {
+        padding: 8px 16px;
+        font-weight: 600;
+      }
+
+      .primary {
+        color: var(--primary-color-0);
+        background-color: var(--white-0);
+
+        &:hover {
+          background-color: var(--primary-color-0);
+          color: var(--white-0);
+          box-shadow: 0 0 1px 1px #fff;
+        }
+      }
+
+      .secondary {
+        color: var(--white-0);
+
+        &:hover {
+          box-shadow: 0 0 1px 1px #fff;
+        }
+      }
+    }
+
+    &-mini-toggle {
+      font-size: 32px;
+      margin-left: auto;
+      color: var(--white-0);
+    }
+  }
+
+  &-content {
+    flex: 1 1 auto;
+    margin-top: calc(var(--layout-prepend-h) + var(--layout-top-h));
+
+    @media screen and (max-width: 1200px) {
+      margin-top: var(--layout-top-h);
+    }
+  }
+
+  &-footer {
+    padding: 64px var(--pd-h);
+    background-color: var(--grey-5);
+
+    &-navigation {
+      display: flex;
+      justify-content: flex-end;
+
+      &-grid {
+        align-content: flex-start;
+      }
+    }
+
+    .company-contact {
+      i {
+        color: var(--primary-color-1);
+        font-size: 20px;
+      }
+    }
+  }
+
+  &-append {
+    padding: 8px var(--pd-h);
+    background-color: var(--grey-4);
+    justify-content: space-between;
+
+    > div {
+      padding: 4px 0;
+    }
+
+    @media screen and (max-width: 1250px) {
+      justify-content: center;
+    }
+  }
+}
+
+::ng-deep {
+  .landing-layout-drawer {
+    .vts-drawer-content {
+      background: var(--white-0);
+    }
+
+    .vts-drawer-body {
+      padding: 0;
+    }
+
+    .drawer-action {
+      display: inline-block;
+      padding: 8px 16px;
+      width: 100%;
+      background-color: var(--white-0);
+      font-weight: 500;
+      border-bottom: 1px solid var(--grey-5);
+
+      .vi,
+      .en {
+        display: inline-flex;
+
+        &.active {
+          box-shadow: 0 0 1px 2px var(--primary-color-0);
+        }
+      }
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--primary-color-0);
+      height: var(--layout-top-h);
+    }
+  }
+}

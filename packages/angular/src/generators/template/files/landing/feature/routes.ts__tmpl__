@@ -1,0 +1,22 @@
+import { Route } from '@angular/router';
+import { <%= classify(layoutName) %>Component } from '@<%= npmScope %>/layout/feature';
+
+export const ROUTES: Route[] = [
+  {
+    path: '',
+    component: <%= classify(layoutName) %>Component,
+    children: [
+      {
+        path: 'homepage',
+        loadComponent: () =>
+          import('./homepage/homepage.component').then(
+            (c) => c.HomepageComponent
+          ),
+      },
+      // Wildcard Route
+      // { path: '**', redirectTo: '/' }
+    ],
+  },
+];
+
+export default ROUTES;

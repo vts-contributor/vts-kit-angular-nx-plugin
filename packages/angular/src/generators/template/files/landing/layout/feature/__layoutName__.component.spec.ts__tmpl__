@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { <%= classify(layoutName) %>Component } from './landing-layout.component';
+
+describe('<%= classify(layoutName) %>Component', () => {
+  let component: <%= classify(layoutName) %>Component;
+  let fixture: ComponentFixture<<%= classify(layoutName) %>Component>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [<%= classify(layoutName) %>Component],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(<%= classify(layoutName) %>Component);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

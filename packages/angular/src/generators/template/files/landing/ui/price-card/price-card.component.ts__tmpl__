@@ -1,0 +1,27 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
+import { VtsButtonModule } from '@ui-vts/ng-vts';
+
+@Component({
+  selector: '<%= name %>-ui-price-card',
+  standalone: true,
+  imports: [CommonModule, VtsSpaceModule, VtsTypographyModule, VtsButtonModule],
+  templateUrl: './price-card.component.html',
+  styleUrls: ['./price-card.component.<%= style %>'],
+})
+export class PriceCardComponent implements OnInit {
+  @Input() title?: string = '';
+  @Input() subTitle?: string = '';
+  @Input() typeTitle?: string = '';
+  @Input() typeSubTitle?: string = '';
+  @Input() features?: { title: string; active: boolean }[] = [];
+  @Input() submitText?: string = '';
+  @Input() primary?: boolean = false;
+  @Output('submit') onSubmit = new EventEmitter();
+
+  constructor() {}
+
+  ngOnInit(): void {}
+}

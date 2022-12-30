@@ -68,7 +68,7 @@ function addRouteToAppModule(
     const routeContent = `
     import { Route } from '@angular/router';
 
-    const ROUTES: Route[] = [];
+    export const ROUTES: Route[] = [];
 
     export default ROUTES;
     `;

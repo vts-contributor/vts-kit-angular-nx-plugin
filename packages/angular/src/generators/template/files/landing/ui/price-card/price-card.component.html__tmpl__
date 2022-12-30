@@ -1,0 +1,50 @@
+<div class="price-card" [class.primary]="primary">
+  <div
+    class="price-card-header"
+    vts-space
+    vtsDirection="vertical"
+    vtsPreset="4"
+  >
+    <div *vtsSpaceItem class="price-card-header-name">
+      <span class="title" vts-typography vtsType="h1">
+        {{ title }}
+      </span>
+      <span class="subtitle" vts-typography vtsColor="secondary">{{
+        subTitle
+      }}</span>
+    </div>
+    <div *vtsSpaceItem class="price-card-header-type">
+      <span vts-typography vtsType="sub1" vtsColor="error">
+        {{ typeTitle }}
+      </span>
+      <br />
+      <span vts-typography vtsColor="secondary">{{ typeSubTitle }}</span>
+    </div>
+  </div>
+  <div class="price-card-body" vts-space vtsDirection="vertical" vtsPreset="3">
+    <ng-container *ngFor="let item of features">
+      <div
+        *vtsSpaceItem
+        class="price-card-body-item"
+        [class.active]="item.active"
+      >
+        <span *ngIf="item.active" vts-typography vtsColor="secondary">
+          {{ item.title }}
+        </span>
+        <span *ngIf="!item.active" vts-typography vtsColor="secondary">
+          <del>{{ item.title }}</del>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="submitText" class="price-card-footer">
+    <button
+      vts-button
+      vtsBlock
+      [vtsType]="primary ? 'primary' : 'default'"
+      (click)="onSubmit.emit()"
+    >
+      {{ submitText }}
+    </button>
+  </div>
+</div>

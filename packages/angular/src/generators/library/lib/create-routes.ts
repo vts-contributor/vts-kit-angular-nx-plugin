@@ -13,7 +13,7 @@ export async function createRoutes(
 
   const routesContents = `import { Route } from '@angular/router';
   
-      const ROUTES: Route[] = [{
+      export const ROUTES: Route[] = [{
         path: '',
         // component: LayoutComponent,
         children: [

@@ -1,0 +1,31 @@
+<<%= name %>-ui-<%= name %>-form
+  [title]="'authentication.title.notification' | translate"
+>
+  <ng-container content>
+    <form [vtsLayout]="'vertical'" vts-form>
+      <vts-form-item vtsJustify="center">
+        <span vtsAlign="center" vts-typo>{{
+          'authentication.form.notificationDesc' | translate
+        }}</span>
+      </vts-form-item>
+      <vts-form-item>
+        <span vts-typo vtsAlign="center" vtsColor="secondary"
+          >{{ 'authentication.form.retryDesc' | translate }}
+          <a vts-typo vtsType="link"
+            ><b>{{ 'authentication.form.retryLink' | translate }}</b></a
+          >
+        </span>
+      </vts-form-item>
+      <vts-form-item>
+        <button
+          vtsType="primary"
+          vtsBlock
+          vts-button
+          [routerLink]="['..', 'signin']"
+        >
+          {{ 'authentication.form.returnAction' | translate }}
+        </button>
+      </vts-form-item>
+    </form>
+  </ng-container>
+</<%= name %>-ui-<%= name %>-form>

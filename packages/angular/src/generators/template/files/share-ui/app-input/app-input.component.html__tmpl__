@@ -1,0 +1,25 @@
+<vts-input-group [vtsSuffix]="suffixTpl">
+  <input
+    [type]="type === 'password' && showPassword ? 'text' : type"
+    vts-input
+    [(ngModel)]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+  />
+</vts-input-group>
+<ng-template #suffixTpl>
+  <i
+    *ngIf="value.length > 0"
+    class="input-suffix-btn input-clear-btn"
+    vts-icon
+    vtsType="Close"
+    (click)="clearValue()"
+  ></i>
+  <i
+    *ngIf="type == 'password'"
+    class="input-suffix-btn input-show-password-btn"
+    vts-icon
+    [vtsType]="showPassword ? 'EyeOff' : 'Eye'"
+    (click)="togglePassword()"
+  ></i>
+</ng-template>

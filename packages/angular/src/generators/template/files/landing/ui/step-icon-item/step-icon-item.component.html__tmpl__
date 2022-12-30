@@ -1,0 +1,27 @@
+<div
+  class="step-icon-item"
+  vts-space
+  vtsDirection="vertical"
+  vtsAlign="center"
+  vtsPreset="4"
+>
+  <ng-container *ngIf="icon">
+    <i *vtsSpaceItem class="step-icon-item-icon" vts-icon [vtsType]="icon"></i>
+  </ng-container>
+  <span
+    *vtsSpaceItem
+    class="step-icon-item-heading"
+    vts-typography
+    vtsType="h4"
+    vtsWeight="semi-bold"
+    vtsAlign="center"
+    >{{ title }}</span
+  >
+  <span
+    *vtsSpaceItem
+    class="step-icon-item-description"
+    vts-typography
+    vtsAlign="center"
+    >{{ description }}</span
+  >
+</div>

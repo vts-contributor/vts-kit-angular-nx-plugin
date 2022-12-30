@@ -5,9 +5,11 @@ import featureGroupGenerator from '../../feature-group/feature-group';
 import { generateFiles, readProjectConfiguration } from '@nrwl/devkit';
 import { join } from 'path';
 import { strings } from '@angular-devkit/core';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
 
 export async function generateErrorTemplate(tree: Tree, options: Schema) {
-  const { name } = options;
+  const { name: rawName } = options;
+  const name = dasherize(rawName);
   await featureGroupGenerator(tree, {
     name,
   });

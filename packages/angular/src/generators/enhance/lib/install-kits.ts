@@ -34,6 +34,7 @@ function installTask(tree: Tree, options: Schema) {
       '@ui-vts/ng-vts': 'latest',
       '@vts-kit/angular-network': 'latest',
       '@vts-kit/angular-validator': 'latest',
+      '@vts-kit/angular-common': 'latest',
       '@ngx-translate/core': ngxTranslateVersion,
     },
     {

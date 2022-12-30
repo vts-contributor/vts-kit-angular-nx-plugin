@@ -1,0 +1,354 @@
+<ng-container *ngIf="breakpoint$ | async as bp">
+  <section class="home-banner">
+    <div class="home-banner-image"></div>
+    <div
+      class="home-banner-floating"
+      vts-space
+      vtsDirection="vertical"
+      vtsPreset="4"
+      vtsAlign="center"
+    >
+      <span @slideInLeft class="heading" *vtsSpaceItem>{{
+        'landing.homepage.intro1' | translate
+      }}</span>
+      <span @slideInRight class="subtitle" *vtsSpaceItem>{{
+        'landing.homepage.intro2' | translate
+      }}</span>
+      <button @opacity *vtsSpaceItem vts-button vtsType="primary">
+        {{ 'landing.homepage.intro3' | translate }}
+      </button>
+    </div>
+  </section>
+  <section class="home-benefit">
+    <div
+      class="home-benefit-prepend"
+      vts-space
+      vtsDirection="vertical"
+      vtsAlign="center"
+    >
+      <span
+        *vtsSpaceItem
+        vts-typography
+        vtsColor="primary"
+        vtsTransform="uppercase"
+        vtsType="h4"
+        vtsWeight="semi-bold"
+        vtsAlign="center"
+        >{{ 'landing.homepage.benefitPrepend1' | translate }}</span
+      >
+      <span *vtsSpaceItem vts-typography vtsType="h1" vtsAlign="center">{{
+        'landing.homepage.benefitPrepend1' | translate
+      }}</span>
+      <span
+        *vtsSpaceItem
+        vts-typography
+        vtsColor="secondary"
+        vtsAlign="center"
+        >{{ 'landing.homepage.intro2' | translate }}</span
+      >
+    </div>
+    <div class="home-benefit-grid" vts-row [vtsGutter]="[32, 32]">
+      <ng-container *ngIf="benefits$ | async as be">
+        <div
+          *ngFor="let item of be"
+          class="home-benefit-card"
+          vts-col
+          vtsLg="12"
+          vtsMd="24"
+        >
+          <<%= name %>-ui-benefit-card
+            [title]="item.title"
+            [description]="item.description"
+            [icon]="bp.xs ? item.icon : null"
+          >
+          </<%= name %>-ui-benefit-card>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+  <section class="home-feature">
+    <div
+      class="home-feature-prepend"
+      vts-space
+      vtsDirection="vertical"
+      vtsAlign="center"
+    >
+      <span
+        *vtsSpaceItem
+        vts-typography
+        vtsColor="primary"
+        vtsTransform="uppercase"
+        vtsType="h4"
+        vtsWeight="semi-bold"
+        vtsAlign="center"
+        >{{ 'landing.homepage.featurePrepend1' | translate }}</span
+      >
+      <span *vtsSpaceItem vts-typography vtsType="h1" vtsAlign="center">{{
+        'landing.homepage.featurePrepend2' | translate
+      }}</span>
+    </div>
+    <div class="home-feature-grid" vts-row>
+      <div class="home-feature-grid-step" vts-col vtsLg="10" vtsSpan="24">
+        <div class="home-feature-grid-step-row" vts-row [vtsGutter]="[0, 36]">
+          <ng-container *ngIf="feature$ | async as ft">
+            <<%= name %>-ui-step-item
+              vts-col
+              vtsSpan="24"
+              *ngFor="let item of ft; let i = index"
+              [title]="item.title"
+              [description]="item.description"
+              [primary]="item.primary"
+              [number]="i + 1"
+            >
+            </<%= name %>-ui-step-item>
+          </ng-container>
+        </div>
+      </div>
+      <div
+        class="home-feature-grid-illustration"
+        vts-col
+        vtsLg="14"
+        vtsSpan="0"
+      >
+        <img
+          src="assets/template/landing/feature-illus.png"
+          width="500px"
+          height="auto"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="home-step">
+    <div
+      class="home-step-prepend"
+      vts-space
+      vtsDirection="vertical"
+      vtsAlign="center"
+    >
+      <span *vtsSpaceItem vts-typography vtsType="h1" vtsAlign="center">{{
+        'landing.homepage.stepPrepend1' | translate
+      }}</span>
+    </div>
+    <div class="home-step-grid" vts-row [vtsGutter]="[32, 64]">
+      <ng-container *ngIf="step$ | async as st">
+        <<%= name %>-ui-step-icon-item
+          vts-col
+          vtsSpan="24"
+          vtsSm="8"
+          *ngFor="let item of st"
+          [title]="item.title"
+          [description]="item.description"
+          [icon]="item.icon"
+        >
+        </<%= name %>-ui-step-icon-item>
+      </ng-container>
+    </div>
+  </section>
+  <section class="home-comment">
+    <div
+      class="home-comment-grid"
+      [class.lg]="bp.lg"
+      vts-row
+      [vtsGutter]="[32, 32]"
+    >
+      <div
+        class="home-comment-grid-desc"
+        vts-col
+        vtsSpan="24"
+        vtsLg="6"
+        vts-space
+        vtsDirection="vertical"
+      >
+        <span *vtsSpaceItem vts-typography vtsType="h1">{{
+          'landing.homepage.commentPrepend1' | translate
+        }}</span>
+        <span *vtsSpaceItem vts-typography>{{
+          'landing.homepage.commentPrepend2' | translate
+        }}</span>
+      </div>
+      <ng-container *ngIf="comment$ | async as cm">
+        <div
+          *ngIf="bp.lg"
+          class="home-comment-grid-card floating"
+          vts-col
+          [vtsLg]="{ span: 14, offset: 4 }"
+        >
+          <<%= name %>-ui-comment-card
+            *ngFor="let item of cm"
+            [icon]="item.icon"
+            [title]="item.title"
+            [subtitle]="item.subtitle"
+            [description]="item.description"
+            [avatar]="item.avatar"
+          >
+          </<%= name %>-ui-comment-card>
+        </div>
+        <div
+          *ngIf="!bp.lg"
+          class="home-comment-grid-card static"
+          vts-col
+          vtsSpan="24"
+        >
+          <div
+            class="home-comment-grid-card-row"
+            vts-row
+            [vtsGutter]="[48, 32]"
+          >
+            <<%= name %>-ui-comment-card
+              *ngFor="let item of cm"
+              vts-col
+              vtsSm="12"
+              vtsSpan="24"
+              [icon]="item.icon"
+              [title]="item.title"
+              [subtitle]="item.subtitle"
+              [description]="item.description"
+              [avatar]="item.avatar"
+            >
+            </<%= name %>-ui-comment-card>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+  <section class="home-package">
+    <div
+      class="home-package-prepend"
+      vts-space
+      vtsDirection="vertical"
+      vtsAlign="center"
+      vtsPreset="4"
+    >
+      <span *vtsSpaceItem vts-typography vtsType="h1" vtsAlign="center">{{
+        'landing.homepage.packagePrepend1' | translate
+      }}</span>
+      <span *vtsSpaceItem vts-typography vtsAlign="center">{{
+        'landing.homepage.packagePrepend2' | translate
+      }}</span>
+    </div>
+    <div class="home-package-grid">
+      <div
+        class="home-package-grid-row"
+        [class.lg]="bp.lg"
+        vts-row
+        [vtsGutter]="[24, 24]"
+        vtsJustify="center"
+      >
+        <ng-container *ngIf="package$ | async as pk">
+          <<%= name %>-ui-price-card
+            *ngFor="let item of pk"
+            vts-col
+            vtsLg="8"
+            vtsSm="12"
+            [title]="item.title"
+            [subTitle]="item.subTitle"
+            [typeTitle]="item.typeTitle"
+            [typeSubTitle]="item.typeSubTitle"
+            [features]="item.features"
+            [submitText]="item.submitText"
+            [primary]="item.primary"
+          >
+          </<%= name %>-ui-price-card>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+  <section class="home-partner">
+    <div
+      class="home-partner-grid"
+      vts-row
+      [vtsGutter]="[32, 32]"
+      vtsJustify="space-around"
+    >
+      <div vts-col>
+        <img
+          src="assets/template/landing/partner-1.png"
+          alt="partner"
+          height="94px"
+          width="246px"
+        />
+      </div>
+      <div vts-col>
+        <img
+          src="assets/template/landing/partner-2.png"
+          alt="partner"
+          height="94px"
+          width="246px"
+        />
+      </div>
+      <div vts-col>
+        <img
+          src="assets/template/landing/partner-3.png"
+          alt="partner"
+          height="94px"
+          width="246px"
+        />
+      </div>
+      <div vts-col>
+        <img
+          src="assets/template/landing/partner-4.png"
+          alt="partner"
+          height="94px"
+          width="246px"
+        />
+      </div>
+      <div vts-col>
+        <img
+          src="assets/template/landing/partner-5.png"
+          alt="partner"
+          height="94px"
+          width="246px"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="home-support">
+    <div class="home-support-grid" vts-row vtsAlign="middle" vtsGutter="86">
+      <div
+        class="home-support-grid-illustration"
+        vts-col
+        vtsSpan="0"
+        vtsMd="12"
+      >
+        <img
+          src="assets/template/landing/support-illus.png"
+          width="500px"
+          height="auto"
+        />
+      </div>
+      <div
+        class="home-support-grid-form"
+        vts-col
+        vtsMd="12"
+        vts-space
+        vtsDirection="vertical"
+        vtsPreset="5"
+      >
+        <div *vtsSpaceItem class="home-support-grid-form-prepend-1">
+          <span vts-typography vtsType="h1">{{
+            'landing.homepage.supportPrepend1' | translate
+          }}</span>
+        </div>
+        <div
+          *vtsSpaceItem
+          class="home-support-grid-form-prepend-2"
+          vts-space
+          vtsDirection="vertical"
+        >
+          <span
+            vts-typography
+            vtsType="h4"
+            vtsWeight="semi-bold"
+            vtsColor="secondary"
+            >{{ 'landing.homepage.supportPrepend2' | translate }}</span
+          >
+          <span vts-typography vtsColor="secondary">{{
+            'landing.homepage.supportPrepend3' | translate
+          }}</span>
+        </div>
+        <div *vtsSpaceItem class="home-support-grid-form-content">
+          <<%= name %>-ui-support-form></<%= name %>-ui-support-form>
+        </div>
+      </div>
+    </div></section
+></ng-container>

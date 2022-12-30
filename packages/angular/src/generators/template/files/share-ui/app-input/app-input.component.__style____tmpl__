@@ -1,0 +1,12 @@
+.input-suffix-btn {
+  cursor: pointer;
+  margin-right: 4px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    color: #ee0033;
+  }
+}

@@ -9,15 +9,27 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["error"],
+      "enum": [
+        "ErrorTemplate-NoLayout",
+        "AuthenticationTemplate-WithLayout",
+        "LandingTemplate-WithLayout"
+      ],
       "description": "Type of template which will be created.",
       "x-prompt": {
         "message": "What type of template to be created? (--type)",
         "type": "list",
         "items": [
           {
-            "value": "error",
-            "label": "Error Template"
+            "value": "ErrorTemplate-NoLayout",
+            "label": "ErrorTemplate-NoLayout"
+          },
+          {
+            "value": "AuthenticationTemplate-WithLayout",
+            "label": "AuthenticationTemplate-WithLayout"
+          },
+          {
+            "value": "LandingTemplate-WithLayout",
+            "label": "LandingTemplate-WithLayout"
           }
         ]
       }
@@ -26,7 +38,12 @@
       "type": "string",
       "description": "Name of feature group.",
       "x-prompt": "What name would you like to use for new feature group?"
+    },
+    "layoutName": {
+      "type": "string",
+      "description": "Name of layout feature will be generated in feature-group `layout`. Only neccessary if template type require a layout, check template description.",
+      "default": "{{name}}-layout"
     }
   },
-  "required": ["type", "name"]
+  "required": ["type", "name", "layoutName"]
 }

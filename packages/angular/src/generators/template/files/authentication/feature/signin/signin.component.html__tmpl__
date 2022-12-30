@@ -1,0 +1,68 @@
+<<%= name %>-ui-<%= name %>-form
+  [title]="'authentication.title.signIn' | translate"
+>
+  <ng-container content>
+    <form
+      [vtsLayout]="'vertical'"
+      vts-form
+      [formGroup]="loginForm"
+      (ngSubmit)="submitForm()"
+    >
+      <vts-form-item>
+        <vts-form-label vtsRequired>{{
+          'common.form.email' | translate
+        }}</vts-form-label>
+        <vts-form-control [vtsErrorTip]="emailErrorTpl">
+          <<%= name %>-ui-app-input
+            cdkTrapFocus
+            [cdkTrapFocusAutoCapture]="true"
+            formControlName="email"
+            [placeholder]="'common.form.email' | translate"
+          ></<%= name %>-ui-app-input>
+          <ng-template #emailErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">{{
+              'common.validation.required'
+                | translate: { name: 'common.form.email' | translate }
+            }}</ng-container>
+          </ng-template>
+        </vts-form-control>
+      </vts-form-item>
+      <vts-form-item>
+        <vts-form-label vtsRequired>{{
+          'common.form.password' | translate
+        }}</vts-form-label>
+        <vts-form-control [vtsErrorTip]="passwordErrorTpl">
+          <<%= name %>-ui-app-input
+            type="password"
+            formControlName="password"
+            [placeholder]="'common.form.password' | translate"
+          ></<%= name %>-ui-app-input>
+          <ng-template #passwordErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">{{
+              'common.validation.required'
+                | translate: { name: 'common.form.password' | translate }
+            }}</ng-container>
+          </ng-template>
+        </vts-form-control>
+      </vts-form-item>
+      <vts-form-item>
+        <a vts-typo vtsType="link" [routerLink]="['..', 'forgot-password']"
+          ><b>{{ 'authentication.form.forgotLink' | translate }}</b></a
+        >
+      </vts-form-item>
+      <vts-form-item>
+        <vts-form-control>
+          <button vtsType="primary" vtsBlock vts-button>
+            {{ 'authentication.form.signInAction' | translate }}
+          </button>
+        </vts-form-control>
+      </vts-form-item>
+    </form>
+  </ng-container>
+  <ng-container footer>
+    <span>{{ 'authentication.form.signUpDesc' | translate }}&nbsp;</span>
+    <a vts-typo vtsType="link" [routerLink]="['..', 'signup']"
+      ><b>{{ 'authentication.form.signUpLink' | translate }}</b></a
+    >
+  </ng-container>
+</<%= name %>-ui-<%= name %>-form>

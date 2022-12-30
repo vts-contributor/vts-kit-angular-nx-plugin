@@ -200,8 +200,16 @@ async function determineTemplate(
 ): Promise<string[]> {
   const templateChoices = [
     {
-      name: 'error',
+      name: 'ErrorTemplate-NoLayout',
       message: 'Error Template',
+    },
+    {
+      name: 'AuthenticationTemplate-WithLayout',
+      message: 'Authentication',
+    },
+    {
+      name: 'LandingTemplate-WithLayout',
+      message: 'Landing Page',
     },
   ];
 
@@ -420,30 +428,39 @@ async function generateTemplate(
   const { templates } = parsedArgs;
   if (templates == null || templates.length == 0) return;
 
-  let templateGenerateSpinner = ora(`Generating template`).start();
-
-  try {
-    const { exec } = getPackageManagerCommand();
-
-    templates.forEach(async (type) => {
+  const generate = async (type) => {
+    const formattedName = type
+      .split('-')
+      .reverse()
+      .pop()
+      .replace(/Template/g, '');
+    let templateGenerateSpinner = ora(
+      `Generating template (${formattedName}).`
+    ).start();
+    try {
+      const { exec } = getPackageManagerCommand();
       const args = unparse({
         type,
-        name: type,
+        name: formattedName,
       }).join(' ');
       const command = `g ${packageName}:template`;
       const fullCommand = `${exec} nx ${command} ${args}`;
       await execAndWait(fullCommand, projectPath);
-    });
 
-    templateGenerateSpinner.succeed(`Generated.`);
-  } catch (e) {
-    templateGenerateSpinner.fail();
-    output.error({
-      title: `Failed to generate template.`,
-      bodyLines: mapErrorToBodyLines(e),
-    });
-    process.exit(1);
-  } finally {
-    templateGenerateSpinner.stop();
+      templateGenerateSpinner.succeed(`Generated template (${formattedName}).`);
+    } catch (e) {
+      templateGenerateSpinner.fail();
+      output.error({
+        title: `Failed to generate template.`,
+        bodyLines: mapErrorToBodyLines(e),
+      });
+      process.exit(1);
+    } finally {
+      templateGenerateSpinner.stop();
+    }
+  };
+
+  for await (const item of templates) {
+    await generate(item);
   }
 }

@@ -1,6 +1,10 @@
 export interface Schema {
-  type: 'error';
+  type:
+    | 'ErrorTemplate-NoLayout'
+    | 'AuthenticationTemplate-WithLayout'
+    | 'LandingTemplate-WithLayout';
   name: string;
+  layoutName: string;
 }
 
 export interface NormalizedSchema extends Schema {}
