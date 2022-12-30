@@ -567,7 +567,7 @@ def initGlobalEnv() {
     }
 
     def project = jenkinsfile_utils.getProject()
-    env.gitProjectApiUrl= "http://git_url/api/v4/projects/${project.id}"
+    env.gitProjectApiUrl= "${gitlabUrl}/api/v4/projects/${project.id}"
 
     // Load local environment
     try {
