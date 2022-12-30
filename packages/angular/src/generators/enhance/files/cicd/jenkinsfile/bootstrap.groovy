@@ -83,7 +83,7 @@ def bootstrapPushCommitBuild() {
                         "<br/>${buildResultContent}",
                         mimeType: 'text/html',
                         cc: "${env.mailCC}",
-                        from: 'vtsjenkinsadmin@viettel.com.vn',
+                        from: 'jenkins_mail',
                         replyTo: '',
                         subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
                         to: "${env.mailTo}"
@@ -209,7 +209,7 @@ def bootstrapMergeRequestBuild() {
             body: "${mergeRequestBuildStr}",
             mimeType: 'text/html',
             cc: "${env.mailCC}",
-            from: 'vtsjenkinsadmin@viettel.com.vn',
+            from: 'jenkins_mail',
             replyTo: '',
             subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
             to: "${env.mailTo}"
@@ -567,7 +567,7 @@ def initGlobalEnv() {
     }
 
     def project = jenkinsfile_utils.getProject()
-    env.gitProjectApiUrl= "http://10.60.156.11/api/v4/projects/${project.id}"
+    env.gitProjectApiUrl= "http://git_url/api/v4/projects/${project.id}"
 
     // Load local environment
     try {
