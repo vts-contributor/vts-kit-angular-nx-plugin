@@ -86,7 +86,7 @@ export class <%= classify(layoutName) %>Component implements OnInit, OnDestroy {
       {
         name: this.t('common.other.email'),
         icon: 'MailOutline:import',
-        value: 'hopdongdientu@viettel.com.vn',
+        value: 'hopdongdientu@gmail.com',
       },
     ])
   );

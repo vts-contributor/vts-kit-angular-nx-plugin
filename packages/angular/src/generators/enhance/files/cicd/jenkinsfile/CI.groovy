@@ -138,13 +138,13 @@ def sonarQubeScan(buildType) {
 			"Details SonarQube Code Analysis Report...</a></i><br/><br/>"
 		env.SONAR_QUBE_SCAN_RESULT_STR = sonarQubeAnalysisComment
 		if ("${env.gitlabActionType}".toString() == "MERGE" || "${env.gitlabActionType}".toString() == "NOTE") {
-			echo "check vulnerabilities, code smell and bugs"
+			echo "Check vulnerabilities, code smell and bugs"
 			int maximumAllowedVulnerabilities = env.maximumAllowedVunerabilities as Integer
 			int maximumAllowedBugs = env.maximumAllowedBugs as Integer
 			int maximumAllowedCodeSmell = env.maximumAllowedCodeSmell as Integer
-			echo "maximum allow vulnerabilities:  ${maximumAllowedVulnerabilities} "
-			echo "maximum allow bugs:  ${maximumAllowedBugs}"
-			echo "maximum allow code smell:  ${maximumAllowedCodeSmell}"
+			echo "Maximum allow vulnerabilities:  ${maximumAllowedVulnerabilities} "
+			echo "Maximum allow bugs:  ${maximumAllowedBugs}"
+			echo "Maximum allow code smell:  ${maximumAllowedCodeSmell}"
 			if (codeAnalysisResult["vulnerabilities"] > maximumAllowedVulnerabilities ||
 				codeAnalysisResult["bugs"] > maximumAllowedBugs || codeAnalysisResult["code_smells"] > maximumAllowedCodeSmell) {
 				if (env.errorBypass == 'true') {

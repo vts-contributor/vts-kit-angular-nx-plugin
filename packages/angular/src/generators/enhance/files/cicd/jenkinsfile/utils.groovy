@@ -71,10 +71,8 @@ def checkoutSourceCode(checkoutType) {
 
 def getProject() {
     def current = ""
-    withCredentials([usernamePassword(credentialsId: 'a5eedd9f-332d-4575-9756-c358bbd808eb', usernameVariable: 'user',
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
         passwordVariable: 'password')]) {
-        def gitlabUrl = sh(script: "echo ${env.gitlabSourceRepoHttpUrl} | cut -d/ -f1-3", returnStdout:true).trim()
-
         def response = httpRequest([
             acceptType: 'APPLICATION_JSON',
             httpMode: 'GET',
@@ -82,7 +80,7 @@ def getProject() {
             customHeaders: [
                 [name: 'Private-Token', value: password]
             ],
-            url: "${gitlabUrl}/api/v4/projects?search=${env.gitlabSourceRepoName}"
+            url: "${env.gitlabUrl}/api/v4/projects?search=${env.gitlabSourceRepoName}"
         ])
         def projects = jenkinsfile_utils.jsonParse(response.content)
         for (project in projects) {
@@ -103,7 +101,7 @@ def getProject() {
 def getProjectMember(notifyMemberLevel) {
     def project_members = []
     def project_member_notify = []
-    withCredentials([usernamePassword(credentialsId: 'a5eedd9f-332d-4575-9756-c358bbd808eb', usernameVariable: 'user',
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
         passwordVariable: 'password')]) {
         def currentPage = 1
         haveNextPage = true
@@ -155,7 +153,7 @@ def checkModuleIsService(String moduleName, notServiceModuleList) {
             isService = false
         }
     }
-    echo "is service: ${isService}"
+    echo "Is service: ${isService}"
     return isService
 }
 

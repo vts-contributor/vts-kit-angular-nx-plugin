@@ -30,7 +30,7 @@ def bootstrapPushCommitBuild() {
         } catch (InterruptedException ex) {
             currentBuild.result = "ABORTED"
         } catch (err) {
-            echo "error: ${err}"
+            echo "Error: ${err}"
             if (currentBuild.result != "ABORTED") {
                 currentBuild.result = "FAILURE"
             }
@@ -72,8 +72,8 @@ def bootstrapPushCommitBuild() {
                 (env.SECURITY_RESULT_STR == null ? "" : env.SECURITY_RESULT_STR) +
                 (env.FUNCTIONAL_TEST_RESULT_STR == null ? "" : env.FUNCTIONAL_TEST_RESULT_STR)
             try {
-                if (env.mailTo == null) {
-                    echo "skip send mail due to mail to null"
+                if (env.mailTo == null || env.mailTo == '') {
+                    echo "Skip send mail due to mail to null"
                 } else {
                     mail([
                         bcc: '',
@@ -83,7 +83,6 @@ def bootstrapPushCommitBuild() {
                         "<br/>${buildResultContent}",
                         mimeType: 'text/html',
                         cc: "${env.mailCC}",
-                        from: 'jenkins_mail',
                         replyTo: '',
                         subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
                         to: "${env.mailTo}"
@@ -110,6 +109,7 @@ def bootstrapRebuildMergeRequest() {
             bootstrapMergeRequestBuild()
         }
     } else {
+        echo "This merge request is currently not open. Cancel build"
         addGitLabMRComment comment: "This merge request is currently not open. Cancel build"
         currentBuild.result = "ABORTED"
     }
@@ -122,7 +122,7 @@ def bootstrapMergeRequestBuild() {
     try {
         if (checkIfBranchesRevisionAreSame(env.gitlabSourceBranch, env.gitlabTargetBranch)) {
             stage("Cancel Build When Source Branch is the same with Target Branch") {
-                echo "source branch has same commitID with target branch. Stop build"
+                echo "Source branch has same commitID with target branch. Stop build"
                 env.CHECK_IF_BRANCHES_REVISION_ARE_SAME_RESULT = "Source branch has same commitID with target branch. Stop build"
             }
             throw new InterruptedException("Source branch has same commitID with target branch. Stop build")
@@ -130,10 +130,6 @@ def bootstrapMergeRequestBuild() {
         env.gitlabBuildID = env.mrBuildPrefix + "-" + env.BUILD_NUMBER
         updateGitlabCommitStatus name: "build", state: 'running'
         updateGitlabCommitStatus name: "${env.gitlabBuildID}", state: 'running'
-        stage('Cancel old MR Build') {
-            cancelOldMrBuild(env.gitlabMergeRequestIid, env.BUILD_TYPE)
-        }
-        updateGitlabCommitStatus name: "build", state: 'running'
         jenkinsfile_CI.buildMergeRequest()
         currentBuild.result = "SUCCESS"
     } catch (FlowInterruptedException interruptEx) {
@@ -143,7 +139,7 @@ def bootstrapMergeRequestBuild() {
         echo "Build canceled: ${interruptEx}"
         currentBuild.result = "ABORTED"
     } catch (err) {
-        echo "build error: ${err}"
+        echo "Build error: ${err}"
         if (currentBuild.result != "ABORTED") {
             currentBuild.result = "FAILURE"
         }
@@ -201,19 +197,27 @@ def bootstrapMergeRequestBuild() {
         def mergeRequestBuildStr =
             "<details> ${buildSummary}<br/><br/> ${buildResultContent}" +
             "${buildDetail}</details>".toString()
-        echo "comment ${mergeRequestBuildStr}"
+        echo "Comment ${mergeRequestBuildStr}"
         addGitLabMRComment comment: "${mergeRequestBuildStr}"
-        echo "comment added !"
-        mail([
-            bcc: '',
-            body: "${mergeRequestBuildStr}",
-            mimeType: 'text/html',
-            cc: "${env.mailCC}",
-            from: 'jenkins_mail',
-            replyTo: '',
-            subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
-            to: "${env.mailTo}"
-        ])
+        echo "Comment added !"
+
+        try {
+            if (env.mailTo == null || env.mailTo == '') {
+                echo "Skip send mail due to mail to null"
+            } else {
+                mail([
+                    bcc: '',
+                    body: "${mergeRequestBuildStr}",
+                    mimeType: 'text/html',
+                    cc: "${env.mailCC}",
+                    replyTo: '',
+                    subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!",
+                    to: "${env.mailTo}"
+                ])
+            }
+        } catch (err) {
+            echo "Send mail failure"
+        }
     }
 }
 
@@ -263,9 +267,9 @@ def bootstrapDeployToProduction() {
             env.DEPLOY_RESULT_TITLE = "Deploy version ${env.projectVersion} Result"
         }
 
-        echo "title: ${env.DEPLOY_RESULT_TITLE}"
-        echo "description: ${env.DEPLOY_RESULT_DESCRIPTION}"
-        withCredentials([usernamePassword(credentialsId: 'a5eedd9f-332d-4575-9756-c358bbd808eb', usernameVariable: 'user',
+        echo "Title: ${env.DEPLOY_RESULT_TITLE}"
+        echo "Description: ${env.DEPLOY_RESULT_DESCRIPTION}"
+        withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
             passwordVariable: 'password')]) {
             def issueContentJson = """ 
             {
@@ -317,7 +321,7 @@ def bootstrapDeployToProduction() {
  * @return boolean true if this push branch is in a open merge request
  */
 def checkIfBranchesRevisionAreSame(sourceBranch, targetBranch) {
-    withCredentials([usernamePassword(credentialsId: 'a6299eee-80ab-41bc-992a-1745f51a264b', usernameVariable: 'username',
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
         passwordVariable: 'password')]) {
         def branchPageIndex = 0
         def hasBranchPage = true
@@ -359,7 +363,7 @@ def checkIfBranchesRevisionAreSame(sourceBranch, targetBranch) {
  */
 def pushCommitInOpenMR(pushBranch) {
     def isInOpenMR = false
-    withCredentials([usernamePassword(credentialsId: 'a6299eee-80ab-41bc-992a-1745f51a264b', usernameVariable: 'username',
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
         passwordVariable: 'password')]) {
         def response = httpRequest([
             acceptType: 'APPLICATION_JSON',
@@ -388,10 +392,8 @@ def pushCommitInOpenMR(pushBranch) {
  * @return boolean true if checked merge request is a open merge request, false if is a closed MR
  */
 def isOpenMergeRequest(gitlabMergeRequestIid) {
-    withCredentials([
-        usernamePassword(credentialsId: 'a6299eee-80ab-41bc-992a-1745f51a264b', usernameVariable: 'username', passwordVariable: 'password'),
-        usernamePassword(credentialsId: 'jenkins_api_token_new', usernameVariable: 'usernamejenkins', passwordVariable: 'token')
-    ]) {
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
+        passwordVariable: 'password')]) {
         def response = httpRequest([
             acceptType: 'APPLICATION_JSON',
             httpMode: 'GET',
@@ -412,10 +414,8 @@ def isOpenMergeRequest(gitlabMergeRequestIid) {
  * @return boolean true if this push branch is in a open merge request
  */
 def isWIPMergeRequest(gitlabMergeRequestIid) {
-    withCredentials([
-        usernamePassword(credentialsId: 'a6299eee-80ab-41bc-992a-1745f51a264b', usernameVariable: 'username', passwordVariable: 'password'),
-        usernamePassword(credentialsId: 'jenkins_api_token_new', usernameVariable: 'usernamejenkins', passwordVariable: 'token')
-    ]) {
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
+        passwordVariable: 'password')]) {
         def response = httpRequest([
             acceptType: 'APPLICATION_JSON',
             httpMode: 'GET',
@@ -427,96 +427,6 @@ def isWIPMergeRequest(gitlabMergeRequestIid) {
         ])
         def mergeRequestInfo = jenkinsfile_utils.jsonParse(response.content)
         return mergeRequestInfo['work_in_progress']
-    }
-}
-
-@SuppressWarnings("GroovyAssignabilityCheck")
-def checkIfBuildIsRunning(buildURL) {
-    withCredentials([usernamePassword(credentialsId: 'jenkins_api_token_new', usernameVariable: 'usernamejenkins', passwordVariable: 'token')]) {
-        def buildInfoResp = httpRequest([
-            acceptType: 'APPLICATION_JSON',
-            httpMode: 'GET',
-            contentType: 'APPLICATION_JSON',
-            authentication: 'jenkins_api_token_new',
-            url: "${buildURL}/api/json"
-        ])
-        return jenkinsfile_utils.jsonParse(buildInfoResp.content)["building"] == true
-    }
-}
-
-/**
- * Check if other builds is running in commit which this build refer to
- * And close these builds when match below requirements:
- * Accept and Close MR build only stop OPEN MR build, not stop Push commit build
- * Open MR Build close both other Open MR build and Push commit build
- * @param buildType type of current build
- * @param gitlabMergeRequestIid GitLab merge request id of this build
- * @return nothing
- */
-def cancelOldMrBuild(gitlabMergeRequestIid, currentBuildType) {
-    env.CANCEL_BUILD_WARNING = ""
-    withCredentials([
-        usernamePassword(credentialsId: 'a6299eee-80ab-41bc-992a-1745f51a264b', usernameVariable: 'username', passwordVariable: 'password'),
-        usernamePassword(credentialsId: 'jenkins_api_token_new', usernameVariable: 'usernamejenkins', passwordVariable: 'token')
-    ]) {
-        def pipelines = httpRequest([
-            acceptType: 'APPLICATION_JSON',
-            httpMode: 'GET',
-            contentType: 'APPLICATION_JSON',
-            customHeaders: [
-                [name: 'Private-Token', value: password]
-            ],
-            url: "${env.gitProjectApiUrl}/merge_requests/${gitlabMergeRequestIid}/pipelines"
-        ])
-
-        for (pipeline in jenkinsfile_utils.jsonParse(pipelines.content)) {
-            //noinspection GroovyAssignabilityCheck
-            def checkCommitID = pipeline['sha']
-            echo "check commit id: ${checkCommitID}"
-            def commitJobs = httpRequest([
-                acceptType: 'APPLICATION_JSON',
-                httpMode: 'GET',
-                contentType: 'APPLICATION_JSON',
-                customHeaders: [
-                    [name: 'Private-Token', value: password]
-                ],
-                url: "${env.gitProjectApiUrl}/repository/commits/${checkCommitID}/statuses?all=yes"
-            ])
-
-            for (commitJob in jenkinsfile_utils.jsonParse(commitJobs.content)) {
-                //noinspection GroovyAssignabilityCheck
-                if (currentBuildType == "merge_request_build" || currentBuildType == "rebuild_merge_request" ||
-                    ((currentBuildType == "accept_mr_build" || currentBuildType == "close_mr_build") &&
-                        (commitJob["name"].contains(env.mrBuildPrefix) ||
-                            commitJob["name"].contains(env.acceptCloseMRBuildPrefix)))
-                ) {
-                    if (commitJob["status"] == "pending" || commitJob["status"] == "running") {
-                        def buildURL = commitJob["target_url"].substring(0, commitJob["target_url"].length() - 17)
-                        echo "Check buildURL: ${buildURL}"
-                        echo "Current buildURL: ${env.BUILD_URL}"
-                        if (!env.BUILD_URL.contains(buildURL)) {
-                            def retry = 0
-                            while (checkIfBuildIsRunning(buildURL) && retry < 3) {
-                                echo "Old build: ${commitJob["target_url"]} is running!. Stop this job!"
-                                httpRequest([
-                                    acceptType: 'APPLICATION_JSON',
-                                    httpMode: 'POST',
-                                    contentType: 'APPLICATION_JSON',
-                                    authentication: 'jenkins_api_token_new',
-                                    url: "${buildURL}/stop"
-                                ])
-                                sleep 10
-                                retry += 1
-                            }
-                            if (checkIfBuildIsRunning(buildURL)) {
-                                env.CANCEL_BUILD_WARNING += "<h2> Build ${buildURL} is still running after cancel build 3 times. Re check it!</h2>"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        echo "pipelines: ${pipelines}"
     }
 }
 
@@ -542,7 +452,7 @@ def updateGitlabPushComment(buildIcon, buildResultStr, lastCommitShortName) {
         "${buildDetails}</details>".toString()
     def requestBody = '{"note":"' + buildCommitStr + '", "line_type": "new"}'
     echo "${requestBody}"
-    withCredentials([usernamePassword(credentialsId: ${env.gitUserPassSecret}, usernameVariable: 'username',
+    withCredentials([usernamePassword(credentialsId: "${env.gitUserPassSecret}", usernameVariable: 'username',
         passwordVariable: 'password')]) {
         sh "curl -X POST ${env.gitProjectApiUrl}/repository/commits/${env.gitlabAfter}/comments " +
             "-H 'Cache-Control: no-cache' -H 'Content-Type: application/json' " +
@@ -555,20 +465,6 @@ def updateGitlabPushComment(buildIcon, buildResultStr, lastCommitShortName) {
  * Custom initial environments
  */
 def initGlobalEnv() {
-    env.MERGE_REQUEST_BUILD_COMMENT = ""
-    env.PUSH_COMMIT_BUILD_COMMENT = ""
-    env.lastCommitShortName = env.gitlabMergeRequestLastCommit.substring(0, 8)
-    env.display_build_name = "${env.gitlabSourceBranch}:${lastCommitShortName} -> ${env.gitlabTargetBranch}".toString()
-    if (env.gitlabSourceRepoName != null) {
-        env.gitlabSourceRepoName = env.gitlabSourceRepoName.replace(" ", "-")
-    }
-    if (env.gitlabTargetRepoName != null) {
-        env.gitlabTargetRepoName = env.gitlabTargetRepoName.replace(" ", "-")
-    }
-
-    def project = jenkinsfile_utils.getProject()
-    env.gitProjectApiUrl= "${gitlabUrl}/api/v4/projects/${project.id}"
-
     // Load local environment
     try {
         echo 'Load local environment: Loading'
@@ -587,11 +483,29 @@ def initGlobalEnv() {
                 echo 'Load remote environment: Error'
             }
         }
-        echo 'Environments:'
-        sh 'env'
     } catch (Exception e) {
         echo 'Load local environment: Error'
     }
+
+    // Extra project environments
+    env.gitlabUrl = sh(script: "echo ${env.gitlabSourceRepoHttpUrl} | cut -d/ -f1-3", returnStdout:true).trim()
+    env.MERGE_REQUEST_BUILD_COMMENT = ""
+    env.PUSH_COMMIT_BUILD_COMMENT = ""
+    env.lastCommitShortName = env.gitlabMergeRequestLastCommit.substring(0, 8)
+    env.display_build_name = "${env.gitlabSourceBranch}:${lastCommitShortName} -> ${env.gitlabTargetBranch}".toString()
+    if (env.gitlabSourceRepoName != null) {
+        env.gitlabSourceRepoName = env.gitlabSourceRepoName.replace(" ", "-")
+    }
+    if (env.gitlabTargetRepoName != null) {
+        env.gitlabTargetRepoName = env.gitlabTargetRepoName.replace(" ", "-")
+    }
+
+    def project = jenkinsfile_utils.getProject()
+    env.gitProjectApiUrl= "${env.gitlabUrl}/api/v4/projects/${project.id}"
+
+    // Dump environments
+    echo 'Environments:'
+    sh 'env'
 }
 
 /**

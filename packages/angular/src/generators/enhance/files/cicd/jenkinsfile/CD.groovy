@@ -28,7 +28,7 @@ def deployToProduction() {
     stage("Wait for maintainer accept or reject to deploy to production") {
         try {
             deployer = env.projectMaintainerList
-            echo "projectMaintainerList: ${env.projectMaintainerList}"
+            echo "Project Maintainers: ${env.projectMaintainerList}"
 
             timeout(time: 24, unit: 'HOURS') {
                 deployInput = input(

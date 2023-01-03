@@ -230,6 +230,7 @@ async function determineTemplate(
                 name: 'templates',
                 message: `Select inital templates: (Use <space> to toggle select)`,
                 type: 'multiselect',
+                initial: ["ErrorTemplate-NoLayout"] as any,
                 choices: templateChoices,
               },
             ])

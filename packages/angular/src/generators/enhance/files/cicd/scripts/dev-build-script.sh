@@ -7,16 +7,18 @@ node -v
 echo "NPM version"
 npm -v
 
-echo "Start build source"   
+echo "Build source"   
 npm i
 npm run build
 
-echo "Start build docker"
-docker build -f cicd/configs/Dockerfile -t "$imageName" .
-echo "Finish build docker"
+echo "Build docker"
+newDockerfilePath=$(npx @vts-private/cli@latest template --templateUrl=cicd/configs/Dockerfile | tail -1)
+docker build -f "$newDockerfilePath" -t "$imageName" .
 
 echo "Push image to registry server"
 docker push "$imageName"
-docker rmi "$imageName"
-echo "Finish push image to registry server"
 
+echo "Remove local image"
+docker rmi "$imageName"
+
+echo "Finish push image to registry server"
