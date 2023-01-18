@@ -1,6 +1,6 @@
 FROM {{harborServer}}/vbs/node:16-nginx-alpine3.16
 COPY cicd/configs/nginx.conf /etc/nginx/nginx.conf
-COPY dist/apps/myapp /usr/share/nginx/html/
+COPY dist/apps/<%= name %> /usr/share/nginx/html/
 
 RUN npm install -g @vts-private/cli@latest
 

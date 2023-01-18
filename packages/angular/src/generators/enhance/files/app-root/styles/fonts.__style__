@@ -236,7 +236,7 @@
   font-family: 'Sarabun';
   src: url('fonts/Sarabun-ExtraBold.woff2') format('woff2'),
     url('fonts/Sarabun-ExtraBold.woff') format('woff');
-  font-weight: bold;
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
@@ -245,7 +245,7 @@
   font-family: 'Sarabun';
   src: url('fonts/Sarabun-ExtraBoldItalic.woff2') format('woff2'),
     url('fonts/Sarabun-ExtraBoldItalic.woff') format('woff');
-  font-weight: bold;
+  font-weight: 800;
   font-style: italic;
   font-display: swap;
 }
