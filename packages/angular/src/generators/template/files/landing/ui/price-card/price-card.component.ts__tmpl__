@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
 import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
-import { VtsButtonModule } from '@ui-vts/ng-vts';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 
 @Component({
   selector: '<%= name %>-ui-price-card',
