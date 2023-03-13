@@ -1,7 +1,5 @@
 /** Pipeline options **/
-env.errorBypass = 'false'                           // OPTIONAL, Continue on error
-env.skipTest = 'false'                              // OPTIONAL, Skip test phase
-env.skipSonar = 'false'                             // OPTIONAL, Skip sonar scan phase
+env.flag_sonar = ""                           // OPTIONAL, Skip sonar scan phase
 
 
 /** Application information **/
@@ -9,6 +7,9 @@ env.appName = "<%= name %>"<%= ''.padStart(36 - name.length) %>// REQUIRED
                                                     // Determine docker image name (<harborServer>/<harborFolder>/<appName>:<version>_<buildNumber>) 
                                                     // and deployment/service name
 
+// GITLAB INFO //
+env.GITLAB_TOKEN_CREDENTIALS="<gitlab - token>"
+env.GITLAB_PROJECT_API_URL="http://<server_gitlab>/api/v4/projects/<id_Project>"
 
 /** Kubernetes profile **/
 
