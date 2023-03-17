@@ -20,6 +20,7 @@ This library aims to provide a quick way to start a new Angular Project and main
 - Bundle Analyze: webpack-bundle-analyzer ([Guideline](#feature-bundle-analyzer) + [Git](https://github.com/webpack-contrib/webpack-bundle-analyzer) + [NPM](https://www.npmjs.com/package/webpack-bundle-analyzer))
 - CICD (Jenkin + Docker) intergrated ([Guideline](#feature-cicd))
 - Dynamic Environment ([Guideline](#feature-dynamic-environment))
+- 3rd party integration ([Guideline](#feature-3rd-party-integration) + [Git](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/integration))
 
 ## Quickstart
 
@@ -853,6 +854,12 @@ Use `docker` CLI to set environment on running an image
 ```
   docker run -e VTS_KIT_ENV1=hello -t webapp-demo:1.0.0
 ```
+  
+### Feature: 3rd party integration
+
+VTS KIT offers libraries that facilitate the integration of third-party libraries and services with minimal effort.
+
+Check out [documentation](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/integration) for more detail.
   
 ## References
 
