@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+forderHarbor=$1
+nameProject=$2
+
 echo "Node version"
 node -v
 
@@ -12,8 +15,9 @@ npm i
 npm run build
 
 echo "Build docker"
+echo "IMAGE NAME" ${forderHarbor}/${nameProject}:latest
 newDockerfilePath=$(npx @vts-private/cli@latest template --templateUrl=cicd/configs/Dockerfile | tail -1)
-docker build -f "$newDockerfilePath" -t "$imageName" .
+docker build -f "$newDockerfilePath" -t ${forderHarbor}/${nameProject}:latest .
 
 echo "Push image to registry server"
 docker push "$imageName"
