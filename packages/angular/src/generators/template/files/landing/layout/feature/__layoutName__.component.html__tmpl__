@@ -8,44 +8,22 @@
       vtsWrap
     >
       <div *vtsSpaceItem class="learn-more">
-        <a
-          vts-space
-          vtsPreset="1"
-          vtsAlign="center"
-          vts-typography
-          vtsColor="secondary"
-        >
-          <i *vtsSpaceItem vts-icon vtsType="InfoOutline"></i>
-          <span *vtsSpaceItem>{{
-            'landing.layout.learnMore' | translate
-          }}</span>
-        </a>
+        <button vts-button vtsType="text">
+          <i vts-icon vtsType="InfoOutline:mat"></i>
+          18008098/198
+        </button>
       </div>
       <div *vtsSpaceItem class="contact">
-        <a
-          vts-space
-          vtsPreset="1"
-          vtsAlign="center"
-          vts-typography
-          vtsColor="secondary"
-        >
-          <i *vtsSpaceItem vts-icon vtsType="PhoneOutline:import"></i>
-          <span *vtsSpaceItem>18008098/198</span>
-        </a>
+        <button vts-button vtsType="text">
+          <i vts-icon vtsType="LocalPhoneOutline:mat"></i>
+          18008098/198
+        </button>
       </div>
       <div *vtsSpaceItem class="order">
-        <a
-          vts-space
-          vtsPreset="1"
-          vtsAlign="center"
-          vts-typography
-          vtsColor="secondary"
-        >
-          <i *vtsSpaceItem vts-icon vtsType="OrderOutline:import"></i>
-          <span *vtsSpaceItem>{{
-            'landing.layout.checkOrder' | translate
-          }}</span>
-        </a>
+        <button vts-button vtsType="text">
+          <i vts-icon vtsType="AssignmentLateOutline:mat"></i>
+          {{ 'landing.layout.checkOrder' | translate }}
+        </button>
       </div>
       <div *vtsSpaceItem vts-space vtsPreset="2" class="locale">
         <a
@@ -153,11 +131,11 @@
               }}</span>
             </a>
             <a class="drawer-action" vts-space vtsPreset="1">
-              <i *vtsSpaceItem vts-icon vtsType="PhoneOutline:import"></i>
+              <i *vtsSpaceItem vts-icon vtsType="LocalPhoneOutline:mat"></i>
               <span *vtsSpaceItem>18008098/198</span>
             </a>
             <a class="drawer-action" vts-space vtsPreset="1">
-              <i *vtsSpaceItem vts-icon vtsType="OrderOutline:import"></i>
+              <i *vtsSpaceItem vts-icon vtsType="AssignmentLateOutline:mat"></i>
               <span *vtsSpaceItem>{{
                 'landing.layout.checkOrder' | translate
               }}</span>
@@ -285,41 +263,43 @@
       </div>
     </div>
   </div>
-  <div class="landing-layout-append" vts-row [vtsGutter]="16">
-    <div
-      vts-col
-      vts-space
-      vtsPreset="3"
-      vtsAlign="center"
-      class="landing-layout-append-copyright"
-    >
-      <span *vtsSpaceItem vts-typography vtsColor="secondary"
-        >© Viettel Telecom 2019. All rights reserved</span
+  <div class="landing-layout-append">
+    <div class="landing-layout-append-container" vts-row [vtsGutter]="16">
+      <div
+        vts-col
+        vts-space
+        vtsPreset="3"
+        vtsAlign="center"
+        class="landing-layout-append-copyright"
       >
-      <div *vtsSpaceItem class="logo">
-        <img
-          src="/assets/template/landing/copyright-logo.png"
-          width="118px"
-          height="auto"
-        />
+        <span *vtsSpaceItem vts-typography vtsColor="secondary"
+          >© Viettel Telecom 2019. All rights reserved</span
+        >
+        <div *vtsSpaceItem class="logo">
+          <img
+            src="/assets/template/landing/copyright-logo.png"
+            width="118px"
+            height="auto"
+          />
+        </div>
       </div>
-    </div>
-    <div
-      vts-col
-      vts-space
-      vtsPreset="3"
-      vtsAlign="center"
-      class="landing-layout-append-policy"
-    >
-      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
-        'landing.layout.termOfUse' | translate
-      }}</a>
-      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
-        'landing.layout.securityPolicy' | translate
-      }}</a>
-      <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
-        'landing.layout.siteMap' | translate
-      }}</a>
+      <div
+        vts-col
+        vts-space
+        vtsPreset="3"
+        vtsAlign="center"
+        class="landing-layout-append-policy"
+      >
+        <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+          'landing.layout.termOfUse' | translate
+        }}</a>
+        <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+          'landing.layout.securityPolicy' | translate
+        }}</a>
+        <a *vtsSpaceItem vts-typography vtsColor="secondary">{{
+          'landing.layout.siteMap' | translate
+        }}</a>
+      </div>
     </div>
   </div>
 </div>

@@ -322,7 +322,8 @@ export class HomepageComponent implements OnInit {
         </defs>
         </svg>
       `,
-      name: 'Benefit1:import',
+      name: 'Benefit1',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -350,7 +351,8 @@ export class HomepageComponent implements OnInit {
         </defs>
         </svg>
       `,
-      name: 'Benefit2:import',
+      name: 'Benefit2',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -388,7 +390,8 @@ export class HomepageComponent implements OnInit {
       </defs>
       </svg>    
       `,
-      name: 'Benefit3:import',
+      name: 'Benefit3',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -411,7 +414,8 @@ export class HomepageComponent implements OnInit {
       </defs>
       </svg>
       `,
-      name: 'Benefit4:import',
+      name: 'Benefit4',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -424,7 +428,8 @@ export class HomepageComponent implements OnInit {
         </defs>
         </svg>
       `,
-      name: 'Step1:import',
+      name: 'Step1',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -442,7 +447,8 @@ export class HomepageComponent implements OnInit {
         </defs>
         </svg>
       `,
-      name: 'Step2:import',
+      name: 'Step2',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -475,14 +481,16 @@ export class HomepageComponent implements OnInit {
         </defs>
       </svg>
       `,
-      name: 'Step3:import',
+      name: 'Step3',
+      type: 'import'
     });
     this.iconService.addIcon({
       icon: `<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.990797 30.3429C0.9566 30.6584 0.922445 30.9735 0.885806 31.2874C0.885806 32.4578 0.885806 33.6282 0.875 34.7773L0.972255 35.288C1.05309 35.7722 1.12343 36.2585 1.19374 36.7446C1.34901 37.818 1.50414 38.8905 1.77191 39.9378C2.53914 42.9596 3.94393 45.7047 6.47256 47.6412C10.9355 51.046 15.8306 51.7483 20.996 49.2798C25.7722 47.0028 28.6359 41.5551 27.8794 36.3946C27.3932 33.0962 25.8803 30.3297 23.2436 28.2443C20.1963 25.8396 16.6843 24.9352 12.8265 25.4034C12.0486 25.5001 11.2865 25.6955 10.5218 25.8916C10.1924 25.9761 9.86253 26.0607 9.53068 26.1375C9.53068 26.1359 9.53043 26.1328 9.53009 26.1285C9.52815 26.1045 9.52316 26.0427 9.54149 25.9886C10.3303 23.2966 11.3137 20.6685 12.8157 18.2745C14.5123 15.5719 16.6519 13.412 20.0234 12.8161C20.5853 12.7204 20.9419 12.3267 21.0932 11.7947C21.5471 10.2306 22.0009 8.66648 22.4224 7.09175C22.6601 6.19798 22.0441 5.41061 21.1256 5.31485C18.6078 5.04884 16.2737 5.61277 14.0692 6.79382C11.1624 8.35792 8.91473 10.6349 7.04528 13.2843C3.81426 17.8808 1.97722 22.9987 1.20999 28.4996C1.12428 29.1115 1.05746 29.7279 0.990797 30.3429ZM42.9243 25.3434C40.9891 25.2156 39.1062 25.5245 37.2546 26.302C37.2546 26.2565 37.253 26.2207 37.2517 26.1907C37.2496 26.1435 37.2482 26.1109 37.2546 26.0783C38.0182 23.373 38.9597 20.7528 40.4137 18.3456C42.0561 15.619 44.1273 13.4249 47.412 12.8284C47.935 12.7325 48.2802 12.3704 48.4267 11.8591C48.5147 11.5443 48.6031 11.2299 48.6915 10.9158C49.0546 9.62496 49.4166 8.33836 49.7447 7.04486C49.9435 6.25668 49.41 5.4685 48.6254 5.35134C48.1024 5.27679 47.548 5.23418 47.0145 5.25548C44.0645 5.36199 41.5226 6.56557 39.2526 8.41885C36.0307 11.039 33.8026 14.4154 32.0975 18.1859C30.1518 22.4889 29.1057 27.0263 28.907 31.7553C28.75 35.4939 29.1476 39.1578 30.6225 42.6407C32.9866 48.2112 37.9764 51.1616 43.8344 50.7036C50.8117 50.1497 56.0211 43.397 54.996 36.3779C54.0859 30.1151 49.1589 25.7375 42.9243 25.3434Z" fill="#D7002E"/>
         </svg>
       `,
-      name: 'CommentMark:import',
+      name: 'CommentMark',
+      type: 'import'
     });
   }
 }
