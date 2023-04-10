@@ -13,7 +13,7 @@ import * as ora from 'ora';
 import { join } from 'path';
 import { execAndWait, getFileName, mapErrorToBodyLines } from './utils';
 import { dirSync } from 'tmp';
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { nxVersion } from '../../src/generators/utils/versions';
 
 const packageName = require('../../package.json').name;
@@ -31,7 +31,7 @@ export const commandsObject: yargs.Argv<Arguments> = yargs
     'dot-notation': true,
   })
   .command(
-    '$0 [name] [options]',
+    '$0 [options]',
     'Create a new Angular workspace',
     (yargs) =>
       yargs
@@ -53,15 +53,48 @@ export const commandsObject: yargs.Argv<Arguments> = yargs
         }),
     async (argv: yargs.ArgumentsCamelCase<Arguments>) => {
       await main(argv).catch((error) => {
-        const { version } = require('../package.json');
         output.error({
-          title: `Something went wrong! v${version}`,
+          title: `Something went wrong!`,
         });
         throw error;
       });
     },
     [getConfiguration]
   )
+  .command({
+    command: 'example',
+    describe: 'Generate an example',
+    handler: async (argv) => {
+      const expArgv = {
+        workspaceName: 'vts-kit-nx-webapp',
+        appName: 'demoapp',
+        style: 'less',
+        templates: ['ErrorTemplate-NoLayout'],
+        example: true,
+      } as yargs.Arguments<Arguments>;
+      await main(expArgv).catch((error) => {
+        output.error({
+          title: `Something went wrong!`,
+        });
+        throw error;
+      });
+    },
+    builder: {
+      prefix: {
+        type: 'string',
+        demandOption: false,
+        describe:
+          'Specify prefix of window environment, any environments start with this prefix will be injected into HTML',
+        default: 'VTS_KIT_',
+      },
+      htmlPath: {
+        type: 'string',
+        demandOption: false,
+        describe:
+          'Path to HTML file which will be injected, by default, use the nearest index.html file',
+      },
+    },
+  })
   .help('help', chalk.dim`Show help`)
   .version(
     'version',
@@ -230,7 +263,7 @@ async function determineTemplate(
                 name: 'templates',
                 message: `Select inital templates: (Use <space> to toggle select)`,
                 type: 'multiselect',
-                initial: ["ErrorTemplate-NoLayout"] as any,
+                initial: ['ErrorTemplate-NoLayout'] as any,
                 choices: templateChoices,
               },
             ])
@@ -241,6 +274,8 @@ async function determineTemplate(
 }
 
 async function main(parsedArgs: yargs.Arguments<Arguments>) {
+  const { example } = parsedArgs;
+
   output.log({
     title: `Version ${version}`,
     bodyLines: [
@@ -249,8 +284,15 @@ async function main(parsedArgs: yargs.Arguments<Arguments>) {
     ],
   });
 
+  if (example)
+    output.log({
+      title: ``,
+      bodyLines: [`Generating Mode: Example`],
+    });
+
   const tmpDir = await createSandbox();
   const projectPath = await createApp(parsedArgs, tmpDir);
+
   await applyVtsChange(parsedArgs, projectPath);
 }
 
@@ -364,12 +406,19 @@ async function applyVtsChange(
   parsedArgs: yargs.Arguments<Arguments>,
   projectPath: string
 ) {
-  await installVtsPlugin(projectPath);
+  const { example } = parsedArgs;
+
+  await installVtsPlugin(parsedArgs, projectPath);
   await runEnhancement(parsedArgs, projectPath);
   await generateTemplate(parsedArgs, projectPath);
+
+  if (example) await updateExample(projectPath);
 }
 
-async function installVtsPlugin(projectPath: string) {
+async function installVtsPlugin(
+  parsedArgs: yargs.Arguments<Arguments>,
+  projectPath: string
+) {
   let installSetupSpinner = ora(`Installing ${packageName}`).start();
 
   try {
@@ -463,5 +512,38 @@ async function generateTemplate(
 
   for await (const item of templates) {
     await generate(item);
+  }
+}
+
+async function updateExample(projectPath: string) {
+  let exampleSpinner = ora(`Update example`).start();
+
+  try {
+    const packageJson = JSON.parse(
+      readFileSync(join(projectPath, 'package.json')).toString()
+    );
+    writeFileSync(
+      join(projectPath, 'package.json'),
+      JSON.stringify(
+        {
+          ...packageJson,
+          devDependencies: {
+            ...packageJson.devDependencies,
+            '@vts-kit/nx-angular': 'latest',
+          },
+        },
+        null,
+        2
+      )
+    );
+  } catch (e) {
+    exampleSpinner.fail();
+    output.error({
+      title: `Failed to update example`,
+      bodyLines: mapErrorToBodyLines(e),
+    });
+    process.exit(1);
+  } finally {
+    exampleSpinner.stop();
   }
 }

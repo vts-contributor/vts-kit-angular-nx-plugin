@@ -69,6 +69,8 @@
     }
 
     @media screen and (max-width: 600px) {
+      max-width: 100%;
+
       &-outlet {
         padding: 40px 20px;
       }
