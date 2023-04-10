@@ -3,4 +3,5 @@ export type Arguments = {
   appName: string;
   style: string;
   templates: string[];
+  example: boolean;
 };

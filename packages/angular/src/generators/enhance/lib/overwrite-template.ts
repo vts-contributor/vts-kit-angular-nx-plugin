@@ -114,6 +114,9 @@ async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
         },
         options: {
           baseHref: '/',
+          stylePreprocessorOptions: {
+            includePaths: ['./node_modules'],
+          },
           ...projectConfig.targets['build'].options,
         },
       },

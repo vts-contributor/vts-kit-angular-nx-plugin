@@ -354,11 +354,10 @@ nx g @vts-kit/nx-angular:<generator_name> <generator_args>
 ### Generator: Template
 
 | No  | Name       | Description                                                                                                                                       | Type                                                                                          | Require | Default |
-| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | -------- | ------- |
-| 1   | name       | Name of feature group                                                                                                                             | string                                                                                        |   ✔      |         |
-| 2   | type       | Type of template which will be created                                                                                                            | ["ErrorTemplate-NoLayout", "AuthenticationTemplate-WithLayout", "LandingTemplate-WithLayout"] |   ✔      |         |
-| 3   | layoutName | Name of layout feature will be generated in feature-group `layout`. Only neccessary if template type require a layout, check template description | string                                                                                        |   ✔      |         |
-
+| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------- | ------- |
+| 1   | name       | Name of feature group                                                                                                                             | string                                                                                        | ✔       |         |
+| 2   | type       | Type of template which will be created                                                                                                            | ["ErrorTemplate-NoLayout", "AuthenticationTemplate-WithLayout", "LandingTemplate-WithLayout"] | ✔       |         |
+| 3   | layoutName | Name of layout feature will be generated in feature-group `layout`. Only neccessary if template type require a layout, check template description | string                                                                                        | ✔       |         |
 
 ## Feature Guideline
 
@@ -706,80 +705,70 @@ CICD variables can be found under `cicd/jenkinsfile/environment.groovy`. Develop
 
 ```
 /** Pipeline options **/
-env.errorBypass = 'false'                            // OPTIONAL, Continue on error
-env.skipTest = 'false'                               // OPTIONAL, Skip test phase
-env.skipSonar = 'false'                              // OPTIONAL, Skip sonar scan phase
-
+env.flag_sonar = ""                                         // OPTIONAL, Enable sonar scan (set to 'yes' to enable)
+env.flag_security = ""                                      // OPTIONAL, Enable fortify scan (set to 'yes' to enable)
 
 /** Application information **/
-env.appName = "demo"                                 // REQUIRED
-                                                     // Determine docker image name (<harborServer>/<harborFolder>/<appName>:<version>_<buildNumber>) 
-                                                     // and deployment/service name
+env.appName = "demo"                                        // REQUIRED
+                                                            // Determine docker image name (<harborServer>/<harborProject>/<appName>:<version>_<buildNumber>)
+                                                            // and deployment/service name
 
 
 /** Kubernetes profile **/
 
 // Development profile
-env.devKubeConfigFileSecret = ""                     // REQUIRED, Secret file credential stored on Jenkin, give in fileID
-env.devNamespace = ""                                // REQUIRED, Kubernetes namespace to deploy
-env.devPort = "80"                                   // REQUIRED, Should be nginx port
-env.devTargetPort = "80"                             // REQUIRED, Container port, should be nginx port
-env.devNodePort = ""                                 // REQUIRED, Exposal port for external access
-env.devImagePullSecrets = ""                         // REQUIRED, Docker secret to pull image
+env.devKubeConfigFileSecret = "dev-k8s-config"              // REQUIRED, Secret file credential stored on Jenkin, give in fileID
+env.devNamespace = ""                                       // REQUIRED, Kubernetes namespace to deploy
+env.devPort = "80"                                          // REQUIRED, Should be nginx port
+env.devTargetPort = "80"                                    // REQUIRED, Container port, should be nginx port
+env.devNodePort = ""                                        // REQUIRED, Exposal port for external access
+env.devImagePullSecrets = "default"                         // REQUIRED, Docker secret to pull image
 
 // Production profile
-env.prodKubeConfigFileSecret = ""                    // REQUIRED, Secret file credential stored on Jenkin, give in fileID
-env.prodNamespace = ""                               // REQUIRED, Kubernetes namespace to deploy
-env.prodPort = "80"                                  // REQUIRED, Should be nginx port
-env.prodTargetPort = "80"                            // REQUIRED, Container port, should be nginx port
-env.prodNodePort = ""                                // REQUIRED, Exposal port for external access
-env.prodImagePullSecrets = ""                        // REQUIRED, Docker secret to pull image
+env.prodKubeConfigFileSecret = "prod-k8s-config"            // REQUIRED, Secret file credential stored on Jenkin, give in fileID
+env.prodNamespace = ""                                      // REQUIRED, Kubernetes namespace to deploy
+env.prodPort = "80"                                         // REQUIRED, Should be nginx port
+env.prodTargetPort = "80"                                   // REQUIRED, Container port, should be nginx port
+env.prodNodePort = ""                                       // REQUIRED, Exposal port for external access
+env.prodImagePullSecrets = "default"                        // REQUIRED, Docker secret to pull image
 
 
 /** Docker harbor configuration **/
-env.harborUserPassSecret = "secrets-harbor"          // REQUIRED, Secret user/pass credential stored on Jenkin, give in secretID
-env.harborServer = ""                                // REQUIRED, Harbor server to push built image
-env.harborFolder = ""                                // REQUIRED, Harbor folder to store image
+env.pullRegistry = ""                                       // REQUIRED, Harbor registry to pull base images
+env.harborProject = ""                                      // REQUIRED, Harbor folder to store image
 
 
 /** Git information **/
-env.gitUserPassSecret = ""                           // REQUIRED, Secret user/pass credential stored on Jenkin, give in secretID
-env.stagingBranch = ""                               // OPTIONAL, Staging branch won't trigger merge build pipeline
+env.gitTokenSecret = ""                                     // REQUIRED, Secret token credential stored on Jenkin, give in secretID
+env.stagingBranch = ""                                      // OPTIONAL, Staging branch won't trigger merge build pipeline
 
-
-/** Report config **/
-env.mailTo = ""                                      // OPTIONAL, Email to receive CICD results
-env.mailCC = ""                                      // OPTIONAL, Email to receive CICD results, CC
-
-/** Maintainers (for CD) **/
-env.projectMaintainerList = ""                       // REQUIRED, People who have permission to deploy application in production environment
-                                                     // Recommended to config this variable in pipeline job rather than in local file 
 
 /** Sonar config **/
 env.maximumAllowedBugs = 0
 env.maximumAllowedVunerabilities = 0
 env.maximumAllowedCodeSmell = 0
 
+
 /** Build prefix for building report **/
 env.pushBuildPrefix = "JENKINS-PUSH"
 env.mrBuildPrefix = "JENKINS-MERGE"
 env.acceptCloseMRBuildPrefix = "JENKINS-ACCEPT-CLOSE"
 ```
-  
+
 ### Feature: Dynamic Environment
 
 VTS KIT provides ability to use environment from container. All system environment which are started with `VTS_KIT_` will be collected and injected into Web Server on running. Developer can reference to these environment inside `window.env`.
 
 Ways to make changes to environments:
-  - 1\. Add environment inside kubernetes YAML deployment
-  - 2\. Use `kubectl` to change environment while application is running (require rolloul restart)
-  - 3\. Set environment on running docker (if deploy as docker)  
-  
+
+- 1\. Add environment inside kubernetes YAML deployment
+- 2\. Use `kubectl` to change environment while application is running (require rolloul restart)
+- 3\. Set environment on running docker (if deploy as docker)
 
 1. Add environment inside kubernetes YAML deployment:
- 
+
 For example, make change to development profile, create two environemnt `VTS_KIT_ENV1` and `VTS_KIT_ENV2`. You can find kubernetes YAML under `cicd/manifests/dev-deploy-manifest.yaml`.
-  
+
 ```
 ---
 apiVersion: v1
@@ -835,32 +824,32 @@ spec:
 2. Use `kubectl` to change environment while application is running (require rolloul restart)
 
 Use `kubectl` CLI to make change to an applied-deployment.
-  
+
 ```
   // Set new environemtn
   kubectl set env deployment/demo VTS_KIT_ENV1=hello
-  
+
   // Rollout restart to apply change
   kubectl rollout restart deployment/demo
-  
+
   // Unset environment (Also need to rollout restart to apply change)
   kubectl set env deployment/demo VTS_KIT_ENV1-
 ```
 
 3. Set environment on running docker (if deploy as docker)
-  
+
 Use `docker` CLI to set environment on running an image
-  
+
 ```
   docker run -e VTS_KIT_ENV1=hello -t webapp-demo:1.0.0
 ```
-  
+
 ### Feature: 3rd party integration
 
 VTS KIT offers libraries that facilitate the integration of third-party libraries and services with minimal effort.
 
 Check out [documentation](https://github.com/vts-contributor/vts-kit-angular-utils/tree/main/libs/integration) for more detail.
-  
+
 ## References
 
 - [Nx Introduction](https://nx.dev/getting-started/intro)

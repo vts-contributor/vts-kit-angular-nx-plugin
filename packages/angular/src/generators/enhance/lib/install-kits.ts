@@ -60,7 +60,7 @@ async function updateAngularJson(tree: Tree, options: Schema) {
             ...projectConfig.targets['build'].options.assets,
             {
               glob: '**/*',
-              input: './node_modules/@ui-vts/icons-angular/icons/svg/',
+              input: './node_modules/@ui-vts/icons-svg/svg/',
               output: '/assets/',
             },
           ],

@@ -32,10 +32,15 @@
   }
 }
 
+:host {
+  max-width: 100vw;
+  overflow: hidden;
+  display: block;
+}
+
 .landing-layout {
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   height: 100%;
 
   * {
@@ -150,16 +155,18 @@
   }
 
   &-append {
-    padding: 8px var(--pd-h);
-    background-color: var(--grey-4);
-    justify-content: space-between;
+    &-container {
+      padding: 8px var(--pd-h);
+      background-color: var(--grey-4);
+      justify-content: space-between;
 
-    > div {
-      padding: 4px 0;
-    }
+      > div {
+        padding: 4px 0;
+      }
 
-    @media screen and (max-width: 1250px) {
-      justify-content: center;
+      @media screen and (max-width: 1250px) {
+        justify-content: center;
+      }
     }
   }
 }
