@@ -3,9 +3,9 @@ import {
   normalizePath,
   ProjectConfiguration,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { getProjectNameFromDirPath } from 'nx/src/utils/project-graph-utils';
 import { join, relative } from 'path';
 import { checkPathUnderFolder } from './path';
@@ -25,7 +25,7 @@ export function normalizeProjectAndPath(
   const project =
     options.project ??
     getProjectFromPath(options.path) ??
-    readWorkspaceConfiguration(tree).defaultProject;
+    readNxJson(tree).defaultProject;
 
   const { root, sourceRoot, projectType } = readProjectConfiguration(
     tree,
@@ -55,7 +55,7 @@ export function normalizeProjectAndPath(
     if (!path)
       throw new Error(
         `The path provided (${pathToComponent}) does not exist under project source ${defaultPath}. ` +
-          `Please make sure to provide a path that exists under the workspace root.`
+        `Please make sure to provide a path that exists under the workspace root.`
       );
   }
 
@@ -78,13 +78,13 @@ export function readProjectConfigurationFromTree(
 }
 
 export function readDefaultProjectConfigurationFromTree(tree: Tree) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   return readProjectConfigurationFromTree(tree, projectConfig);
 }
 
 export function getStyleType(tree: Tree) {
-  const { generators } = readWorkspaceConfiguration(tree);
+  const { generators } = readNxJson(tree);
   const packageName = require('../../../package.json').name;
   const generateName = `${packageName}:component`;
   if (generators[generateName] != null) {

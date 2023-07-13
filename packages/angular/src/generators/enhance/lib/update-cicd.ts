@@ -1,5 +1,5 @@
 import { strings } from '@angular-devkit/core';
-import { generateFiles } from '@nrwl/devkit';
+import { generateFiles } from '@nx/devkit';
 import { Tree } from 'nx/src/generators/tree';
 import { join } from 'path';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';

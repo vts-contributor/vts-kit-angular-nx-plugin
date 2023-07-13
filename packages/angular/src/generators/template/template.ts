@@ -1,5 +1,5 @@
-import type { Tree } from '@nrwl/devkit';
-import { formatFiles } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
+import { formatFiles } from '@nx/devkit';
 import { generateAuthenticationTemplate } from './lib/generate-authentication';
 import { generateErrorTemplate } from './lib/generate-error';
 import { generateLandingPageTemplate } from './lib/generate-landing-page';

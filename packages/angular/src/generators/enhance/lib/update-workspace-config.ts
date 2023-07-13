@@ -1,8 +1,8 @@
 import {
-  readWorkspaceConfiguration,
-  updateWorkspaceConfiguration,
-  WorkspaceConfiguration,
-} from '@nrwl/devkit';
+  readNxJson,
+  NxJsonConfiguration,
+  updateNxJson
+} from '@nx/devkit';
 import { Tree } from 'nx/src/generators/tree';
 import { NormalizedSchema } from '../schema';
 
@@ -10,11 +10,11 @@ export async function updateWorkspaceConfig(
   tree: Tree,
   options: NormalizedSchema
 ) {
-  const workspaceConfig = readWorkspaceConfiguration(tree);
+  const workspaceConfig = readNxJson(tree);
   const packageName = require('../../../../package.json').name;
   const { style } = options;
 
-  const update: WorkspaceConfiguration = {
+  const update: NxJsonConfiguration = {
     ...workspaceConfig,
     generators: {
       [`${packageName}`]: {
@@ -40,5 +40,5 @@ export async function updateWorkspaceConfig(
       },
     },
   };
-  updateWorkspaceConfiguration(tree, update);
+  updateNxJson(tree, update);
 }

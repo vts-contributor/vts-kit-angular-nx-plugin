@@ -1,4 +1,4 @@
-import * as tsUtils from '@nrwl/workspace/src/utilities/typescript';
+import * as tsUtils from '@nx/workspace/src/utilities/typescript';
 import * as fs from 'fs';
 import { readTsPathMappings } from './typescript';
 

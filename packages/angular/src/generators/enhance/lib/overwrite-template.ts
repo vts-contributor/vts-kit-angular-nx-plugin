@@ -3,9 +3,9 @@ import {
   generateFiles,
   ProjectConfiguration,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { Tree } from 'nx/src/generators/tree';
 import { join } from 'path';
 import { NormalizedSchema } from '../schema';
@@ -22,7 +22,7 @@ export async function overwriteTemplate(tree: Tree, options: NormalizedSchema) {
 
 async function overwriteApp(tree: Tree, options: NormalizedSchema) {
   const { defaultProject: project, npmScope } =
-    readWorkspaceConfiguration(tree);
+    readNxJson(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { name, sourceRoot } = projectConfig;
   const appPath = `${sourceRoot}/app`;
@@ -40,7 +40,7 @@ async function overwriteApp(tree: Tree, options: NormalizedSchema) {
 }
 
 async function generateWelcome(tree: Tree, options: NormalizedSchema) {
-  const { npmScope } = readWorkspaceConfiguration(tree);
+  const { npmScope } = readNxJson(tree);
 
   await featureGroupGenerator(tree, {
     name: 'welcome',
@@ -74,7 +74,7 @@ async function generateWelcome(tree: Tree, options: NormalizedSchema) {
 }
 
 async function overwriteAppRoot(tree: Tree, options: NormalizedSchema) {
-  const { defaultProject: project } = readWorkspaceConfiguration(tree);
+  const { defaultProject: project } = readNxJson(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   tree.delete(`${sourceRoot}/styles.${options.style}`);

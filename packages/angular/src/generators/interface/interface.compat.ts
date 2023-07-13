@@ -1,4 +1,4 @@
 import interfaceGenerator from './interface';
-import { convertNxGenerator } from '@nrwl/devkit';
+import { convertNxGenerator } from '@nx/devkit';
 
 export default convertNxGenerator(interfaceGenerator);

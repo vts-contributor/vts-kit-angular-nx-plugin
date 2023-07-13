@@ -1,10 +1,5 @@
-import { addDependenciesToPackageJson, Tree } from '@nrwl/devkit';
-import {
-  postcssImportVersion,
-  postcssPresetEnvVersion,
-  postcssUrlVersion,
-  postcssVersion,
-} from './versions';
+import { addDependenciesToPackageJson, Tree } from '@nx/devkit';
+import { postcssVersion, postcssImportVersion, postcssPresetEnvVersion, postcssUrlVersion } from './versions'
 
 export function addBuildableLibrariesPostCssDependencies(tree: Tree): void {
   addDependenciesToPackageJson(

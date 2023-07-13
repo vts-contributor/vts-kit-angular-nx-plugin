@@ -3,12 +3,12 @@ import { Schema } from '../schema';
 import { tsquery } from '@phenomnomnominal/tsquery';
 import {
   readProjectConfiguration,
-  readWorkspaceConfiguration,
-} from '@nrwl/devkit';
+  readNxJson,
+} from '@nx/devkit';
 import { join } from 'path';
 
 export async function updateAppConstructor(tree: Tree, options: Schema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   const modulePath = join(sourceRoot, 'app', 'app.module.ts');

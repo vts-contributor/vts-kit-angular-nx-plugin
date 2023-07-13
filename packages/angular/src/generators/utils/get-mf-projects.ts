@@ -1,12 +1,12 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import { tsquery } from '@phenomnomnominal/tsquery';
-import { forEachExecutorOptions } from '@nrwl/workspace/src/utilities/executor-options-utils';
+import { forEachExecutorOptions } from '@nx/devkit/src/generators/executor-options-utils';
 
 export function getMFProjects(
   tree: Tree,
   { legacy }: { legacy: boolean } = { legacy: false }
 ) {
-  const NRWL_WEBPACK_BROWSER_BUILDER = '@nrwl/angular:webpack-browser';
+  const NRWL_WEBPACK_BROWSER_BUILDER = '@nx/angular:webpack-browser';
   const CUSTOM_WEBPACK_OPTION = 'customWebpackConfig';
   const MODULE_FEDERATION_IDENTIFIER = legacy
     ? 'Identifier[name=ModuleFederationPlugin]'

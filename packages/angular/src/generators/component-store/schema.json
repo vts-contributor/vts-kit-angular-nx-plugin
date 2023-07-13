@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SchematicsAngularComponentStore",
+  "title": "Angular Component Store Schema",
+  "cli": "nx",
+  "type": "object",
+  "description": "Creates a new, generic Angular component store definition in the given or default project.",
+  "additionalProperties": false,
+  "properties": {
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path at which to create the component store file, relative to the selected project (/src/(lib|app)/<relative_path>) or relative to workspace (<root_workspace>/<relative_path>).",
+      "visible": false
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "x-dropdown": "projects"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the component store.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the component store?"
+    },
+    "skipTests": {
+      "type": "boolean",
+      "description": "Do not create \"spec.ts\" test files for the new class.",
+      "default": false,
+      "x-user-analytics": 12
+    }
+  },
+  "required": [
+    "name",
+    "project"
+  ]
+}

@@ -22,7 +22,8 @@ export function execAndWait(command: string, cwd: string) {
   return new Promise((res, rej) => {
     exec(command, { cwd, env: { ...process.env } }, (error, stdout, stderr) => {
       if (error) {
-        rej({ code: error.code, logMessage: stderr });
+        const message = stderr && stderr.trim().length ? stderr : stdout;
+        rej({ code: error.code, logMessage: message });
       } else {
         res({ code: 0, stdout });
       }

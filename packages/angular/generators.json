@@ -6,31 +6,41 @@
     "library": {
       "factory": "./src/generators/library/library.compat",
       "schema": "./src/generators/library/schema.json",
-      "aliases": ["lib"],
+      "aliases": [
+        "lib"
+      ],
       "description": "Creates an Angular library."
     },
     "component": {
       "factory": "./src/generators/component/component.compat",
       "schema": "./src/generators/component/schema.json",
-      "aliases": ["c"],
+      "aliases": [
+        "c"
+      ],
       "description": "Generate an Angular Component."
     },
     "directive": {
       "factory": "./src/generators/directive/directive.compat",
       "schema": "./src/generators/directive/schema.json",
-      "aliases": ["d"],
+      "aliases": [
+        "d"
+      ],
       "description": "Generate an Angular Directive."
     },
     "pipe": {
       "factory": "./src/generators/pipe/pipe.compat",
       "schema": "./src/generators/pipe/schema.json",
-      "aliases": ["p"],
+      "aliases": [
+        "p"
+      ],
       "description": "Generate an Angular Pipe."
     },
     "service": {
       "factory": "./src/generators/service/service.compat",
       "schema": "./src/generators/service/schema.json",
-      "aliases": ["s"],
+      "aliases": [
+        "s"
+      ],
       "description": "Generate an Angular Service."
     },
     "class": {
@@ -41,19 +51,25 @@
     "interface": {
       "factory": "./src/generators/interface/interface.compat",
       "schema": "./src/generators/interface/schema.json",
-      "aliases": ["i"],
+      "aliases": [
+        "i"
+      ],
       "description": "Generate an Angular Interface."
     },
     "enum": {
       "factory": "./src/generators/enum/enum.compat",
       "schema": "./src/generators/enum/schema.json",
-      "aliases": ["e"],
+      "aliases": [
+        "e"
+      ],
       "description": "Generate an Angular Enum."
     },
     "guard": {
       "factory": "./src/generators/guard/guard.compat",
       "schema": "./src/generators/guard/schema.json",
-      "aliases": ["g"],
+      "aliases": [
+        "g"
+      ],
       "description": "Generate an Angular Guard."
     },
     "interceptor": {
@@ -64,19 +80,25 @@
     "resolver": {
       "factory": "./src/generators/resolver/resolver.compat",
       "schema": "./src/generators/resolver/schema.json",
-      "aliases": ["r"],
+      "aliases": [
+        "r"
+      ],
       "description": "Generate an Angular Resolver."
     },
     "validator": {
       "factory": "./src/generators/validator/validator.compat",
       "schema": "./src/generators/validator/schema.json",
-      "aliases": ["v"],
+      "aliases": [
+        "v"
+      ],
       "description": "Generate an Angular Validator."
     },
     "feature-group": {
       "factory": "./src/generators/feature-group/feature-group.compat",
       "schema": "./src/generators/feature-group/schema.json",
-      "aliases": ["fg"],
+      "aliases": [
+        "fg"
+      ],
       "description": "Generate an Angular Feature group."
     },
     "enhance": {
@@ -89,39 +111,57 @@
       "factory": "./src/generators/template/template.compat",
       "schema": "./src/generators/template/schema.json",
       "description": "Generate a new feature-group template."
+    },
+    "component-store": {
+      "factory": "./src/generators/component-store/component-store.compat",
+      "schema": "./src/generators/component-store/schema.json",
+      "aliases": [
+        "p"
+      ],
+      "description": "Generate an Angular Component Store."
     }
   },
   "generators": {
     "library": {
       "factory": "./src/generators/library/library",
       "schema": "./src/generators/library/schema.json",
-      "aliases": ["lib"],
+      "aliases": [
+        "lib"
+      ],
       "x-type": "library",
       "description": "Creates an Angular library."
     },
     "component": {
       "factory": "./src/generators/component/component",
       "schema": "./src/generators/component/schema.json",
-      "aliases": ["c"],
+      "aliases": [
+        "c"
+      ],
       "x-type": "component",
       "description": "Creates an Angular component."
     },
     "directive": {
       "factory": "./src/generators/directive/directive",
       "schema": "./src/generators/directive/schema.json",
-      "aliases": ["d"],
+      "aliases": [
+        "d"
+      ],
       "description": "Generate an Angular Directive."
     },
     "pipe": {
       "factory": "./src/generators/pipe/pipe",
       "schema": "./src/generators/pipe/schema.json",
-      "aliases": ["p"],
+      "aliases": [
+        "p"
+      ],
       "description": "Generate an Angular Pipe."
     },
     "service": {
       "factory": "./src/generators/service/service",
       "schema": "./src/generators/service/schema.json",
-      "aliases": ["s"],
+      "aliases": [
+        "s"
+      ],
       "description": "Generate an Angular Service."
     },
     "class": {
@@ -132,19 +172,25 @@
     "interface": {
       "factory": "./src/generators/interface/interface",
       "schema": "./src/generators/interface/schema.json",
-      "aliases": ["i"],
+      "aliases": [
+        "i"
+      ],
       "description": "Generate an Angular Interface."
     },
     "enum": {
       "factory": "./src/generators/enum/enum",
       "schema": "./src/generators/enum/schema.json",
-      "aliases": ["i"],
+      "aliases": [
+        "i"
+      ],
       "description": "Generate an Angular Enum."
     },
     "guard": {
       "factory": "./src/generators/guard/guard",
       "schema": "./src/generators/guard/schema.json",
-      "aliases": ["g"],
+      "aliases": [
+        "g"
+      ],
       "description": "Generate an Angular Guard."
     },
     "interceptor": {
@@ -155,19 +201,25 @@
     "resolver": {
       "factory": "./src/generators/resolver/resolver",
       "schema": "./src/generators/resolver/schema.json",
-      "aliases": ["r"],
+      "aliases": [
+        "r"
+      ],
       "description": "Generate an Angular Resolver."
     },
     "validator": {
       "factory": "./src/generators/validator/validator",
       "schema": "./src/generators/validator/schema.json",
-      "aliases": ["v"],
+      "aliases": [
+        "v"
+      ],
       "description": "Generate an Angular Validator."
     },
     "feature-group": {
       "factory": "./src/generators/feature-group/feature-group",
       "schema": "./src/generators/feature-group/schema.json",
-      "aliases": ["v"],
+      "aliases": [
+        "v"
+      ],
       "description": "Generate an Angular Feature Group."
     },
     "enhance": {
@@ -180,6 +232,14 @@
       "factory": "./src/generators/template/template",
       "schema": "./src/generators/template/schema.json",
       "description": "Generate a new feature-group template."
+    },
+    "component-store": {
+      "factory": "./src/generators/component-store/component-store",
+      "schema": "./src/generators/component-store/schema.json",
+      "aliases": [
+        "cs"
+      ],
+      "description": "Generate an Angular Component Store."
     }
   }
 }

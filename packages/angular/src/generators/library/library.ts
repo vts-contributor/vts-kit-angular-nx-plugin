@@ -5,12 +5,11 @@ import {
   moveFilesToNewDirectory,
   removeDependenciesFromPackageJson,
   Tree,
-} from '@nrwl/devkit';
-import { wrapAngularDevkitSchematic } from '@nrwl/devkit/ngcli-adapter';
-import { jestProjectGenerator } from '@nrwl/jest';
-import { convertToNxProjectGenerator } from '@nrwl/workspace/generators';
+} from '@nx/devkit';
+import { wrapAngularDevkitSchematic } from '@nx/devkit/ngcli-adapter';
+import { jestProjectGenerator } from '@nx/jest';
+import { convertToNxProjectGenerator } from '@nx/workspace/generators';
 import { ngPackagrVersion } from '../utils/versions';
-import { karmaProjectGenerator } from '@nrwl/angular/generators';
 import { addBuildableLibrariesPostCssDependencies } from '../utils/dependencies';
 import { enableStrictTypeChecking } from './lib/enable-strict-type-checking';
 import { normalizeOptions } from './lib/normalize-options';
@@ -21,7 +20,7 @@ import { updateTsConfig } from './lib/update-tsconfig';
 import { Schema } from './schema';
 import { createRoutes } from './lib/create-routes';
 import { addLazyLoadedRouterConfiguration } from './lib/add-lazy-loaded-router-configuration';
-import { logger } from '@nrwl/devkit';
+import { logger } from '@nx/devkit';
 
 export async function libraryGenerator(tree: Tree, schema: Partial<Schema>) {
   // Do some validation checks
@@ -110,11 +109,8 @@ async function addUnitTestRunner(
       skipSerializers: false,
       skipFormat: true,
     });
-  } else if (options.unitTestRunner === 'karma') {
-    await karmaProjectGenerator(host, {
-      project: options.name,
-      skipFormat: true,
-    });
+  } else {
+
   }
 }
 

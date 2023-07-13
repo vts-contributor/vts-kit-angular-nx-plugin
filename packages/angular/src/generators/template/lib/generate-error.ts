@@ -2,7 +2,7 @@ import { Tree } from 'nx/src/generators/tree';
 import { getStyleType } from '../../utils/project';
 import { Schema } from '../schema';
 import featureGroupGenerator from '../../feature-group/feature-group';
-import { generateFiles, readProjectConfiguration } from '@nrwl/devkit';
+import { generateFiles, readProjectConfiguration } from '@nx/devkit';
 import { join } from 'path';
 import { strings } from '@angular-devkit/core';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';

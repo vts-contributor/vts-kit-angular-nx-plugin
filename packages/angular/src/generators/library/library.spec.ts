@@ -6,12 +6,12 @@
 //   readProjectConfiguration,
 //   Tree,
 //   updateJson,
-// } from '@nrwl/devkit';
+// } from '@nx/devkit';
 // import {
 //   createTreeWithEmptyV1Workspace,
 //   createTreeWithEmptyWorkspace,
-// } from '@nrwl/devkit/testing';
-// import { Linter } from '@nrwl/linter';
+// } from '@nx/devkit/testing';
+// import { Linter } from '@nx/linter';
 // import { toNewFormat } from 'nx/src/config/workspaces';
 // import { createApp } from '../../utils/nx-devkit/testing';
 // import { UnitTestRunner } from '../../utils/test-runners';
@@ -1256,7 +1256,7 @@
 
 //       // check to see if the workspace configuration has been updated to use strict
 //       // mode by default in future libraries
-//       expect(generators['@nrwl/angular:library'].strict).not.toBeDefined();
+//       expect(generators['@nx/angular:library'].strict).not.toBeDefined();
 //     });
 
 //     it('should set defaults when --strict=false', async () => {
@@ -1271,7 +1271,7 @@
 //       // check to see if the workspace configuration has been updated to turn off
 //       // strict mode by default in future libraries
 //       const { generators } = readJson<NxJsonConfiguration>(tree, 'nx.json');
-//       expect(generators['@nrwl/angular:library'].strict).toBe(false);
+//       expect(generators['@nx/angular:library'].strict).toBe(false);
 //     });
 //   });
 
@@ -1288,7 +1288,7 @@
 //         expect(workspaceJson.projects['my-lib'].architect.lint)
 //           .toMatchInlineSnapshot(`
 //           Object {
-//             "builder": "@nrwl/linter:eslint",
+//             "builder": "@nx/linter:eslint",
 //             "options": Object {
 //               "lintFilePatterns": Array [
 //                 "libs/my-lib/**/*.ts",
@@ -1317,7 +1317,7 @@
 //             "overrides": Array [
 //               Object {
 //                 "extends": Array [
-//                   "plugin:@nrwl/nx/angular",
+//                   "plugin:@nx/nx/angular",
 //                   "plugin:@angular-eslint/template/process-inline-templates",
 //                 ],
 //                 "files": Array [
@@ -1344,7 +1344,7 @@
 //               },
 //               Object {
 //                 "extends": Array [
-//                   "plugin:@nrwl/nx/angular-template",
+//                   "plugin:@nx/nx/angular-template",
 //                 ],
 //                 "files": Array [
 //                   "*.html",

@@ -1,4 +1,4 @@
-import { ProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
+import { ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { Tree } from 'nx/src/generators/tree';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
@@ -46,7 +46,7 @@ export async function createWebpackAndProjectConfig(
       ...projectConfig.targets,
       build: {
         ...projectConfig.targets['build'],
-        executor: '@nrwl/angular:webpack-browser',
+        executor: '@nx/angular:webpack-browser',
         options: {
           ...projectConfig.targets['build'].options,
           customWebpackConfig: {
@@ -70,7 +70,7 @@ export async function createWebpackAndProjectConfig(
       },
       serve: {
         ...projectConfig.targets['build'],
-        executor: '@nrwl/angular:webpack-dev-server',
+        executor: '@nx/angular:webpack-dev-server',
         configurations: {
           production: {
             browserTarget: `${name}:build:production`,

@@ -1,7 +1,7 @@
 import {
   getRootTsConfigPath,
   readTsConfig,
-} from '@nrwl/workspace/src/utilities/typescript';
+} from '@nx/js';
 import { existsSync } from 'fs';
 import { ParsedCommandLine } from 'typescript';
 

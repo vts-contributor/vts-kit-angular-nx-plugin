@@ -6,8 +6,10 @@
   "prefix": "lib",
   "targets": {
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "libs/welcome/ui/jest.config.ts",
         "passWithNoTests": true

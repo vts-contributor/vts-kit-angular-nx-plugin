@@ -5,9 +5,9 @@ import {
   joinPathFragments,
   logger,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   updateJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { checkPathUnderFolder } from '../../utils/path';
 import mergeDeep, { format } from '../../utils/string';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
@@ -29,7 +29,7 @@ export async function generateAuthenticationTemplate(
 }
 
 async function generateAssets(tree: Tree, options: Schema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
 
@@ -46,7 +46,7 @@ async function generateAssets(tree: Tree, options: Schema) {
 }
 
 async function generateLocale(tree: Tree, options: Schema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   const localePath = join(sourceRoot, 'assets', 'locale');
@@ -165,7 +165,7 @@ async function generateLocale(tree: Tree, options: Schema) {
 
 async function generateLayout(tree: Tree, options: Schema) {
   const style = getStyleType(tree);
-  const { npmScope } = readWorkspaceConfiguration(tree);
+  const { npmScope } = readNxJson(tree);
   const { layoutName, name: rawName } = options;
   const name = dasherize(rawName);
   const formattedLayoutName = dasherize(format(layoutName, { name }));
@@ -209,7 +209,7 @@ async function generateLayout(tree: Tree, options: Schema) {
 
 async function generateTemplate(tree: Tree, options: Schema) {
   const style = getStyleType(tree);
-  const { npmScope } = readWorkspaceConfiguration(tree);
+  const { npmScope } = readNxJson(tree);
   const { layoutName, name: rawName } = options;
   const name = dasherize(rawName);
   const formattedLayoutName = dasherize(format(layoutName, { name }));

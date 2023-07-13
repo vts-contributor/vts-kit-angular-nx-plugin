@@ -1,14 +1,13 @@
 import {
   joinPathFragments,
-  readWorkspaceConfiguration,
   Tree,
-} from '@nrwl/devkit';
-import { insertImport } from '@nrwl/workspace/src/utilities/ast-utils';
+} from '@nx/devkit';
+import { insertImport } from '@nx/js';
+import { addImportToModule } from '../../utils/ast-utils'
 import * as ts from 'typescript';
-import { addImportToModule } from '../../utils/nx-devkit/ast-utils';
 import { NormalizedSchema } from './normalized-schema';
 import { tsquery } from '@phenomnomnominal/tsquery';
-import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
 
 export function addLazyLoadedRouterConfiguration(
   host: Tree,
