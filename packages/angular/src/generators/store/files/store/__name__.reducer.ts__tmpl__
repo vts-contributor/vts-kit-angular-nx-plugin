@@ -1,0 +1,34 @@
+import { createReducer, on } from '@ngrx/store';
+import * as <%= classify(name) %>Actions from './<%= name %>.action';
+
+export const <%= uppercase(name) %>_FEATURE_KEY = '<%= uppercase(name) %>_FEATURE_KEY';
+
+export type <%= classify(name) %>State = {
+  loading: boolean;
+  data: any; // Entity Type
+  error: string;
+};
+
+const initialState: <%= classify(name) %>State = {
+  loading: false,
+  data: null,
+  error: '',
+};
+
+export const <%= classify(name) %>Reducer = createReducer(
+  initialState,
+  on(<%= classify(name) %>Actions.action, (state) => ({
+    ...state,
+    loading: true,
+    error: '',
+  })),
+  on(<%= classify(name) %>Actions.actionSuccess, (state, { data }) => ({
+    ...state,
+    data
+  })),
+  on(<%= classify(name) %>Actions.actionError, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
+  }))
+);

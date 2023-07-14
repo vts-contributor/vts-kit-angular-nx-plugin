@@ -3,8 +3,8 @@ import {
   logger,
   readJsonFile,
   workspaceRoot,
-} from '@nrwl/devkit';
-import { getRootTsConfigPath } from '@nrwl/workspace/src/utilities/typescript';
+} from '@nx/devkit';
+import { getRootTsConfigPath } from '@nx/js';
 import { existsSync, lstatSync, readdirSync } from 'fs';
 import { PackageJson, readModulePackageJson } from 'nx/src/utils/package-json';
 import { dirname, join, normalize, relative } from 'path';
@@ -142,7 +142,7 @@ function getEmptySharedLibrariesConfig() {
     getAliases: () => ({}),
     getLibraries: () => ({}),
     getReplacementPlugin: () =>
-      new NormalModuleReplacementPlugin(/./, () => {}),
+      new NormalModuleReplacementPlugin(/./, () => { }),
   };
 }
 
@@ -175,7 +175,7 @@ function recursivelyCollectSecondaryEntryPointsFromDirectory(
         if (name === entryPointName) {
           collectedPackages.push({ name, version: pkgVersion });
         }
-      } catch {}
+      } catch { }
     } else if (mainEntryPointExports) {
       // if the package.json doesn't exist, check if the directory is
       // exported by the main entry point
@@ -244,8 +244,8 @@ export function getNpmPackageSharedConfig(
   if (!version) {
     logger.warn(
       `Could not find a version for "${pkgName}" in the root "package.json" ` +
-        'when collecting shared packages for the Module Federation setup. ' +
-        'The package will not be shared.'
+      'when collecting shared packages for the Module Federation setup. ' +
+      'The package will not be shared.'
     );
 
     return undefined;

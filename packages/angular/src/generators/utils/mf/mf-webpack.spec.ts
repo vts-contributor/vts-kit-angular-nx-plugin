@@ -2,7 +2,7 @@ jest.mock('fs');
 import * as fs from 'fs';
 import * as tsUtils from './typescript';
 
-import * as devkit from '@nrwl/devkit';
+import * as devkit from '@nx/devkit';
 import { sharePackages, shareWorkspaceLibraries } from './mf-webpack';
 
 describe('MF Webpack Utils', () => {

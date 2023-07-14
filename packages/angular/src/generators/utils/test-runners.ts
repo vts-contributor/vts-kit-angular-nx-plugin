@@ -1,5 +1,4 @@
 export enum UnitTestRunner {
-  Karma = 'karma',
   Jest = 'jest',
   None = 'none',
 }

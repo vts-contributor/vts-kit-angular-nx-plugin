@@ -1,5 +1,5 @@
-import { readProjectConfiguration } from '@nrwl/devkit';
-import { Tree } from 'nx/src/generators/tree';
+import { readProjectConfiguration } from '@nx/devkit';
+import { Tree } from '@nx/devkit';
 import featureGroupGenerator from '../../feature-group/feature-group';
 import { Schema } from '../schema';
 

@@ -1,5 +1,5 @@
-import type { Tree } from '@nrwl/devkit';
-import { logger, readProjectConfiguration, stripIndents } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger, readProjectConfiguration, stripIndents } from '@nx/devkit';
 import { locateLibraryEntryPointFromDirectory } from './entry-point';
 import { GenerationOptions, getFileInfo } from './file-info';
 import { getRelativeImportToFile } from './path';
@@ -25,7 +25,7 @@ export function exportInEntryPoint(
   if (!entryPointPath) {
     logger.warn(
       `Unable to determine whether the item should be exported in the library entry point file. ` +
-        `The library's entry point file could not be found. Skipping exporting the component in the entry point file.`
+      `The library's entry point file could not be found. Skipping exporting the component in the entry point file.`
     );
 
     return;

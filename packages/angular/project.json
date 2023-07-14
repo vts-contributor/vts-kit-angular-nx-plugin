@@ -5,8 +5,10 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/angular",
         "main": "packages/angular/src/index.ts",
@@ -37,8 +39,10 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "packages/angular/**/*.ts",
@@ -49,8 +53,10 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/angular"],
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "coverage/packages/angular"
+      ],
       "options": {
         "jestConfig": "packages/angular/jest.config.ts",
         "passWithNoTests": true

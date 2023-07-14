@@ -1,6 +1,6 @@
-import { ProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
+import { ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import { existsSync } from 'fs';
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
 import { NormalizedSchema } from '../schema';
 
@@ -46,7 +46,7 @@ export async function createWebpackAndProjectConfig(
       ...projectConfig.targets,
       build: {
         ...projectConfig.targets['build'],
-        executor: '@nrwl/angular:webpack-browser',
+        executor: '@nx/angular:webpack-browser',
         options: {
           ...projectConfig.targets['build'].options,
           customWebpackConfig: {
@@ -58,8 +58,8 @@ export async function createWebpackAndProjectConfig(
           production: {
             ...projectConfig.targets['build'].configurations.production,
             fileReplacements: [
-              ...projectConfig.targets['build'].configurations.production
-                .fileReplacements,
+              ...(projectConfig.targets['build'].configurations.production
+                .fileReplacements || []),
               {
                 replace: `${webpackPath}/webpack.config.js`,
                 with: `${webpackPath}/webpack.config.prod.js`,
@@ -70,7 +70,7 @@ export async function createWebpackAndProjectConfig(
       },
       serve: {
         ...projectConfig.targets['build'],
-        executor: '@nrwl/angular:webpack-dev-server',
+        executor: '@nx/angular:webpack-dev-server',
         configurations: {
           production: {
             browserTarget: `${name}:build:production`,
@@ -97,6 +97,8 @@ export async function addScript(tree: Tree, options: NormalizedSchema) {
       ...pkgJsonContent,
       scripts: {
         ...pkgJsonContent.scripts,
+        'start': 'nx serve',
+        'build': 'nx build',
         'start:analyze': 'cross-env ANALYZE=1 npm run start',
         'build:analyze': 'cross-env ANALYZE=1 npm run build',
       },

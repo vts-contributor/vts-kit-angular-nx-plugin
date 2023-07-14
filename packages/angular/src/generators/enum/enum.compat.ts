@@ -1,4 +1,4 @@
 import enumGenerator from './enum';
-import { convertNxGenerator } from '@nrwl/devkit';
+import { convertNxGenerator } from '@nx/devkit';
 
 export default convertNxGenerator(enumGenerator);

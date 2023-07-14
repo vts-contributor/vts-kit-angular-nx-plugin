@@ -1,6 +1,6 @@
-import type { Tree } from '@nrwl/devkit';
-import { formatFiles } from '@nrwl/devkit';
-import { wrapAngularDevkitSchematic } from '@nrwl/devkit/ngcli-adapter';
+import type { Tree } from '@nx/devkit';
+import { formatFiles } from '@nx/devkit';
+import { wrapAngularDevkitSchematic } from '@nx/devkit/ngcli-adapter';
 import { exportInEntryPoint } from '../utils/export';
 import { addRoute } from './lib/add-route';
 import { findRoute } from './lib/find-route';

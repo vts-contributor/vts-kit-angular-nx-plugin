@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { fetch } from '@nrwl/angular';
+import { fetch } from '@nx/angular';
 import { DbService } from '@vts-kit-ng-nx-demo/share/data-access';
 import { catchError, EMPTY, map, of, switchMap, tap } from 'rxjs';
 import {
@@ -23,5 +23,5 @@ export class ProductListEffects {
     )
   );
 
-  constructor(private readonly actions$: Actions, private db: DbService) {}
+  constructor(private readonly actions$: Actions, private db: DbService) { }
 }

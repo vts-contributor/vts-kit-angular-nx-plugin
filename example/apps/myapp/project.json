@@ -6,8 +6,10 @@
   "prefix": "vts-kit-ng-nx-demo",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/myapp",
         "index": "apps/myapp/src/index.html",
@@ -71,8 +73,10 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nrwl/angular:webpack-dev-server",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/angular:webpack-dev-server",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "host": "localhost",
         "port": 8000
@@ -94,14 +98,19 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/myapp/**/*.ts", "apps/myapp/**/*.html"]
+        "lintFilePatterns": [
+          "apps/myapp/**/*.ts",
+          "apps/myapp/**/*.html"
+        ]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/myapp/jest.config.ts",
         "passWithNoTests": true

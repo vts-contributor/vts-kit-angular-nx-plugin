@@ -1,20 +1,20 @@
 import {
-  readWorkspaceConfiguration,
-  updateWorkspaceConfiguration,
-  WorkspaceConfiguration,
-} from '@nrwl/devkit';
-import { Tree } from 'nx/src/generators/tree';
+  readNxJson,
+  NxJsonConfiguration,
+  updateNxJson
+} from '@nx/devkit';
+import { Tree } from '@nx/devkit';
 import { NormalizedSchema } from '../schema';
 
 export async function updateWorkspaceConfig(
   tree: Tree,
   options: NormalizedSchema
 ) {
-  const workspaceConfig = readWorkspaceConfiguration(tree);
+  const workspaceConfig = readNxJson(tree);
   const packageName = require('../../../../package.json').name;
-  const { style } = options;
+  const { style, defaultApp } = options;
 
-  const update: WorkspaceConfiguration = {
+  const update: NxJsonConfiguration = {
     ...workspaceConfig,
     generators: {
       [`${packageName}`]: {
@@ -25,12 +25,6 @@ export async function updateWorkspaceConfig(
           linter: 'eslint',
         },
       },
-      // [`${packageName}:application`]: {
-      //   style,
-      //   linter: "eslint",
-      //   unitTestRunner: "jest",
-      //   e2eTestRunner: "cypress"
-      // },
       [`${packageName}:library`]: {
         linter: 'eslint',
         unitTestRunner: 'jest',
@@ -39,6 +33,7 @@ export async function updateWorkspaceConfig(
         style,
       },
     },
+    defaultProject: defaultApp
   };
-  updateWorkspaceConfiguration(tree, update);
+  updateNxJson(tree, update);
 }

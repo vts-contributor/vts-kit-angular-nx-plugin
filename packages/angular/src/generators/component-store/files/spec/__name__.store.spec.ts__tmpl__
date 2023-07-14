@@ -1,0 +1,8 @@
+import { <%= classify(name) %>Store } from './<%= name %>.store';
+
+describe('<%= classify(name) %>Store', () => {
+  it('create an instance', () => {
+    const store = new <%= classify(name) %>Store();
+    expect(store).toBeTruthy();
+  });
+});

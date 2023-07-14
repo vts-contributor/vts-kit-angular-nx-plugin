@@ -3,7 +3,7 @@ import {
   ProjectGraph,
   readJsonFile,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { existsSync } from 'fs';
 import { readTsPathMappings } from './typescript';
 

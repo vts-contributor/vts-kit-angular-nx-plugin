@@ -1,5 +1,5 @@
-import { generateFiles, Tree } from '@nrwl/devkit';
-import { formatFiles } from '@nrwl/devkit';
+import { generateFiles, Tree } from '@nx/devkit';
+import { formatFiles } from '@nx/devkit';
 import { join } from 'path';
 import { exportInEntryPoint } from '../utils/export';
 import { normalizeOptions } from './lib/normalize-options';

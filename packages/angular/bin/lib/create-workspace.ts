@@ -7,8 +7,8 @@ import {
   detectPackageManager,
   getPackageManagerCommand,
   getPackageManagerVersion,
-} from '@nrwl/devkit';
-import { unparse } from 'nx/src/tasks-runner/utils';
+} from '@nx/devkit';
+import { unparse } from './utils';
 import * as ora from 'ora';
 import { join } from 'path';
 import { execAndWait, getFileName, mapErrorToBodyLines } from './utils';
@@ -18,10 +18,10 @@ import { nxVersion } from '../../src/generators/utils/versions';
 
 const packageName = require('../../package.json').name;
 const version = require('../../package.json').version;
-const defaultNxArgs = {
-  cli: 'angular',
-  preset: 'angular',
-  presetVersion: version,
+const generateArgs = {
+  preset: 'angular-monorepo',
+  workspaceType: 'integrated',
+  standaloneApi: true,
 };
 
 export const commandsObject: yargs.Argv<Arguments> = yargs
@@ -291,8 +291,7 @@ async function main(parsedArgs: yargs.Arguments<Arguments>) {
     });
 
   const tmpDir = await createSandbox();
-  const projectPath = await createApp(parsedArgs, tmpDir);
-
+  const projectPath = await createWorkspace(parsedArgs, tmpDir);
   await applyVtsChange(parsedArgs, projectPath);
 }
 
@@ -304,7 +303,7 @@ async function createSandbox() {
 
   const { install } = getPackageManagerCommand();
   const dependencies = [
-    `@nrwl/workspace@${nxVersion}`,
+    `@nx/workspace@${nxVersion}`,
     `nx@${nxVersion}`,
     'typescript',
     'prettier',
@@ -348,26 +347,23 @@ async function createSandbox() {
   return tmpDir;
 }
 
-async function createApp(
+async function createWorkspace(
   parsedArgs: yargs.Arguments<Arguments>,
   tmpDir: string
 ) {
-  const { workspaceName, appName, style } = parsedArgs;
+  const { workspaceName, appName } = parsedArgs;
   const args = unparse({
+    ...generateArgs,
     appName,
-    style,
-    preset: defaultNxArgs.preset,
-    cli: defaultNxArgs.cli,
+    verbose: true
   }).join(' ');
 
   const packageManager = detectPackageManager();
   const { exec } = getPackageManagerCommand();
-  const command = `new ${workspaceName} ${args} --collection=@nrwl/workspace/generators.json`;
+  const command = `new ${workspaceName} ${args} --collection=@nx/workspace/generators.json`;
   const workingDir = process.cwd().replace(/\\/g, '/');
   let nxWorkspaceRoot = `"${workingDir}"`;
 
-  // If path contains spaces there is a problem in Windows for npm@6.
-  // In this case we have to escape the wrapping quotes.
   if (
     process.platform === 'win32' &&
     /\s/.test(nxWorkspaceRoot) &&
@@ -383,7 +379,7 @@ async function createApp(
   ).start();
 
   try {
-    const fullCommand = `${exec} nx ${command} --nxWorkspaceRoot=${nxWorkspaceRoot}`;
+    const fullCommand = `${exec} nx ${command} --nxWorkspaceRoot=${nxWorkspaceRoot} --verbose`;
     await execAndWait(fullCommand, tmpDir);
 
     workspaceSetupSpinner.succeed(
@@ -400,6 +396,38 @@ async function createApp(
     workspaceSetupSpinner.stop();
   }
   return join(workingDir, getFileName(workspaceName));
+}
+
+async function createApp(
+  parsedArgs: yargs.Arguments<Arguments>,
+  projectPath: string
+) {
+  const { appName } = parsedArgs;
+  let installSetupSpinner = ora(`Creating application ${appName}`).start();
+
+  try {
+    const { style, appName } = parsedArgs;
+    const { exec } = getPackageManagerCommand();
+    const args = unparse({
+      style,
+      name: appName,
+      verbose: true
+    }).join(' ');
+    let command = `g angular-monorepo:preset`;
+    const fullCommand = `${exec} nx ${command} ${args}`;
+    await execAndWait(fullCommand, projectPath);
+
+    installSetupSpinner.succeed(`Created application ${appName}`);
+  } catch (e) {
+    installSetupSpinner.fail();
+    output.error({
+      title: `Failed to create application ${appName}.`,
+      bodyLines: mapErrorToBodyLines(e),
+    });
+    process.exit(1);
+  } finally {
+    installSetupSpinner.stop();
+  }
 }
 
 async function applyVtsChange(
@@ -449,10 +477,12 @@ async function runEnhancement(
   let workspaceUpdateSpinner = ora(`Workspace is updating`).start();
 
   try {
-    const { style } = parsedArgs;
+    const { style, appName } = parsedArgs;
     const { exec } = getPackageManagerCommand();
     const args = unparse({
       style,
+      defaultApp: appName,
+      verbose: true
     }).join(' ');
     const command = `g ${packageName}:enhance`;
     const fullCommand = `${exec} nx ${command} ${args}`;
@@ -460,6 +490,7 @@ async function runEnhancement(
 
     workspaceUpdateSpinner.succeed(`Workspace updated.`);
   } catch (e) {
+    console.log(e)
     workspaceUpdateSpinner.fail();
     output.error({
       title: `Failed to update workspace.`,
@@ -492,6 +523,7 @@ async function generateTemplate(
       const args = unparse({
         type,
         name: formattedName,
+        verbose: true
       }).join(' ');
       const command = `g ${packageName}:template`;
       const fullCommand = `${exec} nx ${command} ${args}`;

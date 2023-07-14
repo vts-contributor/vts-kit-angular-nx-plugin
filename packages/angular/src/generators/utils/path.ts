@@ -1,4 +1,4 @@
-import { joinPathFragments, workspaceRoot } from '@nrwl/devkit';
+import { joinPathFragments, workspaceRoot } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { basename, dirname, join, normalize, relative } from 'path';
 

@@ -3,8 +3,8 @@ import {
   joinPathFragments,
   Tree,
   updateJson,
-} from '@nrwl/devkit';
-import { getRootTsConfigPathInTree } from '@nrwl/workspace/src/utilities/typescript';
+} from '@nx/devkit';
+import { getRootTsConfigPathInTree } from '@nx/js';
 import { NormalizedSchema } from './normalized-schema';
 
 function updateRootConfig(
