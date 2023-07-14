@@ -1,15 +1,16 @@
 import {
   readNxJson,
 } from '@nx/devkit';
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { NormalizedSchema } from '../schema';
 import { libraryGenerator } from '../../library/library';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
+import { getNpmScope } from '@nx/js/src/utils/package-json/get-npm-scope';
 
 const SHARE_PATH = 'share';
 
 async function generateLib(tree: Tree, libName: string) {
-  const { npmScope } = readNxJson(tree);
+  const npmScope = getNpmScope(tree);
   const declareName = dasherize(libName);
   const importPath = `@${npmScope}/${SHARE_PATH}/${declareName}`;
   await libraryGenerator(tree, {

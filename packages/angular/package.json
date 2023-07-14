@@ -1,6 +1,6 @@
 {
   "name": "@vts-kit/nx-angular",
-  "version": "1.0.10-local",
+  "version": "1.0.10",
   "main": "src/index.js",
   "generators": "./generators.json",
   "bin": "./bin/index.js",

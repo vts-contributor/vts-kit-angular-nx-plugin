@@ -1,6 +1,6 @@
 import { strings } from '@angular-devkit/core';
 import { generateFiles } from '@nx/devkit';
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
 import { NormalizedSchema } from '../schema';

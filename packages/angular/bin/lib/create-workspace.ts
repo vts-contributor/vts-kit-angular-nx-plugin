@@ -8,7 +8,7 @@ import {
   getPackageManagerCommand,
   getPackageManagerVersion,
 } from '@nx/devkit';
-import { unparse } from 'nx/src/tasks-runner/utils';
+import { unparse } from './utils';
 import * as ora from 'ora';
 import { join } from 'path';
 import { execAndWait, getFileName, mapErrorToBodyLines } from './utils';
@@ -477,10 +477,11 @@ async function runEnhancement(
   let workspaceUpdateSpinner = ora(`Workspace is updating`).start();
 
   try {
-    const { style } = parsedArgs;
+    const { style, appName } = parsedArgs;
     const { exec } = getPackageManagerCommand();
     const args = unparse({
       style,
+      defaultApp: appName,
       verbose: true
     }).join(' ');
     const command = `g ${packageName}:enhance`;

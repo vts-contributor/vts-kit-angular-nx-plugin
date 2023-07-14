@@ -116,9 +116,17 @@
       "factory": "./src/generators/component-store/component-store.compat",
       "schema": "./src/generators/component-store/schema.json",
       "aliases": [
-        "p"
+        "cs"
       ],
       "description": "Generate an Angular Component Store."
+    },
+    "store": {
+      "factory": "./src/generators/store/store.compat",
+      "schema": "./src/generators/store/schema.json",
+      "aliases": [
+        "st"
+      ],
+      "description": "Generate an Angular Store."
     }
   },
   "generators": {
@@ -240,6 +248,14 @@
         "cs"
       ],
       "description": "Generate an Angular Component Store."
+    },
+    "store": {
+      "factory": "./src/generators/store/store",
+      "schema": "./src/generators/store/schema.json",
+      "aliases": [
+        "st"
+      ],
+      "description": "Generate an Angular Store."
     }
   }
 }

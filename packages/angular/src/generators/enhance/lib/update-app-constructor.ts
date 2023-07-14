@@ -1,4 +1,4 @@
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { Schema } from '../schema';
 import { tsquery } from '@phenomnomnominal/tsquery';
 import {

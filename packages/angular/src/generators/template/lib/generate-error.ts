@@ -1,4 +1,4 @@
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { getStyleType } from '../../utils/project';
 import { Schema } from '../schema';
 import featureGroupGenerator from '../../feature-group/feature-group';

@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { of, from } from 'rxjs';
+import * as <%= classify(name) %>Actions from './<%= name %>.action';
+
+@Injectable({ providedIn: 'root' })
+export class <%= classify(name) %>Effect {
+  constructor(private actions$: Actions) { }
+
+  signIn$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(<%= classify(name) %>Actions.action),
+      exhaustMap((action) =>
+        // Api call
+        from(
+          fetch('https://google.com', {
+            body: action.query
+          })
+        ).pipe(
+          map((data) => <%= classify(name) %>Actions.actionSuccess({ data })),
+          catchError(({ message }) =>
+            of(<%= classify(name) %>Actions.actionError({ error: message }))
+          )
+        )
+      )
+    )
+  );
+}

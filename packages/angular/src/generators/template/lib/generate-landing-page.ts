@@ -1,4 +1,4 @@
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { Schema } from '../schema';
 import {
   generateFiles,
@@ -17,6 +17,7 @@ import { strings } from '@angular-devkit/core';
 import { getStyleType } from '../../utils/project';
 import featureGroupGenerator from '../../feature-group/feature-group';
 import { exportInEntryPoint } from '../../utils/export';
+import { getNpmScope } from '@nx/js/src/utils/package-json/get-npm-scope';
 
 export async function generateLandingPageTemplate(tree: Tree, options: Schema) {
   await generateAssets(tree, options);
@@ -286,7 +287,7 @@ async function generateLocale(tree: Tree, options: Schema) {
 
 async function generateLayout(tree: Tree, options: Schema) {
   const style = getStyleType(tree);
-  const { npmScope } = readNxJson(tree);
+  const npmScope = getNpmScope(tree);
   const { layoutName, name: rawName } = options;
   const name = dasherize(rawName);
   const formattedLayoutName = dasherize(format(layoutName, { name }));
@@ -365,7 +366,7 @@ async function generateLayout(tree: Tree, options: Schema) {
 
 async function generateTemplate(tree: Tree, options: Schema) {
   const style = getStyleType(tree);
-  const { npmScope } = readNxJson(tree);
+  const npmScope = getNpmScope(tree);
   const { layoutName, name: rawName } = options;
   const name = dasherize(rawName);
   const formattedLayoutName = format(layoutName, { name });

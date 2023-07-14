@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
 import { tapResponse } from '@ngrx/component-store';
 import { ImmerComponentStore } from 'ngrx-immer/component-store';
-import { switchMap, tap } from 'rxjs';
+import { from, switchMap, tap } from 'rxjs';
 
-export interface <%= classify(name) %> State {
+export interface <%= classify(name) %>State {
   loading: boolean;
   data: any, // Entity Type
   error: string;
 }
 
-const initialState: <%= classify(name) %> State = {
+const initialState: <%= classify(name) %>State = {
   loading: false,
   data: null,
   error: '',
 };
 
 @Injectable()
-export class <%= classify(name) %> Store extends ImmerComponentStore <<%= classify(name) %> State > {
+export class <%= classify(name) %>Store extends ImmerComponentStore <<%= classify(name) %>State > {
   constructor() {
     super(initialState);
   }
 
-  readonly queryPopularizeVideo = this.effect<{}>((param$) =>
+  // Example of effect
+  readonly query = this.effect<{}>((param$) =>
     param$.pipe(
       tap(() =>
         this.patchState({
@@ -51,4 +52,11 @@ export class <%= classify(name) %> Store extends ImmerComponentStore <<%= classi
       })
     )
   );
+
+  // Example of updater
+  readonly set = this.updater<{
+    loading: boolean
+  }>((state, { loading }) => {
+    state.loading = loading;
+  });
 }

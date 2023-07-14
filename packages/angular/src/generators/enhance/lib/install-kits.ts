@@ -8,7 +8,7 @@ import {
   updateProjectConfiguration,
 } from '@nx/devkit';
 import { insertImport } from '@nx/js';
-import { Tree } from 'nx/src/generators/tree';
+import { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { createSourceFile, ScriptTarget } from 'typescript';
 import { addImportToModule } from '../../utils/nx-devkit/ast-utils';

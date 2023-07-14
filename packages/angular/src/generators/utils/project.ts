@@ -6,17 +6,8 @@ import {
   readNxJson,
   Tree,
 } from '@nx/devkit';
-import { getProjectNameFromDirPath } from 'nx/src/utils/project-graph-utils';
 import { join, relative } from 'path';
 import { checkPathUnderFolder } from './path';
-
-export function getProjectFromPath(path: string) {
-  try {
-    return getProjectNameFromDirPath(path);
-  } catch {
-    return null;
-  }
-}
 
 export function normalizeProjectAndPath(
   tree: Tree,
@@ -24,7 +15,6 @@ export function normalizeProjectAndPath(
 ) {
   const project =
     options.project ??
-    getProjectFromPath(options.path) ??
     readNxJson(tree).defaultProject;
 
   const { root, sourceRoot, projectType } = readProjectConfiguration(
