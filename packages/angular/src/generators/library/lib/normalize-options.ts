@@ -5,15 +5,15 @@ import {
   names,
   readJson,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
-} from '@nrwl/devkit';
-import { getImportPath } from 'nx/src/utils/path';
+} from '@nx/devkit';
+import { getImportPath } from '@nx/js/src/utils/get-import-path';
 import { Schema } from '../schema';
 import { NormalizedSchema } from './normalized-schema';
-import { Linter } from '@nrwl/linter';
+import { Linter } from '@nx/linter';
 import { UnitTestRunner } from '../../utils/test-runners';
-import { logger } from '@nrwl/devkit';
+import { logger } from '@nx/devkit';
 
 export function normalizeOptions(
   host: Tree,
@@ -38,7 +38,7 @@ export function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`.replace(/\/+/g, '/')
     : name;
 
-  const { libsDir, npmScope } = getWorkspaceLayout(host);
+  const { libsDir } = getWorkspaceLayout(host);
 
   const projectName = projectDirectory
     .replace(new RegExp('/', 'g'), '-')
@@ -53,7 +53,7 @@ export function normalizeOptions(
   const modulePath = `${projectRoot}/src/lib/${fileName}.module.ts`;
 
   const importPath =
-    options.importPath || getImportPath(npmScope, projectDirectory);
+    options.importPath || getImportPath(host, projectDirectory);
 
   // Determine the roots where @schematics/angular will place the projects
   // This might not be where the projects actually end up
@@ -70,7 +70,7 @@ export function normalizeOptions(
   let appInfo: any = { appRouting: null, appRoutingPath: null };
   let appRouting =
     options.appRoutingProject ??
-    readWorkspaceConfiguration(host).defaultProject;
+    readNxJson(host).defaultProject;
 
   const { projectType, root, sourceRoot } = readProjectConfiguration(
     host,

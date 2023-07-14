@@ -1,5 +1,5 @@
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import { tsquery } from '@phenomnomnominal/tsquery';
 import { getFileInfo } from '../../utils/file-info';
 import { getRelativeImportToFile } from '../../utils/path';

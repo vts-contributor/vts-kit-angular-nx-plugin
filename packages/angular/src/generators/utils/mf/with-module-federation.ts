@@ -2,7 +2,7 @@ import {
   createProjectGraphAsync,
   ProjectGraph,
   readCachedProjectGraph,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { readCachedProjectConfiguration } from 'nx/src/project-graph/project-graph';
 import { extname } from 'path';
 import {
@@ -45,9 +45,8 @@ function determineRemoteUrl(remote: string) {
       You can also use the tuple syntax in your webpack config to configure your remotes. e.g. \`remotes: [['remote1', 'http://localhost:4201']]\``
     );
   }
-  return `${
-    publicHost.endsWith('/') ? publicHost.slice(0, -1) : publicHost
-  }/remoteEntry.mjs`;
+  return `${publicHost.endsWith('/') ? publicHost.slice(0, -1) : publicHost
+    }/remoteEntry.mjs`;
 }
 
 function mapRemotes(remotes: MFRemotes) {
@@ -59,11 +58,10 @@ function mapRemotes(remotes: MFRemotes) {
       const remoteLocationExt = extname(remoteLocation);
       mappedRemotes[remoteName] = ['.js', '.mjs'].includes(remoteLocationExt)
         ? remoteLocation
-        : `${
-            remoteLocation.endsWith('/')
-              ? remoteLocation.slice(0, -1)
-              : remoteLocation
-          }/remoteEntry.mjs`;
+        : `${remoteLocation.endsWith('/')
+          ? remoteLocation.slice(0, -1)
+          : remoteLocation
+        }/remoteEntry.mjs`;
     } else if (typeof remote === 'string') {
       mappedRemotes[remote] = determineRemoteUrl(remote);
     }
@@ -105,7 +103,7 @@ function addStringDependencyToSharedConfig(
     const config = getNpmPackageSharedConfig(
       dependency,
       pkgJson.dependencies?.[dependency] ??
-        pkgJson.devDependencies?.[dependency]
+      pkgJson.devDependencies?.[dependency]
     );
 
     if (!config) {
@@ -116,7 +114,7 @@ function addStringDependencyToSharedConfig(
   } else {
     throw new Error(
       `The specified dependency "${dependency}" in the additionalShared configuration does not exist in the project graph. ` +
-        `Please check your additionalShared configuration and make sure you are including valid workspace projects or npm packages.`
+      `Please check your additionalShared configuration and make sure you are including valid workspace projects or npm packages.`
     );
   }
 }
@@ -158,13 +156,13 @@ function applyDefaultEagerPackages(
 }
 
 export async function withModuleFederation(options: MFConfig) {
-  const DEFAULT_NPM_PACKAGES_TO_AVOID = ['zone.js', '@nrwl/angular/mf'];
+  const DEFAULT_NPM_PACKAGES_TO_AVOID = ['zone.js', '@nx/angular/mf'];
   const DEFAULT_ANGULAR_PACKAGES_TO_SHARE = [
     '@angular/animations',
     '@angular/common',
   ];
 
-  let projectGraph: ProjectGraph<any>;
+  let projectGraph: ProjectGraph
   try {
     projectGraph = readCachedProjectGraph();
   } catch (e) {

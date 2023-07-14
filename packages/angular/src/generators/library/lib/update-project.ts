@@ -8,9 +8,9 @@ import {
   removeProjectConfiguration,
   Tree,
   updateJson,
-} from '@nrwl/devkit';
-import { getRelativePathToRootTsConfig } from '@nrwl/workspace/src/utilities/typescript';
-import { replaceAppNameWithPath } from '@nrwl/workspace/src/utils/cli-config-utils';
+} from '@nx/devkit';
+import { getRelativePathToRootTsConfig } from '@nx/js';
+import { replaceAppNameWithPath } from '../../utils/cli-config-utils';
 import * as path from 'path';
 import { NormalizedSchema } from './normalized-schema';
 import { updateNgPackage } from './update-ng-package';
@@ -126,8 +126,8 @@ function fixProjectWorkspaceConfig(
     const { executor, ...rest } = project.targets.build;
     project.targets.build = {
       executor: options.publishable
-        ? '@nrwl/angular:package'
-        : '@nrwl/angular:ng-packagr-lite',
+        ? '@nx/angular:package'
+        : '@nx/angular:ng-packagr-lite',
       outputs: [
         joinPathFragments(
           'dist',

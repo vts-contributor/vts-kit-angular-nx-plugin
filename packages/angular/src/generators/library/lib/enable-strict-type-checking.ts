@@ -1,9 +1,9 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import {
-  readWorkspaceConfiguration,
+  readNxJson,
   updateJson,
-  updateWorkspaceConfiguration,
-} from '@nrwl/devkit';
+  updateNxJson,
+} from '@nx/devkit';
 import { NormalizedSchema } from './normalized-schema';
 
 /**
@@ -19,16 +19,16 @@ export function enableStrictTypeChecking(
 // export function setLibraryStrictDefault(host: Tree, isStrict: boolean) {
 //   // set the default so future libraries use it
 //   // unless the user has previously set this value
-//   const workspace = readWorkspaceConfiguration(host);
+//   const workspace = readNxJson(host);
 
 //   workspace.generators = workspace.generators || {};
 
-//   workspace.generators['@nrwl/angular:library'] =
-//     workspace.generators['@nrwl/angular:library'] || {};
+//   workspace.generators['@nx/angular:library'] =
+//     workspace.generators['@nx/angular:library'] || {};
 
-//   workspace.generators['@nrwl/angular:library'].strict =
-//     workspace.generators['@nrwl/angular:library'].strict ?? isStrict;
-//   updateWorkspaceConfiguration(host, workspace);
+//   workspace.generators['@nx/angular:library'].strict =
+//     workspace.generators['@nx/angular:library'].strict ?? isStrict;
+//   updateNxJson(host, workspace);
 // }
 
 function updateTsConfig(

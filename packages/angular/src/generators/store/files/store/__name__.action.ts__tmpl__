@@ -1,0 +1,18 @@
+import { createAction, props } from '@ngrx/store';
+
+export const action = createAction(
+  '[<%= classify(name) %>] API',
+  props<{
+    query: string
+  }>()
+);
+
+export const actionSuccess = createAction(
+  '[<%= classify(name) %>] API Success',
+  props<{data: any}>()
+);
+
+export const actionError = createAction(
+  '[<%= classify(name) %>] API error',
+  props<{ error: string }>()
+);

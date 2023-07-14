@@ -3,14 +3,15 @@ import {
   generateFiles,
   ProjectConfiguration,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
-import { Tree } from 'nx/src/generators/tree';
+} from '@nx/devkit';
+import { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { NormalizedSchema } from '../schema';
 import featureGroupGenerator from '../../feature-group/feature-group';
 import { readDefaultProjectConfigurationFromTree } from '../../utils/project';
+import { getNpmScope } from '@nx/js/src/utils/package-json/get-npm-scope';
 
 export async function overwriteTemplate(tree: Tree, options: NormalizedSchema) {
   await generateWelcome(tree, options);
@@ -21,8 +22,9 @@ export async function overwriteTemplate(tree: Tree, options: NormalizedSchema) {
 }
 
 async function overwriteApp(tree: Tree, options: NormalizedSchema) {
-  const { defaultProject: project, npmScope } =
-    readWorkspaceConfiguration(tree);
+  const npmScope = getNpmScope(tree);
+  const { defaultProject: project } =
+    readNxJson(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { name, sourceRoot } = projectConfig;
   const appPath = `${sourceRoot}/app`;
@@ -40,7 +42,7 @@ async function overwriteApp(tree: Tree, options: NormalizedSchema) {
 }
 
 async function generateWelcome(tree: Tree, options: NormalizedSchema) {
-  const { npmScope } = readWorkspaceConfiguration(tree);
+  const npmScope = getNpmScope(tree);
 
   await featureGroupGenerator(tree, {
     name: 'welcome',
@@ -74,7 +76,7 @@ async function generateWelcome(tree: Tree, options: NormalizedSchema) {
 }
 
 async function overwriteAppRoot(tree: Tree, options: NormalizedSchema) {
-  const { defaultProject: project } = readWorkspaceConfiguration(tree);
+  const { defaultProject: project } = readNxJson(tree);
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   tree.delete(`${sourceRoot}/styles.${options.style}`);
@@ -114,6 +116,9 @@ async function updateAppProjectConfig(tree: Tree, options: NormalizedSchema) {
         },
         options: {
           baseHref: '/',
+          stylePreprocessorOptions: {
+            includePaths: ['./node_modules'],
+          },
           ...projectConfig.targets['build'].options,
         },
       },

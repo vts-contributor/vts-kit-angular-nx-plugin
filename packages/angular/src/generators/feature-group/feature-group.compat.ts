@@ -1,4 +1,4 @@
 import featureGroupGenerator from './feature-group';
-import { convertNxGenerator } from '@nrwl/devkit';
+import { convertNxGenerator } from '@nx/devkit';
 
 export default convertNxGenerator(featureGroupGenerator);

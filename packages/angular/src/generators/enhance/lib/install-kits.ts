@@ -4,11 +4,11 @@ import {
   generateFiles,
   ProjectConfiguration,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
-import { insertImport } from '@nrwl/workspace/src/utilities/ast-utils';
-import { Tree } from 'nx/src/generators/tree';
+} from '@nx/devkit';
+import { insertImport } from '@nx/js';
+import { Tree } from '@nx/devkit';
 import { join } from 'path';
 import { createSourceFile, ScriptTarget } from 'typescript';
 import { addImportToModule } from '../../utils/nx-devkit/ast-utils';
@@ -60,7 +60,7 @@ async function updateAngularJson(tree: Tree, options: Schema) {
             ...projectConfig.targets['build'].options.assets,
             {
               glob: '**/*',
-              input: './node_modules/@ui-vts/icons-angular/icons/svg/',
+              input: './node_modules/@ui-vts/icons-svg/svg/',
               output: '/assets/',
             },
           ],
@@ -73,7 +73,7 @@ async function updateAngularJson(tree: Tree, options: Schema) {
 }
 
 async function addKitConfig(tree: Tree, options: Schema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   tree.write(
@@ -113,7 +113,7 @@ async function addKitConfig(tree: Tree, options: Schema) {
 }
 
 async function updateAppModule(tree: Tree, options: Schema) {
-  const project = readWorkspaceConfiguration(tree).defaultProject;
+  const project = readNxJson(tree).defaultProject;
   const projectConfig = readProjectConfiguration(tree, project);
   const { sourceRoot } = projectConfig;
   const modulePath = join(sourceRoot, 'app', 'app.module.ts');

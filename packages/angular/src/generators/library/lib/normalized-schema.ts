@@ -1,5 +1,5 @@
 import { UnitTestRunner } from '../../utils/test-runners';
-import type { AngularLinter } from '../schema';
+import { Linter } from '@nx/linter';
 
 export interface NormalizedSchema {
   libraryOptions: {
@@ -18,7 +18,7 @@ export interface NormalizedSchema {
     compilationMode?: 'full' | 'partial';
     skipPackageJson?: boolean;
     skipPostInstall?: boolean;
-    linter: AngularLinter;
+    linter: Linter;
     unitTestRunner: UnitTestRunner;
     projectRoot: string;
     entryFile: string;

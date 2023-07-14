@@ -1,4 +1,4 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import type { NormalizedSchema, Schema } from '../schema';
 import { normalizeProjectAndPath } from '../../utils/project';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';

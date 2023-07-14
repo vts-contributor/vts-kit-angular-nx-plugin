@@ -4,7 +4,7 @@ import {
   offsetFromRoot,
   Tree,
   updateJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { NormalizedSchema } from './normalized-schema';
 
 export function updateNgPackage(

@@ -3,9 +3,9 @@ import {
   names,
   normalizePath,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 export type GenerationOptions = {
   name: string;
@@ -23,7 +23,7 @@ export type FileInfo = {
 
 export function getFileInfo(tree: Tree, options: GenerationOptions): FileInfo {
   const project =
-    options.project ?? readWorkspaceConfiguration(tree).defaultProject;
+    options.project ?? readNxJson(tree).defaultProject;
   const { root, sourceRoot, projectType } = readProjectConfiguration(
     tree,
     project

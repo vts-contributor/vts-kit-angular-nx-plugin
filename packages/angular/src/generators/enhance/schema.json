@@ -11,7 +11,15 @@
       "description": "The file extension or preprocessor to use for style files, or `none` to skip generating the style file.",
       "type": "string",
       "default": "scss",
-      "enum": ["scss", "css", "less"]
+      "enum": [
+        "scss",
+        "css",
+        "less"
+      ]
+    },
+    "defaultApp": {
+      "description": "Setting default app for enhancement",
+      "type": "string"
     }
   },
   "required": []

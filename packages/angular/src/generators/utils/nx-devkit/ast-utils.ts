@@ -1,14 +1,14 @@
 import * as ts from 'typescript';
-import { findNodes } from '@nrwl/workspace/src/utilities/typescript/find-nodes';
-import { getSourceNodes } from '@nrwl/workspace/src/utilities/typescript/get-source-nodes';
 import * as path from 'path';
-import { Tree, names, readProjectConfiguration } from '@nrwl/devkit';
+import { Tree, names, readProjectConfiguration } from '@nx/devkit';
 import {
   insertChange,
   removeChange,
   getImport,
   replaceChange,
-} from '@nrwl/workspace/src/utilities/ast-utils';
+  findNodes,
+  getSourceNodes
+} from '@nx/js';
 
 function _angularImportsFromNode(
   node: ts.ImportDeclaration,
@@ -179,9 +179,8 @@ function _addSymbolToNgModuleMetadata(
       // Get the indentation of the last element, if any.
       const text = node.getFullText(source);
       if (text.match('^\r?\r?\n')) {
-        toInsert = `,${
-          text.match(/^\r?\n\s+/)[0]
-        }${metadataField}: [${expression}]`;
+        toInsert = `,${text.match(/^\r?\n\s+/)[0]
+          }${metadataField}: [${expression}]`;
       } else {
         toInsert = `, ${metadataField}: [${expression}]`;
       }
@@ -239,9 +238,8 @@ function _addSymbolToNgModuleMetadata(
       // Get the indentation of the last element, if any.
       const text = node.getFullText(source);
       if (text.match('^\r?\r?\n')) {
-        toInsert = `,${
-          text.match(/^\r?\n\s+/)[0]
-        }${metadataField}: [${expression}]`;
+        toInsert = `,${text.match(/^\r?\n\s+/)[0]
+          }${metadataField}: [${expression}]`;
       } else {
         toInsert = `, ${metadataField}: [${expression}]`;
       }
@@ -634,13 +632,12 @@ export function readBootstrapInfo(
   );
   const bootstrapComponentFileName = `./${path.join(
     path.dirname(moduleImport.moduleSpec),
-    `${
-      names(
-        bootstrapComponentClassName.substring(
-          0,
-          bootstrapComponentClassName.length - 9
-        )
-      ).fileName
+    `${names(
+      bootstrapComponentClassName.substring(
+        0,
+        bootstrapComponentClassName.length - 9
+      )
+    ).fileName
     }.component`
   )}`;
 

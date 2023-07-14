@@ -7,21 +7,21 @@ import {
   detectPackageManager,
   getPackageManagerCommand,
   getPackageManagerVersion,
-} from '@nrwl/devkit';
-import { unparse } from 'nx/src/tasks-runner/utils';
+} from '@nx/devkit';
+import { unparse } from './utils';
 import * as ora from 'ora';
 import { join } from 'path';
 import { execAndWait, getFileName, mapErrorToBodyLines } from './utils';
 import { dirSync } from 'tmp';
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { nxVersion } from '../../src/generators/utils/versions';
 
 const packageName = require('../../package.json').name;
 const version = require('../../package.json').version;
-const defaultNxArgs = {
-  cli: 'angular',
-  preset: 'angular',
-  presetVersion: version,
+const generateArgs = {
+  preset: 'angular-monorepo',
+  workspaceType: 'integrated',
+  standaloneApi: true,
 };
 
 export const commandsObject: yargs.Argv<Arguments> = yargs
@@ -31,7 +31,7 @@ export const commandsObject: yargs.Argv<Arguments> = yargs
     'dot-notation': true,
   })
   .command(
-    '$0 [name] [options]',
+    '$0 [options]',
     'Create a new Angular workspace',
     (yargs) =>
       yargs
@@ -53,15 +53,48 @@ export const commandsObject: yargs.Argv<Arguments> = yargs
         }),
     async (argv: yargs.ArgumentsCamelCase<Arguments>) => {
       await main(argv).catch((error) => {
-        const { version } = require('../package.json');
         output.error({
-          title: `Something went wrong! v${version}`,
+          title: `Something went wrong!`,
         });
         throw error;
       });
     },
     [getConfiguration]
   )
+  .command({
+    command: 'example',
+    describe: 'Generate an example',
+    handler: async (argv) => {
+      const expArgv = {
+        workspaceName: 'vts-kit-nx-webapp',
+        appName: 'demoapp',
+        style: 'less',
+        templates: ['ErrorTemplate-NoLayout'],
+        example: true,
+      } as yargs.Arguments<Arguments>;
+      await main(expArgv).catch((error) => {
+        output.error({
+          title: `Something went wrong!`,
+        });
+        throw error;
+      });
+    },
+    builder: {
+      prefix: {
+        type: 'string',
+        demandOption: false,
+        describe:
+          'Specify prefix of window environment, any environments start with this prefix will be injected into HTML',
+        default: 'VTS_KIT_',
+      },
+      htmlPath: {
+        type: 'string',
+        demandOption: false,
+        describe:
+          'Path to HTML file which will be injected, by default, use the nearest index.html file',
+      },
+    },
+  })
   .help('help', chalk.dim`Show help`)
   .version(
     'version',
@@ -230,7 +263,7 @@ async function determineTemplate(
                 name: 'templates',
                 message: `Select inital templates: (Use <space> to toggle select)`,
                 type: 'multiselect',
-                initial: ["ErrorTemplate-NoLayout"] as any,
+                initial: ['ErrorTemplate-NoLayout'] as any,
                 choices: templateChoices,
               },
             ])
@@ -241,6 +274,8 @@ async function determineTemplate(
 }
 
 async function main(parsedArgs: yargs.Arguments<Arguments>) {
+  const { example } = parsedArgs;
+
   output.log({
     title: `Version ${version}`,
     bodyLines: [
@@ -249,8 +284,14 @@ async function main(parsedArgs: yargs.Arguments<Arguments>) {
     ],
   });
 
+  if (example)
+    output.log({
+      title: ``,
+      bodyLines: [`Generating Mode: Example`],
+    });
+
   const tmpDir = await createSandbox();
-  const projectPath = await createApp(parsedArgs, tmpDir);
+  const projectPath = await createWorkspace(parsedArgs, tmpDir);
   await applyVtsChange(parsedArgs, projectPath);
 }
 
@@ -262,7 +303,7 @@ async function createSandbox() {
 
   const { install } = getPackageManagerCommand();
   const dependencies = [
-    `@nrwl/workspace@${nxVersion}`,
+    `@nx/workspace@${nxVersion}`,
     `nx@${nxVersion}`,
     'typescript',
     'prettier',
@@ -306,26 +347,23 @@ async function createSandbox() {
   return tmpDir;
 }
 
-async function createApp(
+async function createWorkspace(
   parsedArgs: yargs.Arguments<Arguments>,
   tmpDir: string
 ) {
-  const { workspaceName, appName, style } = parsedArgs;
+  const { workspaceName, appName } = parsedArgs;
   const args = unparse({
+    ...generateArgs,
     appName,
-    style,
-    preset: defaultNxArgs.preset,
-    cli: defaultNxArgs.cli,
+    verbose: true
   }).join(' ');
 
   const packageManager = detectPackageManager();
   const { exec } = getPackageManagerCommand();
-  const command = `new ${workspaceName} ${args} --collection=@nrwl/workspace/generators.json`;
+  const command = `new ${workspaceName} ${args} --collection=@nx/workspace/generators.json`;
   const workingDir = process.cwd().replace(/\\/g, '/');
   let nxWorkspaceRoot = `"${workingDir}"`;
 
-  // If path contains spaces there is a problem in Windows for npm@6.
-  // In this case we have to escape the wrapping quotes.
   if (
     process.platform === 'win32' &&
     /\s/.test(nxWorkspaceRoot) &&
@@ -341,7 +379,7 @@ async function createApp(
   ).start();
 
   try {
-    const fullCommand = `${exec} nx ${command} --nxWorkspaceRoot=${nxWorkspaceRoot}`;
+    const fullCommand = `${exec} nx ${command} --nxWorkspaceRoot=${nxWorkspaceRoot} --verbose`;
     await execAndWait(fullCommand, tmpDir);
 
     workspaceSetupSpinner.succeed(
@@ -360,16 +398,55 @@ async function createApp(
   return join(workingDir, getFileName(workspaceName));
 }
 
+async function createApp(
+  parsedArgs: yargs.Arguments<Arguments>,
+  projectPath: string
+) {
+  const { appName } = parsedArgs;
+  let installSetupSpinner = ora(`Creating application ${appName}`).start();
+
+  try {
+    const { style, appName } = parsedArgs;
+    const { exec } = getPackageManagerCommand();
+    const args = unparse({
+      style,
+      name: appName,
+      verbose: true
+    }).join(' ');
+    let command = `g angular-monorepo:preset`;
+    const fullCommand = `${exec} nx ${command} ${args}`;
+    await execAndWait(fullCommand, projectPath);
+
+    installSetupSpinner.succeed(`Created application ${appName}`);
+  } catch (e) {
+    installSetupSpinner.fail();
+    output.error({
+      title: `Failed to create application ${appName}.`,
+      bodyLines: mapErrorToBodyLines(e),
+    });
+    process.exit(1);
+  } finally {
+    installSetupSpinner.stop();
+  }
+}
+
 async function applyVtsChange(
   parsedArgs: yargs.Arguments<Arguments>,
   projectPath: string
 ) {
-  await installVtsPlugin(projectPath);
+  const { example } = parsedArgs;
+
+  await installVtsPlugin(parsedArgs, projectPath);
   await runEnhancement(parsedArgs, projectPath);
   await generateTemplate(parsedArgs, projectPath);
+
+  if (example) await updateExample(projectPath);
 }
 
-async function installVtsPlugin(projectPath: string) {
+async function installVtsPlugin(
+  parsedArgs: yargs.Arguments<Arguments>,
+  projectPath: string
+) {
   let installSetupSpinner = ora(`Installing ${packageName}`).start();
 
   try {
@@ -400,10 +477,12 @@ async function runEnhancement(
   let workspaceUpdateSpinner = ora(`Workspace is updating`).start();
 
   try {
-    const { style } = parsedArgs;
+    const { style, appName } = parsedArgs;
     const { exec } = getPackageManagerCommand();
     const args = unparse({
       style,
+      defaultApp: appName,
+      verbose: true
     }).join(' ');
     const command = `g ${packageName}:enhance`;
     const fullCommand = `${exec} nx ${command} ${args}`;
@@ -411,6 +490,7 @@ async function runEnhancement(
 
     workspaceUpdateSpinner.succeed(`Workspace updated.`);
   } catch (e) {
+    console.log(e)
     workspaceUpdateSpinner.fail();
     output.error({
       title: `Failed to update workspace.`,
@@ -443,6 +523,7 @@ async function generateTemplate(
       const args = unparse({
         type,
         name: formattedName,
+        verbose: true
       }).join(' ');
       const command = `g ${packageName}:template`;
       const fullCommand = `${exec} nx ${command} ${args}`;
@@ -463,5 +544,38 @@ async function generateTemplate(
 
   for await (const item of templates) {
     await generate(item);
+  }
+}
+
+async function updateExample(projectPath: string) {
+  let exampleSpinner = ora(`Update example`).start();
+
+  try {
+    const packageJson = JSON.parse(
+      readFileSync(join(projectPath, 'package.json')).toString()
+    );
+    writeFileSync(
+      join(projectPath, 'package.json'),
+      JSON.stringify(
+        {
+          ...packageJson,
+          devDependencies: {
+            ...packageJson.devDependencies,
+            '@vts-kit/nx-angular': 'latest',
+          },
+        },
+        null,
+        2
+      )
+    );
+  } catch (e) {
+    exampleSpinner.fail();
+    output.error({
+      title: `Failed to update example`,
+      bodyLines: mapErrorToBodyLines(e),
+    });
+    process.exit(1);
+  } finally {
+    exampleSpinner.stop();
   }
 }

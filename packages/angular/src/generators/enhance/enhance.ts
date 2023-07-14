@@ -1,5 +1,5 @@
-import type { GeneratorCallback, Tree } from '@nrwl/devkit';
-import { formatFiles } from '@nrwl/devkit';
+import type { GeneratorCallback, Tree } from '@nx/devkit';
+import { formatFiles } from '@nx/devkit';
 import { generateLayout } from './lib/generate-layout';
 import { generateShareFolder } from './lib/generate-share-folder';
 import { installKits } from './lib/install-kits';
@@ -14,10 +14,10 @@ import type { Schema } from './schema';
 export async function enhanceGenerator(tree: Tree, rawOptions: Schema) {
   const options = normalizeOptions(tree, rawOptions);
   try {
-    await overwriteTemplate(tree, options);
     await updateWorkspaceConfig(tree, options);
+    await overwriteTemplate(tree, options);
 
-    let installTask: GeneratorCallback = () => {};
+    let installTask: GeneratorCallback = () => { };
     installTask = installKits(tree, options);
     await updateAppConstructor(tree, options);
     await updateWebpack(tree, options);

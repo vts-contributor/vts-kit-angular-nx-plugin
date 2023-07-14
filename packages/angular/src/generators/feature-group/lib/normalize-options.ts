@@ -1,9 +1,9 @@
 import {
   joinPathFragments,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import type { NormalizedSchema, Schema } from '../schema';
 import { warn } from 'console';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';

@@ -1,0 +1,24 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import {
+  <%= uppercase(name) %>_FEATURE_KEY,
+  <%= classify(name) %>State,
+} from './<%= name %>.reducer';
+
+export const get<%= classify(name) %>State = createFeatureSelector<<%= classify(name) %>State>(
+  <%= uppercase(name) %>_FEATURE_KEY
+);
+
+export const getData = createSelector(
+  get<%= classify(name) %>State,
+  ({ data }) => data
+);
+
+export const getLoading = createSelector(
+  get<%= classify(name) %>State,
+  ({ loading }) => loading
+);
+
+export const getError = createSelector(
+  get<%= classify(name) %>State,
+  ({ error }) => error
+);
